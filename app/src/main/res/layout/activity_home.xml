@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF9E4">
+
+    <!-- Scrollable content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomNav"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:background="#FFC107"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Good Morning"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#FF5722" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Snack Time with Win Snack!"
+                    android:textSize="16sp"
+                    android:textColor="#757575"
+                    android:layout_marginTop="2dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="8dp">
+
+                    <!-- Search box -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="0.8"
+                        android:orientation="horizontal"
+                        android:background="@drawable/bg_search_rounded"
+                        android:paddingHorizontal="8dp"
+                        android:gravity="center_vertical"
+                        android:layout_marginEnd="8dp">
+
+                        <EditText
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:hint="Search"
+                            android:textSize="14sp"
+                            android:drawableLeft="@android:drawable/ic_menu_search"
+                            android:drawablePadding="8dp"
+                            android:background="@android:color/transparent"
+                            android:paddingVertical="0dp"
+                            android:paddingHorizontal="8dp" />
+
+                        <ImageButton
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@mipmap/ic_voice"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:layout_marginStart="4dp" />
+
+                        <ImageButton
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@mipmap/ic_filter"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:layout_marginStart="4dp" />
+                    </LinearLayout>
+
+                    <ImageButton
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@mipmap/ic_cart"
+                        android:background="@android:color/transparent"
+                        android:scaleType="fitCenter" />
+
+                    <ImageButton
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@mipmap/ic_notification"
+                        android:background="@android:color/transparent"
+                        android:layout_marginStart="8dp"
+                        android:scaleType="fitCenter" />
+
+                    <ImageButton
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@mipmap/ic_profile"
+                        android:background="@android:color/transparent"
+                        android:layout_marginStart="8dp"
+                        android:scaleType="fitCenter" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Categories -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:overScrollMode="never"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <!-- Mixed -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_marginEnd="16dp">
+
+                        <ImageButton
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@mipmap/ic_mixed"
+                            android:background="@android:color/transparent"
+                            android:scaleType="centerInside" />
+                    </LinearLayout>
+
+                    <!-- Grilled -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_marginEnd="16dp">
+
+                        <ImageButton
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@mipmap/ic_grilled"
+                            android:background="@android:color/transparent"
+                            android:scaleType="centerInside" />
+                    </LinearLayout>
+
+                    <!-- Sweet -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_marginEnd="16dp">
+
+                        <ImageButton
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@mipmap/ic_sweet"
+                            android:background="@android:color/transparent"
+                            android:scaleType="centerInside" />
+                    </LinearLayout>
+
+                    <!-- Combo -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_marginEnd="16dp">
+
+                        <ImageButton
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@mipmap/ic_combo"
+                            android:background="@android:color/transparent"
+                            android:scaleType="centerInside" />
+                    </LinearLayout>
+
+                    <!-- Ingredients -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_marginEnd="8dp">
+
+                        <ImageButton
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@mipmap/ic_ingredients"
+                            android:background="@android:color/transparent"
+                            android:scaleType="centerInside" />
+                    </LinearLayout>
+                </LinearLayout>
+            </HorizontalScrollView>
+
+
+
+            <!-- Best Seller -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:orientation="vertical">
+
+                <!-- Tiêu đề và View All -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Best Seller"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="#FF5722" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="end"
+                        android:text="View All >"
+                        android:textSize="12sp"
+                        android:textColor="#FF5722"
+                        android:gravity="end" />
+                </LinearLayout>
+
+                <!-- Danh sách sản phẩm -->
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:overScrollMode="never"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <!-- Product 1 -->
+                        <LinearLayout
+                            android:layout_width="160dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginEnd="12dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:scaleType="centerCrop"
+                                android:src="@mipmap/ic_product1"
+                                android:background="@drawable/bg_product_rounded" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="$103.0"
+                                android:textSize="14sp"
+                                android:textColor="#FF5722"
+                                android:layout_marginTop="4dp" />
+                        </LinearLayout>
+
+                        <!-- Product 2 -->
+                        <LinearLayout
+                            android:layout_width="160dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginEnd="12dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:scaleType="centerCrop"
+                                android:src="@mipmap/ic_product2"
+                                android:background="@drawable/bg_product_rounded" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="$50.0"
+                                android:textSize="14sp"
+                                android:textColor="#FF5722"
+                                android:layout_marginTop="4dp" />
+                        </LinearLayout>
+
+                        <!-- Product 3 -->
+                        <LinearLayout
+                            android:layout_width="160dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginEnd="12dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:scaleType="centerCrop"
+                                android:src="@mipmap/ic_product3"
+                                android:background="@drawable/bg_product_rounded" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="$12.99"
+                                android:textSize="14sp"
+                                android:textColor="#FF5722"
+                                android:layout_marginTop="4dp" />
+                        </LinearLayout>
+
+                        <!-- Product 4 -->
+                        <LinearLayout
+                            android:layout_width="160dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginEnd="8dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:scaleType="centerCrop"
+                                android:src="@mipmap/ic_product4"
+                                android:background="@drawable/bg_product_rounded" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="$8.20"
+                                android:textSize="14sp"
+                                android:textColor="#FF5722"
+                                android:layout_marginTop="4dp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </HorizontalScrollView>
+            </LinearLayout>
+
+
+            <!-- Promo Banner -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:src="@mipmap/ic_discount_banner"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/bg_banner_rounded" />
+            </LinearLayout>
+
+            <!-- Recommend -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Recommend"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#FF5722" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:overScrollMode="never">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <!-- Product 1 -->
+                        <LinearLayout
+                            android:layout_width="180dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginEnd="8dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="120dp"
+                                android:src="@mipmap/ic_recommend1"
+                                android:scaleType="centerCrop" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="$10.0"
+                                android:textSize="14sp"
+                                android:textColor="#FF5722"
+                                android:layout_marginTop="4dp" />
+                        </LinearLayout>
+                        <!-- Product 1 -->
+                        <LinearLayout
+                            android:layout_width="180dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginEnd="8dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="120dp"
+                                android:src="@mipmap/ic_recommend2"
+                                android:scaleType="centerCrop" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="$10.0"
+                                android:textSize="14sp"
+                                android:textColor="#FF5722"
+                                android:layout_marginTop="4dp" />
+                        </LinearLayout>
+                        <!-- Clone more recommends -->
+                    </LinearLayout>
+                </HorizontalScrollView>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom Navigation -->
+    <LinearLayout
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="#FF9800"
+        android:paddingHorizontal="12dp">
+
+        <ImageButton
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@mipmap/ic_navi1"
+            android:background="@android:color/transparent" />
+
+        <ImageButton
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:src="@mipmap/ic_navi2"
+            android:background="@android:color/transparent" />
+
+        <ImageButton
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:src="@mipmap/ic_navi3"
+            android:background="@android:color/transparent" />
+
+        <ImageButton
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:src="@mipmap/ic_navi4"
+            android:background="@android:color/transparent" />
+
+        <ImageButton
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:src="@mipmap/ic_navi5"
+            android:background="@android:color/transparent" />
+    </LinearLayout>
+</RelativeLayout>
