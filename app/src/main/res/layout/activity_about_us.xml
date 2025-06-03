@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- HEADER (nền vàng + icon + title) -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFCF59"
+            android:padding="12dp">
+
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_back"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:id="@+id/aboutUsTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="sans-serif"
+                android:text="About Us"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentEnd="true">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_cart"
+                    android:layout_marginEnd="8dp" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_user" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <!-- Nền trắng cong trên + logo + mô tả -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_white_top_rounded"
+            android:orientation="vertical"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="24dp"
+            android:paddingBottom="32dp">
+
+            <ImageView
+                android:layout_width="141dp"
+                android:layout_height="123dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="12dp"
+                android:src="@mipmap/winsnack_logo" />
+
+            <TextView
+                android:id="@+id/aboutDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:lineSpacingExtra="4dp"
+                android:text="@string/about_us_description"
+                android:textAlignment="center"
+                android:textColor="#858784"
+                android:textIsSelectable="false"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- VIDEO PLACEHOLDER -->
+        <ImageView
+            android:id="@+id/videoPlaceholder"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="8dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/video_aboutus" />
+
+        <!-- COMMITMENT SECTION -->
+        <LinearLayout
+            android:id="@+id/sectionCommitment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#FFFFFF"
+            android:paddingTop="16dp"
+            android:paddingBottom="32dp"
+            android:gravity="center_horizontal">
+
+            <!-- TIÊU ĐỀ -->
+            <TextView
+                android:id="@+id/commitmentTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFE3B3"
+                android:paddingVertical="8dp"
+                android:gravity="center"
+                android:text="WIN SNACK'S COMMITMENT"
+                android:textColor="#FF9413"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:fontFamily="sans-serif"
+                android:layout_marginBottom="16dp" />
+
+            <!-- MỤC 1 - QUALITY -->
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_quality"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="184dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/title_commitment_quality"
+                android:textAlignment="center"
+                android:textColor="#FF9413"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_height="wrap_content"
+                android:text="Every Win Snack product is made from carefully selected ingredients, processed hygienically, and strictly adheres to food safety standards."
+                android:textAlignment="center"
+                android:textColor="#3C3C3C"
+                android:textSize="13sp"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginBottom="24dp" />
+
+            <!-- MỤC 2 - ORIGIN -->
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_origin"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="181dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/title_commitment_origin"
+                android:textAlignment="center"
+                android:textColor="#FF9413"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_height="wrap_content"
+                android:text="Ingredients are supplied by reputable local sources from Tay Ninh (rice paper, shrimp), Da Lat (dried fruits), and other regions known for their high-quality raw materials."
+                android:textAlignment="center"
+                android:textColor="#3C3C3C"
+                android:textSize="13sp"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginBottom="24dp" />
+
+            <!-- MỤC 3 - CERTIFICATIONS -->
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_certification"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="113dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/title_commitment_certs"
+                android:textAlignment="center"
+                android:textColor="#FF9413"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_height="wrap_content"
+                android:text="Meets HACCP, ISO standards and other certifications related to food hygiene and safety."
+                android:textAlignment="center"
+                android:textColor="#3C3C3C"
+                android:textSize="13sp"
+                android:lineSpacingExtra="4dp" />
+        </LinearLayout>
+        <!-- PARTNER SECTION -->
+        <LinearLayout
+            android:id="@+id/sectionPartners"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#FFFFFF"
+            android:paddingTop="16dp"
+            android:paddingBottom="32dp"
+            android:gravity="center_horizontal">
+
+            <!-- TIÊU ĐỀ -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFE3B3"
+                android:paddingVertical="8dp"
+                android:gravity="center"
+                android:text="PARTNERS"
+                android:textColor="#FF9413"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:fontFamily="sans-serif"
+                android:layout_marginBottom="16dp" />
+
+            <!-- MỤC 1 -->
+
+            <ImageView
+                android:layout_width="342dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/ecommerce" />
+
+            <TextView
+                android:layout_width="184dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/title_ecommerce"
+                android:textAlignment="center"
+                android:textColor="#FF9413"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_height="wrap_content"
+                android:text="Win Snack’s online stores are professionally designed, making it easy to shop from anywhere at any time with attractive deals."
+                android:textAlignment="center"
+                android:textColor="#3C3C3C"
+                android:textSize="13sp"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginBottom="24dp" />
+
+            <!-- MỤC 2 -->
+            <ImageView
+                android:layout_width="322dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/delivery_service" />
+
+            <TextView
+                android:layout_width="243dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/title_service"
+                android:textAlignment="center"
+                android:textColor="#FF9413"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_height="wrap_content"
+                android:text="In partnership with reliable delivery platforms, your Win Snack orders are delivered quickly, safely, and conveniently to your door."
+                android:textAlignment="center"
+                android:textColor="#3C3C3C"
+                android:textSize="13sp"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginBottom="24dp" />
+
+            <!-- MỤC 3 -->
+
+            <ImageView
+                android:layout_width="457dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/stores" />
+
+            <TextView
+                android:layout_width="302dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/title_store"
+                android:textAlignment="center"
+                android:textColor="#FF9413"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="495dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:lineSpacingExtra="4dp"
+                android:text="Win Snack products are available in leading supermarket chains and convenience stores, helping customers easily find and enjoy the flavorful rice paper snacks nearby."
+                android:textAlignment="center"
+                android:textColor="#3C3C3C"
+                android:textSize="13sp" />
+        </LinearLayout>
+        <!-- PARTNER SECTION -->
+        <LinearLayout
+            android:id="@+id/sectionTeams"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#FFFFFF"
+            android:paddingTop="16dp"
+            android:paddingBottom="32dp"
+            android:gravity="center_horizontal">
+
+            <!-- TIÊU ĐỀ -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFE3B3"
+                android:paddingVertical="8dp"
+                android:gravity="center"
+                android:text="WIN SNACK TEAM"
+                android:textColor="#FF9413"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:fontFamily="sans-serif"
+                android:layout_marginBottom="16dp" />
+
+            <!-- HÌNH ẢNH TEAM FULL WIDTH -->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/team"
+                android:layout_marginBottom="8dp" />
+        </LinearLayout>
+ <!-- CUSTOMER REVIEWS SECTION -->
+        <LinearLayout
+            android:id="@+id/sectionReviews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#FFFFFF"
+            android:paddingTop="16dp"
+            android:paddingBottom="32dp"
+            android:gravity="center_horizontal">
+
+            <!-- TIÊU ĐỀ -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFE3B3"
+                android:paddingVertical="8dp"
+                android:gravity="center"
+                android:text="CUSTOMER REVIEWS"
+                android:textColor="#FF9413"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:fontFamily="sans-serif"
+                android:layout_marginBottom="16dp" />
+
+            <!-- HÌNH ẢNH TEAM FULL WIDTH -->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/customer_reviews"
+                android:layout_marginBottom="8dp" />
+        </LinearLayout>
+        <!-- STATISTICS SECTION -->
+        <LinearLayout
+            android:id="@+id/sectionStatistic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#FFFFFF"
+            android:paddingTop="16dp"
+            android:paddingBottom="32dp"
+            android:gravity="center_horizontal">
+
+            <!-- TIÊU ĐỀ -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFE3B3"
+                android:paddingVertical="8dp"
+                android:gravity="center"
+                android:text="STATISTICS"
+                android:textColor="#FF9413"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:fontFamily="sans-serif"
+                android:layout_marginBottom="16dp" />
+
+            <!-- HÌNH ẢNH TEAM FULL WIDTH -->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/statistics"
+                android:layout_marginBottom="8dp" />
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+</ScrollView>

@@ -1,6 +1,18 @@
 <resources>
     <string name="app_name">Win Snack- Group2</string>
-    <!--    Duyen An code-->
+    <string name="title_log_in">Log In</string>
+    <string name="title_sign_up">Sign Up</string>
+    <string name="about_us_description">Win Snack is a snack brand specializing in a wide variety of rice paper snacks, ranging from familiar traditional flavors to creatively modern combinations — perfect for all ages. With the slogan "One bite, you're hooked," we always prioritize quality and customer satisfaction.
+Every product at Win Snack is more than just a regular snack — it's a reflection of our dedication, creativity, and passion to bring joy in every bite. We aim to become everyone's favorite choice, a companion for every moment — from light parties, gatherings with friends, to peaceful, personal indulgence.</string>
+    <string name="title_commitmentQuality">Every Win Snack product is made from carefully selected ingredients, processed hygienically, and strictly adheres to food safety standards.</string>
+    <string name="titlecommitmentOrigin">Ingredients are supplied by reputable local sources from Tay Ninh (rice paper, shrimp), Da Lat (dried fruits), and other regions known for their high-quality raw materials.</string>
+    <string name="title_commitmentCerts">Meets HACCP, ISO standards and other certifications related to food hygiene and safety.</string>
+    <string name="title_commitment_quality">Quality Commitment</string>
+    <string name="title_commitment_origin">Clear Origin</string>
+    <string name="title_commitment_certs">Certifications</string>
+    <string name="title_ecommerce">Ecommerce Platforms</string>
+    <string name="title_service">Trusted Delivery Services</string>
+    <string name="title_store"><![CDATA[Supermarkets & Convenience Stores]]></string>
     <string name="forget_password">Forget Password</string>
     <string name="sign_up">Sign Up</string>
     <string name="otp_verification">OTP Verification</string>
@@ -20,5 +32,5 @@
     <string name="resend">RESEND</string>
     <string name="please_enter_verification_code">Please enter the verification code</string>
     <string name="by_clicking_continue">By clicking Continue, you will receive an OTP code via the phone number above.</string>
-    <!--    Duyen An end-->
+ 
 </resources>
