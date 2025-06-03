@@ -16,6 +16,30 @@
             android:name=".AboutUsActivity"
             android:exported="false" />
         <activity
+
+            android:name=".FingerprintActiveActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FingerprintSetupActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignUpMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OtpVerificationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ForgetPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:name=".HomeActivity"
+
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true" >
             <intent-filter>
@@ -24,6 +48,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+<!--        <uses-permission android:name="android.permission.USE_FINGERPRINT" />-->
+<!--        <uses-permission android:name="android.permission.USE_BIOMETRIC" />-->
     </application>
 
 </manifest>
