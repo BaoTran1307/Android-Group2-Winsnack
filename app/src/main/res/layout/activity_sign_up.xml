@@ -79,7 +79,7 @@
             android:textSize="12sp"
             android:gravity="center"
             android:layout_marginBottom="20dp">
-            <![CDATA[By clicking <font color='#FF9500'>Continue</font>, you will receive an <font color='#FF9500'>OTP code</font> via the phone number above.]]>
+<!--            <![CDATA[By clicking <font color='#FF9500'>Continue</font>, you will receive an <font color='#FF9500'>OTP code</font> via the phone number above.]]>-->
         </TextView>
 
         <!-- Continue Button -->
