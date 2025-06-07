@@ -3,7 +3,8 @@ package com.baotran.winsnack_group2;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.InputType;
+import android.text.TextUtils;
+import android.text.method.PasswordTransformationMethod;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -48,30 +49,22 @@ public class LoginActivity extends AppCompatActivity {
 
         btnLogin.setOnClickListener(v -> handleLogin());
 
+        btnGoogle.setOnClickListener(v -> Toast.makeText(this, "Google Login - Coming Soon", Toast.LENGTH_SHORT).show());
+        btnApple.setOnClickListener(v -> Toast.makeText(this, "Apple Login - Coming Soon", Toast.LENGTH_SHORT).show());
+        btnFingerprint.setOnClickListener(v -> Toast.makeText(this, "Fingerprint Login - Coming Soon", Toast.LENGTH_SHORT).show());
+
         tvForgotPassword.setOnClickListener(v -> Toast.makeText(this, "Forgot password not implemented", Toast.LENGTH_SHORT).show());
 
         tvSignUp.setOnClickListener(v -> {
             Intent intent = new Intent(this, SignUpMainActivity.class);
             startActivity(intent);
         });
-
-        btnGoogle.setOnClickListener(v -> Toast.makeText(this, "Google login not implemented", Toast.LENGTH_SHORT).show());
-
-        btnApple.setOnClickListener(v -> Toast.makeText(this, "Apple login not implemented", Toast.LENGTH_SHORT).show());
-
-        btnFingerprint.setOnClickListener(v -> Toast.makeText(this, "Fingerprint login not implemented", Toast.LENGTH_SHORT).show());
     }
 
     private void togglePasswordVisibility() {
-        if (isPasswordVisible) {
-            etPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-            btnTogglePassword.setImageResource(R.mipmap.ic_eye);
-            isPasswordVisible = false;
-        } else {
-            etPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-            btnTogglePassword.setImageResource(R.mipmap.ic_eye_off);
-            isPasswordVisible = true;
-        }
+        isPasswordVisible = !isPasswordVisible;
+        etPassword.setTransformationMethod(isPasswordVisible ? null : PasswordTransformationMethod.getInstance());
+        btnTogglePassword.setImageResource(isPasswordVisible ? android.R.drawable.ic_menu_close_clear_cancel : android.R.drawable.ic_menu_view);
         etPassword.setSelection(etPassword.getText().length());
     }
 
@@ -79,25 +72,26 @@ public class LoginActivity extends AppCompatActivity {
         String emailPhone = etEmailPhone.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
-        if (emailPhone.isEmpty()) {
+        if (TextUtils.isEmpty(emailPhone)) {
             etEmailPhone.setError("Please enter email or phone number");
             etEmailPhone.requestFocus();
             return;
         }
 
-        if (password.isEmpty()) {
+        if (TextUtils.isEmpty(password)) {
             etPassword.setError("Please enter password");
             etPassword.requestFocus();
             return;
         }
 
-        // Kiểm tra thông tin đăng nhập với SharedPreferences
         SharedPreferences prefs = getSharedPreferences("MockUsers", MODE_PRIVATE);
         String storedPassword = prefs.getString(emailPhone, null);
+        String username = prefs.getString(emailPhone + "_username", "User");
 
         if (storedPassword != null && storedPassword.equals(password)) {
             Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, HomeActivity.class);
+            intent.putExtra("USERNAME", username);
             startActivity(intent);
             finish();
         } else {

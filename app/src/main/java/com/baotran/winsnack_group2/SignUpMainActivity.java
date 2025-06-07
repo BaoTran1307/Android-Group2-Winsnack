@@ -95,8 +95,8 @@ public class SignUpMainActivity extends AppCompatActivity {
             return;
         }
 
-        if (password.length() < 6) {
-            etPassword.setError("Password must be at least 6 characters");
+        if (!isValidPassword(password)) {
+            etPassword.setError("Password must be at least 8 characters, including letters and numbers");
             etPassword.requestFocus();
             return;
         }
@@ -113,7 +113,7 @@ public class SignUpMainActivity extends AppCompatActivity {
             return;
         }
 
-        // Mô phỏng đăng ký: Lưu thông tin vào SharedPreferences
+        // Check if email exists
         SharedPreferences prefs = getSharedPreferences("MockUsers", MODE_PRIVATE);
         if (prefs.contains(email)) {
             etEmail.setError("Email already exists");
@@ -121,43 +121,38 @@ public class SignUpMainActivity extends AppCompatActivity {
             return;
         }
 
+        // Save user data
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(email, password);
-        editor.putString(email + "_username", username); // Lưu username
+        editor.putString(email + "_username", username);
         editor.apply();
 
-        // Hiển thị thông báo và chuyển hướng đến HomeActivity
         Toast.makeText(this, "Sign up successful!", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, HomeActivity.class);
+        intent.putExtra("USERNAME", username);
         startActivity(intent);
         finish();
     }
 
     private void togglePasswordVisibility() {
-        if (isPasswordVisible) {
-            etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-            ivPasswordToggle.setImageResource(android.R.drawable.ic_menu_view);
-        } else {
-            etPassword.setTransformationMethod(null);
-            ivPasswordToggle.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
-        }
         isPasswordVisible = !isPasswordVisible;
+        etPassword.setTransformationMethod(isPasswordVisible ? null : PasswordTransformationMethod.getInstance());
+        ivPasswordToggle.setImageResource(isPasswordVisible ? android.R.drawable.ic_menu_close_clear_cancel : android.R.drawable.ic_menu_view);
         etPassword.setSelection(etPassword.getText().length());
     }
 
     private void toggleConfirmPasswordVisibility() {
-        if (isConfirmPasswordVisible) {
-            etConfirmPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-            ivConfirmPasswordToggle.setImageResource(android.R.drawable.ic_menu_view);
-        } else {
-            etConfirmPassword.setTransformationMethod(null);
-            ivConfirmPasswordToggle.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
-        }
         isConfirmPasswordVisible = !isConfirmPasswordVisible;
+        etConfirmPassword.setTransformationMethod(isConfirmPasswordVisible ? null : PasswordTransformationMethod.getInstance());
+        ivConfirmPasswordToggle.setImageResource(isConfirmPasswordVisible ? android.R.drawable.ic_menu_close_clear_cancel : android.R.drawable.ic_menu_view);
         etConfirmPassword.setSelection(etConfirmPassword.getText().length());
     }
 
     private boolean isValidEmail(String email) {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    private boolean isValidPassword(String password) {
+        return password.length() >= 8 && password.matches(".*[a-zA-Z].*") && password.matches(".*\\d.*");
     }
 }
