@@ -1,8 +1,9 @@
 package com.baotran.winsnack_group2;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,7 +16,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText etPhoneNumber;
     private Button btnContinue;
     private TextView tvLogIn;
-    private ImageView btnBack;
+    private ImageView btnBack, btnGoogle, btnApple, btnFingerprint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,9 @@ public class SignUpActivity extends AppCompatActivity {
         btnContinue = findViewById(R.id.btn_continue);
         tvLogIn = findViewById(R.id.tv_log_in);
         btnBack = findViewById(R.id.btn_back);
+        btnGoogle = findViewById(R.id.btn_google);
+        btnApple = findViewById(R.id.btn_apple);
+        btnFingerprint = findViewById(R.id.btn_fingerprint);
     }
 
     private void setupClickListeners() {
@@ -38,47 +42,51 @@ public class SignUpActivity extends AppCompatActivity {
 
         btnContinue.setOnClickListener(v -> handleContinue());
 
-        tvLogIn.setOnClickListener(v -> navigateToLogin());
+        btnGoogle.setOnClickListener(v -> Toast.makeText(this, "Google Sign Up - Coming Soon", Toast.LENGTH_SHORT).show());
+        btnApple.setOnClickListener(v -> Toast.makeText(this, "Apple Sign Up - Coming Soon", Toast.LENGTH_SHORT).show());
+        btnFingerprint.setOnClickListener(v -> Toast.makeText(this, "Fingerprint Sign Up - Coming Soon", Toast.LENGTH_SHORT).show());
 
-        // Social login buttons
-        findViewById(R.id.btn_google).setOnClickListener(v -> handleSocialLogin("Google"));
-        findViewById(R.id.btn_apple).setOnClickListener(v -> handleSocialLogin("Apple"));
-        findViewById(R.id.btn_fingerprint).setOnClickListener(v -> handleSocialLogin("Fingerprint"));
+        tvLogIn.setOnClickListener(v -> {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        });
     }
 
     private void handleContinue() {
         String phoneNumber = etPhoneNumber.getText().toString().trim();
 
-        if (phoneNumber.isEmpty()) {
-            Toast.makeText(this, "Please enter phone number", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(phoneNumber)) {
+            etPhoneNumber.setError("Please enter phone number");
+            etPhoneNumber.requestFocus();
             return;
         }
 
         if (!isValidPhoneNumber(phoneNumber)) {
-            Toast.makeText(this, "Please enter a valid phone number", Toast.LENGTH_SHORT).show();
+            etPhoneNumber.setError("Please enter a valid phone number (10+ digits)");
+            etPhoneNumber.requestFocus();
             return;
         }
 
-        // Send OTP logic here
-        Toast.makeText(this, "OTP sent to " + phoneNumber, Toast.LENGTH_SHORT).show();
+        SharedPreferences prefs = getSharedPreferences("MockUsers", MODE_PRIVATE);
+        if (prefs.contains(phoneNumber)) {
+            etPhoneNumber.setError("Phone number already exists");
+            etPhoneNumber.requestFocus();
+            return;
+        }
 
-        // Navigate to OTP verification
-        Intent intent = new Intent(this, OtpVerificationActivity.class);
-        intent.putExtra("phone_number", phoneNumber);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(phoneNumber, "default123");
+        editor.putString(phoneNumber + "_username", "PhoneUser_" + phoneNumber);
+        editor.apply();
+
+        Toast.makeText(this, "Sign up successful! OTP verified.", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.putExtra("USERNAME", "PhoneUser_" + phoneNumber);
         startActivity(intent);
+        finish();
     }
 
     private boolean isValidPhoneNumber(String phoneNumber) {
         return phoneNumber.length() >= 10 && phoneNumber.matches("\\d+");
-    }
-
-    private void navigateToLogin() {
-        Intent intent = new Intent(this, ForgetPasswordActivity.class);
-        startActivity(intent);
-    }
-
-    private void handleSocialLogin(String provider) {
-        Toast.makeText(this, "Sign up with " + provider, Toast.LENGTH_SHORT).show();
-        // Implement social login logic here
     }
 }

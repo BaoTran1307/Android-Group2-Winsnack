@@ -1,7 +1,10 @@
 package com.baotran.winsnack_group2;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.InputType;
+import android.text.TextUtils;
+import android.text.method.PasswordTransformationMethod;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -40,36 +43,28 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void setupListeners() {
-        btnBack.setOnClickListener(v -> onBackPressed());
+        btnBack.setOnClickListener(v -> finish());
 
         btnTogglePassword.setOnClickListener(v -> togglePasswordVisibility());
 
         btnLogin.setOnClickListener(v -> handleLogin());
 
-        tvForgotPassword.setOnClickListener(v -> handleForgotPassword());
+        btnGoogle.setOnClickListener(v -> Toast.makeText(this, "Google Login - Coming Soon", Toast.LENGTH_SHORT).show());
+        btnApple.setOnClickListener(v -> Toast.makeText(this, "Apple Login - Coming Soon", Toast.LENGTH_SHORT).show());
+        btnFingerprint.setOnClickListener(v -> Toast.makeText(this, "Fingerprint Login - Coming Soon", Toast.LENGTH_SHORT).show());
 
-        tvSignUp.setOnClickListener(v -> handleSignUp());
+        tvForgotPassword.setOnClickListener(v -> Toast.makeText(this, "Forgot password not implemented", Toast.LENGTH_SHORT).show());
 
-        btnGoogle.setOnClickListener(v -> handleGoogleLogin());
-
-        btnApple.setOnClickListener(v -> handleAppleLogin());
-
-        btnFingerprint.setOnClickListener(v -> handleFingerprintLogin());
+        tvSignUp.setOnClickListener(v -> {
+            Intent intent = new Intent(this, SignUpMainActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void togglePasswordVisibility() {
-        if (isPasswordVisible) {
-            // Hide password
-            etPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-            btnTogglePassword.setImageResource(R.mipmap.ic_eye);
-            isPasswordVisible = false;
-        } else {
-            // Show password
-            etPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-            btnTogglePassword.setImageResource(R.mipmap.ic_eye_off);
-            isPasswordVisible = true;
-        }
-        // Move cursor to end
+        isPasswordVisible = !isPasswordVisible;
+        etPassword.setTransformationMethod(isPasswordVisible ? null : PasswordTransformationMethod.getInstance());
+        btnTogglePassword.setImageResource(isPasswordVisible ? android.R.drawable.ic_menu_close_clear_cancel : android.R.drawable.ic_menu_view);
         etPassword.setSelection(etPassword.getText().length());
     }
 
@@ -77,44 +72,30 @@ public class LoginActivity extends AppCompatActivity {
         String emailPhone = etEmailPhone.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
-        if (emailPhone.isEmpty()) {
+        if (TextUtils.isEmpty(emailPhone)) {
             etEmailPhone.setError("Please enter email or phone number");
             etEmailPhone.requestFocus();
             return;
         }
 
-        if (password.isEmpty()) {
+        if (TextUtils.isEmpty(password)) {
             etPassword.setError("Please enter password");
             etPassword.requestFocus();
             return;
         }
 
-        // TODO: Implement actual login logic
-        Toast.makeText(this, "Login clicked", Toast.LENGTH_SHORT).show();
-    }
+        SharedPreferences prefs = getSharedPreferences("MockUsers", MODE_PRIVATE);
+        String storedPassword = prefs.getString(emailPhone, null);
+        String username = prefs.getString(emailPhone + "_username", "User");
 
-    private void handleForgotPassword() {
-        // TODO: Navigate to forgot password screen
-        Toast.makeText(this, "Forgot password clicked", Toast.LENGTH_SHORT).show();
-    }
-
-    private void handleSignUp() {
-        // TODO: Navigate to sign up screen
-        Toast.makeText(this, "Sign up clicked", Toast.LENGTH_SHORT).show();
-    }
-
-    private void handleGoogleLogin() {
-        // TODO: Implement Google login
-        Toast.makeText(this, "Google login clicked", Toast.LENGTH_SHORT).show();
-    }
-
-    private void handleAppleLogin() {
-        // TODO: Implement Apple login
-        Toast.makeText(this, "Apple login clicked", Toast.LENGTH_SHORT).show();
-    }
-
-    private void handleFingerprintLogin() {
-        // TODO: Implement fingerprint login
-        Toast.makeText(this, "Fingerprint login clicked", Toast.LENGTH_SHORT).show();
+        if (storedPassword != null && storedPassword.equals(password)) {
+            Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, HomeActivity.class);
+            intent.putExtra("USERNAME", username);
+            startActivity(intent);
+            finish();
+        } else {
+            Toast.makeText(this, "Invalid email/phone or password", Toast.LENGTH_SHORT).show();
+        }
     }
 }
