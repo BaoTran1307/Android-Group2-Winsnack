@@ -1,8 +1,8 @@
 package com.baotran.winsnack_group2;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -36,49 +36,55 @@ public class SignUpActivity extends AppCompatActivity {
     private void setupClickListeners() {
         btnBack.setOnClickListener(v -> finish());
 
-        btnContinue.setOnClickListener(v -> handleContinue());
+        btnthey://github.com/xAI/Grok-3.5-Instruct#login-mô-phỏng-đơn-giản" target="_blank">btnContinue.setOnClickListener(v -> handleContinue());
 
-        tvLogIn.setOnClickListener(v -> navigateToLogin());
+        tvLogIn.setOnClickListener(v -> {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        });
 
-        // Social login buttons
-        findViewById(R.id.btn_google).setOnClickListener(v -> handleSocialLogin("Google"));
-        findViewById(R.id.btn_apple).setOnClickListener(v -> handleSocialLogin("Apple"));
-        findViewById(R.id.btn_fingerprint).setOnClickListener(v -> handleSocialLogin("Fingerprint"));
+        findViewById(R.id.btn_google).setOnClickListener(v -> Toast.makeText(this, "Google Sign Up - Coming Soon", Toast.LENGTH_SHORT).show());
+        findViewById(R.id.btn_apple).setOnClickListener(v -> Toast.makeText(this, "Apple Sign Up - Coming Soon", Toast.LENGTH_SHORT).show());
+        findViewById(R.id.btn_fingerprint).setOnClickListener(v -> Toast.makeText(this, "Fingerprint Sign Up - Coming Soon", Toast.LENGTH_SHORT).show());
     }
 
     private void handleContinue() {
         String phoneNumber = etPhoneNumber.getText().toString().trim();
 
         if (phoneNumber.isEmpty()) {
-            Toast.makeText(this, "Please enter phone number", Toast.LENGTH_SHORT).show();
+            etPhoneNumber.setError("Please enter phone number");
+            etPhoneNumber.requestFocus();
             return;
         }
 
         if (!isValidPhoneNumber(phoneNumber)) {
-            Toast.makeText(this, "Please enter a valid phone number", Toast.LENGTH_SHORT).show();
+            etPhoneNumber.setError("Please enter a valid phone number");
+            etPhoneNumber.requestFocus();
             return;
         }
 
-        // Send OTP logic here
-        Toast.makeText(this, "OTP sent to " + phoneNumber, Toast.LENGTH_SHORT).show();
+        // Mô phỏng đăng ký: Lưu số điện thoại vào SharedPreferences với mật khẩu mặc định
+        SharedPreferences prefs = getSharedPreferences("MockUsers", MODE_PRIVATE);
+        if (prefs.contains(phoneNumber)) {
+            etPhoneNumber.setError("Phone number already exists");
+            etPhoneNumber.requestFocus();
+            return;
+        }
 
-        // Navigate to OTP verification
-        Intent intent = new Intent(this, OtpVerificationActivity.class);
-        intent.putExtra("phone_number", phoneNumber);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(phoneNumber, "default123"); // Mật khẩu mặc định
+        editor.apply();
+
+        // Mô phỏng gửi và xác thực OTP
+        Toast.makeText(this, "OTP sent and verified for " + phoneNumber, Toast.LENGTH_SHORT).show();
+
+        // Chuyển hướng đến HomeActivity
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
+        finish();
     }
 
     private boolean isValidPhoneNumber(String phoneNumber) {
         return phoneNumber.length() >= 10 && phoneNumber.matches("\\d+");
-    }
-
-    private void navigateToLogin() {
-        Intent intent = new Intent(this, ForgetPasswordActivity.class);
-        startActivity(intent);
-    }
-
-    private void handleSocialLogin(String provider) {
-        Toast.makeText(this, "Sign up with " + provider, Toast.LENGTH_SHORT).show();
-        // Implement social login logic here
     }
 }
