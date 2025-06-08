@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Header -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFCF59"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_back"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Contact Us"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_cart"
+                    android:layout_marginEnd="8dp" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_user" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <!-- Subheading -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="How Can We Help You?"
+            android:textAlignment="center"
+            android:textColor="#FF9413"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"
+            android:paddingBottom="8dp" />
+
+        <!-- Tabs -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="Contact Us"
+                android:textColor="#FF6600"
+                android:backgroundTint="#FFE5DD"
+                android:textStyle="bold" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="FAQs"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#FF9413"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Search bar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:background="#F6F6F6"
+            android:padding="12dp"
+            android:backgroundTint="#EEEEEE"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Search"
+                android:background="@null"
+                android:padding="0dp"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_filter"
+                android:layout_marginStart="12dp" />
+        </LinearLayout>
+
+        <!-- FAQ items -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="How long does delivery take?"
+                android:textColor="#FF9413"
+                android:textStyle="bold"
+                android:paddingVertical="12dp"
+                android:drawableEnd="@drawable/ic_dropdown"
+                android:gravity="center_vertical"
+                android:drawablePadding="8dp" />
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#FFDDC1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Can I return or exchange my order?"
+                android:textColor="#FF9413"
+                android:textStyle="bold"
+                android:paddingVertical="12dp"
+                android:drawableEnd="@drawable/ic_dropdown"
+                android:gravity="center_vertical"
+                android:drawablePadding="8dp" />
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#FFDDC1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Is there free shipping?"
+                android:textColor="#FF9413"
+                android:textStyle="bold"
+                android:paddingVertical="12dp"
+                android:drawableEnd="@drawable/ic_dropdown"
+                android:gravity="center_vertical"
+                android:drawablePadding="8dp" />
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#FFDDC1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="What payment methods do you accept?"
+                android:textColor="#FF9413"
+                android:textStyle="bold"
+                android:paddingVertical="12dp"
+                android:drawableEnd="@drawable/ic_dropdown"
+                android:gravity="center_vertical"
+                android:drawablePadding="8dp" />
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#FFDDC1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="How do I use a voucher?"
+                android:textColor="#FF9413"
+                android:textStyle="bold"
+                android:paddingVertical="12dp"
+                android:drawableEnd="@drawable/ic_dropdown"
+                android:gravity="center_vertical"
+                android:drawablePadding="8dp" />
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#FFDDC1" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
