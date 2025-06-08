@@ -1,6 +1,7 @@
 package com.baotran.winsnack_group2;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -10,8 +11,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
-public class ProductDetailsActivity extends AppCompatActivity {
+public class ProductDetailsActivity extends com.baotran.winsnack_group2.BaseActivity { // Thay AppCompatActivity bằng BaseActivity
 
     private TextView txtBrand, txtPrice, txtOriginalPrice, txtQuantity, txtDescription, txtSeeMore,
             txtCommentsTitle, txtCommentUser1, txtCommentDate1, txtCommentText1, txtCommentUser2, txtCommentDate2,
@@ -25,7 +27,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product_details);
+
+        // Inflate layout của ProductDetailsActivity vào FrameLayout của BaseActivity
+        LayoutInflater inflater = getLayoutInflater();
+        View contentView = inflater.inflate(R.layout.activity_product_details, findViewById(R.id.content_frame), true);
 
         // Initialize views
         btnBack = findViewById(R.id.btn_back);
@@ -125,4 +130,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
         connector.closeDatabase();
     }
     */
+    // Fragment placeholder (có thể bỏ nếu không dùng Fragment)
+    public static class ProductDetailsFragment extends androidx.fragment.app.Fragment {
+        public ProductDetailsFragment() {
+            super(R.layout.activity_product_details);
+        }
+    }
 }
