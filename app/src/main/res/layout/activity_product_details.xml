@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF9E8"
+    tools:ignore="ExtraText">
+
+    <!-- Header Section -->
+    <RelativeLayout
+        android:id="@+id/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:paddingTop="20dp"
+        android:paddingBottom="10dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:background="#F5CB58">
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_back"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:padding="4dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Product details"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtDiscount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:text="-30%"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/circle_background_orange"
+            android:layout_marginTop="30dp"
+            android:padding="8dp"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <!-- Scrollable Content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottomNav"
+        android:layout_below="@+id/header_layout"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Product Image -->
+            <ImageView
+                android:id="@+id/imgProduct"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/ic_recommend2" />
+
+            <!-- Product Brand -->
+            <TextView
+                android:id="@+id/txtBrand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bánh tráng Chà bông"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#FF9800" />
+
+            <!-- Price and Quantity -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/txtPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$14.00"
+                    android:textSize="24sp"
+                    android:textColor="#FF5722"
+                    android:textStyle="bold"
+                    android:layout_weight="0" />
+
+                <TextView
+                    android:id="@+id/txtOriginalPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/original_price"
+                    android:textSize="16sp"
+                    android:textColor="#757575"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="16dp"
+                    android:layout_weight="0" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@drawable/quantity_background"
+                    android:padding="4dp"
+                    android:layout_marginLeft="120dp"
+                    android:layout_weight="0"
+                    android:layout_gravity="end" > <!-- Căn phải -->
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" /> <!-- Đẩy LinearLayout con sang phải -->
+                <ImageButton
+                    android:id="@+id/btnDecrease"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@mipmap/ic_menu_close_clear_cancel"
+                    android:background="?android:attr/selectableItemBackground" />
+
+                <TextView
+                    android:id="@+id/txtQuantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:paddingHorizontal="12dp" />
+
+                <ImageButton
+                    android:id="@+id/btnIncrease"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:src="@mipmap/ic_menu_add" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Description -->
+            <TextView
+                android:id="@+id/txtDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+                android:textSize="16sp"
+                android:textColor="#424242"
+                android:layout_marginTop="16dp" />
+
+            <TextView
+                android:id="@+id/txtSeeMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="SEE MORE"
+                android:textColor="#FF9800"
+                android:textSize="14sp"
+                android:layout_gravity="center"/>
+
+            <!-- Comments Section -->
+            <TextView
+                android:id="@+id/txtCommentsTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Comments"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                android:textColor="#212121" />
+
+            <!-- Comment 1 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/txtCommentUser1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thank Tee"
+                    android:textColor="#4CAF50"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical"/>
+
+                <RatingBar
+                    android:id="@+id/ratingBar1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="5"
+                    android:rating="4.8"
+                    android:scaleX="0.5"
+                    android:scaleY="0.5"
+                    android:stepSize="0.1" />
+
+                <TextView
+                    android:id="@+id/txtCommentDate1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3 Ngày trước"
+                    android:textSize="12sp"
+                    android:textColor="#757575"
+                    android:layout_gravity="center_vertical"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtCommentText1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="Mình đã thử và thấy bao la lòng bạn nhé! Win Snack, bánh tráng rong biển, bánh tráng bơ."
+                android:textColor="#424242"
+                android:textSize="14sp" />
+
+            <!-- Comment 2 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/txtCommentUser2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thank Tee"
+                    android:textColor="#4CAF50"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical"
+                    />
+
+                <RatingBar
+                    android:id="@+id/ratingBar2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="5"
+                    android:rating="4.8"
+                    android:scaleX="0.5"
+                    android:scaleY="0.5"
+                    android:stepSize="0.1" />
+
+                <TextView
+                    android:id="@+id/txtCommentDate2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3 Ngày trước"
+                    android:textSize="12sp"
+                    android:textColor="#757575"
+                    android:layout_gravity="center_vertical"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtCommentText2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mình đã thử và thấy bao la lòng bạn nhé! Win Snack, bánh tráng rong biển, bánh tráng bơ."
+                android:textSize="14sp"
+                android:textColor="#424242"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp" />
+
+            <TextView
+                android:id="@+id/txtAddComment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ADD COMMENTS"
+                android:textSize="14sp"
+                android:textColor="#FF9800"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="center"/>
+
+            <!-- Add to Cart Button -->
+            <Button
+                android:id="@+id/btnAddToCart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/button_primary"
+                android:text="Add to Cart"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom Navigation -->
+    <LinearLayout
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@drawable/footer_background"
+        android:paddingHorizontal="12dp">
+
+        <ImageButton
+            android:id="@+id/btnHome"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@android:color/transparent"
+            android:padding="0dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_navi1" />
+
+        <ImageButton
+            android:id="@+id/btnMenu"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="40dp"
+            android:background="@android:color/transparent"
+            android:padding="0dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_navi2" />
+
+        <ImageButton
+            android:id="@+id/btnChatbot"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="40dp"
+            android:src="@mipmap/ic_navi3"
+            android:background="@android:color/transparent"
+            android:padding="0dp"
+            android:scaleType="fitCenter" />
+
+        <ImageButton
+            android:id="@+id/btnEvent"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="40dp"
+            android:src="@mipmap/ic_navi4"
+            android:background="@android:color/transparent"
+            android:padding="0dp"
+            android:scaleType="fitCenter"/>
+
+        <ImageButton
+            android:id="@+id/btnOthers"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="40dp"
+            android:src="@mipmap/ic_navi5"
+            android:background="@android:color/transparent"
+            android:padding="0dp"
+            android:scaleType="fitCenter"/>
+    </LinearLayout>
+
+    <!-- ImageView cho ic_chatbot ở góc dưới bên phải -->
+    <ImageView
+        android:id="@+id/imgChatbot"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="80dp"
+        android:layout_marginEnd="16dp"
+        android:src="@mipmap/ic_chatbot"
+        android:elevation="8dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless" />
+</RelativeLayout>
