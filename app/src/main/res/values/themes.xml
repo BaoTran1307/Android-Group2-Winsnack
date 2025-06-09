@@ -3,6 +3,13 @@
     <style name="Base.Theme.WinSnackGroup2" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">#FF5722</item> <!-- Màu chính -->
+        <item name="colorSecondary">#FFE0C2</item> <!-- Màu phụ -->
+        <item name="colorPrimaryVariant">#FF9800</item> <!-- Biến thể màu chính -->
+        <item name="colorOnPrimary">#FFFFFF</item> <!-- Màu chữ trên màu chính -->
+        <item name="colorAccent">#FF5722</item> <!-- Màu accent (thay tím bằng cam) -->
+        <!-- Định nghĩa style cho MaterialButton -->
+        <item name="materialButtonStyle">@style/Widget.Material3.Button.OutlinedButton</item>
     </style>
 
     <style name="Theme.WinSnackGroup2" parent="Base.Theme.WinSnackGroup2" />
