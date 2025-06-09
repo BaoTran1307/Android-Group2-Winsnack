@@ -13,4 +13,15 @@
     <color name="transparent">#00000000</color>
     <color name="black">#FF000000</color>
     <color name="text_hint">#999999</color>
+    <color name="orange">#FF8C42</color>
+    <color name="light_orange">#FFB366</color>
+    <color name="dark_brown">#8B4513</color>
+    <color name="medium_brown">#A0522D</color>
+    <color name="light_brown">#DEB887</color>
+    <color name="yellow_gradient_start">#FFD700</color>
+    <color name="yellow_gradient_end">#FFA500</color>
+    <color name="card_background">#F8F8F8</color>
+    <color name="step_completed">#4CAF50</color>
+    <color name="step_active">#FF8C42</color>
+    <color name="step_pending">#E0E0E0</color>
 </resources>

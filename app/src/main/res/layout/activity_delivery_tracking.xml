@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/gradient_background_yellow">
+
+    <!-- Header -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_arrow_back"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Delivery time"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+
+    <!-- Content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Shipping Address Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Shipping Address"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/dark_brown"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="778 Locust View Drive Oakland, CA"
+                        android:textSize="14sp"
+                        android:textColor="@color/medium_brown"
+                        android:background="@drawable/address_background"
+                        android:padding="8dp"
+                        android:layout_marginBottom="16dp" />
+
+                    <!-- Map Placeholder -->
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:src="@drawable/map_placeholder"
+                        android:background="@drawable/rounded_corner_background"
+                        android:scaleType="centerCrop" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Delivery Time Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Delivery Time Header -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Delivery Time"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/dark_brown" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:text="25 mins"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/orange" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Estimated Delivery"
+                        android:textSize="12sp"
+                        android:textColor="@color/medium_brown"
+                        android:layout_marginBottom="16dp" />
+
+                    <!-- Tracking Steps -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- Step 1 -->
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="12dp">
+
+                            <View
+                                android:id="@+id/step1_dot"
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:layout_marginEnd="12dp"
+                                android:background="@drawable/step_completed_dot" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_toEndOf="@id/step1_dot"
+                                android:layout_toStartOf="@id/step1_time"
+                                android:text="Your order has been accepted"
+                                android:textSize="14sp"
+                                android:textColor="@color/dark_brown" />
+
+                            <TextView
+                                android:id="@+id/step1_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:text="2 min"
+                                android:textSize="12sp"
+                                android:textColor="@color/medium_brown" />
+
+                        </RelativeLayout>
+
+                        <!-- Step 2 -->
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="12dp">
+
+                            <View
+                                android:id="@+id/step2_dot"
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:layout_marginEnd="12dp"
+                                android:background="@drawable/step_completed_dot" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_toEndOf="@id/step2_dot"
+                                android:layout_toStartOf="@id/step2_time"
+                                android:text="The shop is preparing your order"
+                                android:textSize="14sp"
+                                android:textColor="@color/dark_brown" />
+
+                            <TextView
+                                android:id="@+id/step2_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:text="5 min"
+                                android:textSize="12sp"
+                                android:textColor="@color/medium_brown" />
+
+                        </RelativeLayout>
+
+                        <!-- Step 3 -->
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="12dp">
+
+                            <View
+                                android:id="@+id/step3_dot"
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:layout_marginEnd="12dp"
+                                android:background="@drawable/step_active_dot" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_toEndOf="@id/step3_dot"
+                                android:layout_toStartOf="@id/step3_time"
+                                android:text="The delivery is on his way"
+                                android:textSize="14sp"
+                                android:textColor="@color/orange"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/step3_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:text="10 min"
+                                android:textSize="12sp"
+                                android:textColor="@color/orange" />
+
+                        </RelativeLayout>
+
+                        <!-- Step 4 -->
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <View
+                                android:id="@+id/step4_dot"
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:layout_marginEnd="12dp"
+                                android:background="@drawable/step_pending_dot" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_toEndOf="@id/step4_dot"
+                                android:layout_toStartOf="@id/step4_time"
+                                android:text="Your order has been delivered"
+                                android:textSize="14sp"
+                                android:textColor="@color/medium_brown" />
+
+                            <TextView
+                                android:id="@+id/step4_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:text="8 min"
+                                android:textSize="12sp"
+                                android:textColor="@color/medium_brown" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp">
+
+                <Button
+                    android:id="@+id/btn_return_home_tracking"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:text="Return Home"
+                    android:textColor="@color/orange"
+                    android:background="@drawable/button_outline_orange"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btn_track_order_tracking"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:text="Track Order"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_filled_orange"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- Bottom Navigation -->
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="72dp"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:background="@color/orange"-->
+<!--        android:gravity="center">-->
+
+<!--        <ImageView-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="28dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:src="@drawable/ic_home"-->
+<!--            android:layout_margin="8dp" />-->
+
+<!--        <ImageView-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="28dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:src="@drawable/ic_food"-->
+<!--            android:layout_margin="8dp" />-->
+
+<!--        <ImageView-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="28dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:src="@drawable/ic_notification"-->
+<!--            android:layout_margin="8dp" />-->
+
+<!--        <ImageView-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="28dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:src="@drawable/ic_discount"-->
+<!--            android:layout_margin="8dp" />-->
+
+<!--        <ImageView-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="28dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:src="@drawable/ic_menu"-->
+<!--            android:layout_margin="8dp" />-->
+
+<!--    </LinearLayout>-->
+
+</LinearLayout>
