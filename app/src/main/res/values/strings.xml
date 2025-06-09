@@ -46,4 +46,6 @@
     <string name="resend">RESEND</string>
     <string name="please_enter_verification_code">Please enter the verification code</string>
     <string name="by_clicking_continue">By clicking Continue, you will receive an OTP code via the phone number above.</string>
+    <string name="title_product_details">Product details</string>
+    <string name="original_price"><strike>$20.00</strike></string>
 </resources>
