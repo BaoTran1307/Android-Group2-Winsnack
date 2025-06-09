@@ -117,14 +117,14 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="110dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <!-- Column 1: Image -->
                     <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="68dp"
+                        android:layout_height="86dp"
                         android:src="@drawable/strawberry_shake"
                         app:srcCompat="@mipmap/ic_product1" />
 
@@ -153,9 +153,9 @@
                         <Button
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@null"
+                            android:backgroundTint="#FFDECF"
                             android:text="Cancel Order"
-                            android:textColor="#FF5722" />
+                            android:textColor="#FF9413" />
                     </LinearLayout>
 
                     <!-- Column 3: Price and Quantity (Vertical) -->
@@ -217,23 +217,18 @@
                         android:layout_height="match_parent"
                         app:barrierDirection="left" />
                 </LinearLayout>
-                <View
-                    android:id="@+id/view"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#F5D7BB" />
                 <!-- Broccoli Lasagna Item -->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="110dp"
                     android:layout_marginTop="8dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <!-- Column 1: Image -->
                     <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="68dp"
+                        android:layout_height="86dp"
                         android:src="@drawable/broccoli_lasagna"
                         app:srcCompat="@mipmap/ic_product2" />
 
@@ -262,9 +257,9 @@
                         <Button
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@null"
+                            android:backgroundTint="#FFDECF"
                             android:text="Cancel Order"
-                            android:textColor="#FF5722" />
+                            android:textColor="#FF9413" />
                     </LinearLayout>
 
                     <!-- Column 3: Price and Quantity (Vertical) -->
@@ -344,7 +339,8 @@
 
                     <TextView
                         android:layout_width="103dp"
-                        android:layout_height="52dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:text="Note"
                         android:textAlignment="textStart"
                         android:textColor="#333333"
@@ -426,12 +422,13 @@
 
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="38dp"
                         android:layout_weight="1"
                         android:background="@drawable/input_background"
+                        android:gravity="center"
                         android:paddingStart="8dp"
                         android:text="**** **** **** 43 / 00 / 0000"
-                        android:textAlignment="textEnd"
+                        android:textAlignment="center"
                         android:textColor="#666666"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -484,16 +481,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="2 days"
-                            android:textSize="16sp"
-                            android:textColor="#FF9800"/>
+                            android:textColor="#FF9800"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>
 
                 <!-- Line 2 (Bottom Divider) -->
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#F5D7BB"/>
             </LinearLayout>
 
             <LinearLayout
@@ -508,6 +502,12 @@
                 android:orientation="vertical">
 
                 <!-- Line 1 (Top Divider) -->
+
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#F5D7BB" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -637,12 +637,15 @@
             </LinearLayout>
 
             <Button
-                android:layout_width="match_parent"
+                android:layout_width="191dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_gravity="center"
+                android:backgroundTint="#FFDECF"
                 android:text="Place Order"
-                android:textColor="#FFFFFF"
-                android:background="#FF9800"
-                android:layout_marginTop="16dp"/>
+                android:textAlignment="center"
+                android:textColor="#FF9413"
+                android:textSize="24sp" />
 
         </LinearLayout>
     </ScrollView>
