@@ -1,5 +1,6 @@
 package com.baotran.winsnack_group2;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.LinearLayout;
@@ -45,6 +46,14 @@ public class OnboardingActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 addDotsIndicator(position);
+                if (position == adapter.getItemCount() - 1) {
+                    // Khi đến trang cuối, tự động chuyển sang HomeActivity sau 2 giây
+                    new android.os.Handler().postDelayed(() -> {
+                        Intent intent = new Intent(OnboardingActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }, 2000);
+                }
             }
         });
     }
@@ -69,9 +78,10 @@ public class OnboardingActivity extends AppCompatActivity {
         if (currentPosition < adapter.getItemCount() - 1) {
             viewPager.setCurrentItem(currentPosition + 1);
         } else {
-            // TODO: Chuyển đến màn hình tiếp theo, ví dụ WelcomeActivity
-            // startActivity(new Intent(this, WelcomeActivity.class));
-            finish(); // Tạm thời đóng nếu chưa có màn hình tiếp
+            // Chuyển sang HomeActivity khi hoàn thành
+            Intent intent = new Intent(this, HomeActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 }
