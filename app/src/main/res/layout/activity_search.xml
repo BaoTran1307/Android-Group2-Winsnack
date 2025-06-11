@@ -203,14 +203,49 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:columnCount="3"
-            android:paddingHorizontal="16dp"
-            android:rowOrderPreserved="false">
+            android:rowOrderPreserved="false"
+            android:padding="8dp"> <Button
+            android:text="New"
+            android:backgroundTint="#FF9413"
+            android:textColor="#FFFFFF"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill_horizontal"
+            android:layout_width="0dp"  android:layout_margin="4dp" /> <Button
+            android:text="Best Seller"
+            android:backgroundTint="#FF9413"
+            android:textColor="#FFFFFF"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill_horizontal"
+            android:layout_width="0dp"
+            android:layout_margin="4dp" />
 
-            <Button android:text="New" android:backgroundTint="#FF9413" android:textColor="#FFFFFF" />
-            <Button android:text="Best Seller" android:backgroundTint="#FF9413" android:textColor="#FFFFFF" />
-            <Button android:text="Limited" android:backgroundTint="#FF9413" android:textColor="#FFFFFF" />
-            <Button android:text="Discount" android:backgroundTint="#FF9413" android:textColor="#FFFFFF" />
-            <Button android:text="Trending" android:backgroundTint="#FF9413" android:textColor="#FFFFFF" />
+            <Button
+                android:text="Limited"
+                android:backgroundTint="#FF9413"
+                android:textColor="#FFFFFF"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill_horizontal"
+                android:layout_width="0dp"
+                android:layout_margin="4dp" />
+
+            <Button
+                android:text="Discount"
+                android:backgroundTint="#FF9413"
+                android:textColor="#FFFFFF"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill_horizontal"
+                android:layout_width="0dp"
+                android:layout_margin="4dp" />
+
+            <Button
+                android:backgroundTint="#FF9413"
+                android:text="Trending"
+                android:textColor="#FFFFFF"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill_horizontal"
+                android:layout_width="0dp"
+                android:layout_margin="4dp" />
+
         </GridLayout>
 
         <!-- Price -->
