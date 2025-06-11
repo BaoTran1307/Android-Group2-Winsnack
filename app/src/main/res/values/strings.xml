@@ -46,7 +46,6 @@
     <string name="resend">RESEND</string>
     <string name="please_enter_verification_code">Please enter the verification code</string>
     <string name="by_clicking_continue">By clicking Continue, you will receive an OTP code via the phone number above.</string>
-    <string name="app_name">YourApp</string>
     <string name="confirm_order">Confirm Order</string>
     <string name="shipping_address">Shipping Address</string>
     <string name="order_summary">Order Summary</string>
