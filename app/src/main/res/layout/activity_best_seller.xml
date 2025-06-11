@@ -90,34 +90,34 @@
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="120dp"
-                        android:src="@drawable/sample_item"
-                        android:scaleType="centerCrop"
+                        android:layout_height="158dp"
                         android:background="@drawable/rounded_image_bg"
-                        android:clipToOutline="true" />
+                        android:clipToOutline="true"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/sample_item" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginTop="4dp">
-
+                        android:layout_marginTop="4dp"
+                        android:gravity="center_vertical">
                         <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Sunny Bruschetta"
-                            android:textStyle="bold"
-                            android:textSize="14sp" />
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Sunny Bruschetta"
+                        android:textStyle="bold"
+                        android:textSize="14sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="5.0"
                             android:textColor="#FF9800"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:drawableEnd="@drawable/ic_star_filled" android:drawablePadding="4dp" />
                     </LinearLayout>
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -160,7 +160,7 @@
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="120dp"
+                        android:layout_height="158dp"
                         android:src="@drawable/sample_item"
                         android:scaleType="centerCrop"
                         android:background="@drawable/rounded_image_bg"
@@ -170,23 +170,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginTop="4dp">
-
+                        android:layout_marginTop="4dp"
+                        android:gravity="center_vertical">
                         <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Cheese Pizza"
-                            android:textStyle="bold"
-                            android:textSize="14sp" />
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Cheese Pizza"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="4.8"
                             android:textColor="#FF9800"
-                            android:textStyle="bold" />
-                    </LinearLayout>
+                            android:textStyle="bold"
+                            android:drawableEnd="@drawable/ic_star_filled" android:drawablePadding="4dp" android:gravity="center_vertical" /> </LinearLayout>
 
                     <TextView
                         android:layout_width="wrap_content"

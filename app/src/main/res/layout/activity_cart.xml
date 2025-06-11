@@ -61,20 +61,25 @@
         tools:ignore="MissingConstraints" />
 
     <!-- ScrollView for Cart Items -->
+
+    <!-- Divider -->
+
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:paddingTop="10dp"
+        android:background="#FF9800"
+        android:fillViewport="true"
         android:paddingLeft="20dp"
+        android:paddingTop="10dp"
         android:paddingRight="30dp"
         android:paddingBottom="30dp"
-        app:layout_constraintTop_toBottomOf="@id/tvItemCount"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/divider"
-        android:background="#FF9800"
-        android:fillViewport="true">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvItemCount"
+        app:layout_constraintVertical_bias="1.0">
 
         <LinearLayout
             android:id="@+id/llCartItems"
@@ -84,17 +89,22 @@
 
             <!-- Hardcoded items (can be replaced with dynamic content) -->
             <include layout="@layout/item_cart" />
+
             <include layout="@layout/item_cart" />
+
             <include layout="@layout/item_cart" />
+
             <include layout="@layout/item_cart" />
+
             <include layout="@layout/item_cart" />
+
             <include layout="@layout/item_cart" />
+
             <include layout="@layout/item_cart" />
 
         </LinearLayout>
     </ScrollView>
 
-    <!-- Divider -->
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"

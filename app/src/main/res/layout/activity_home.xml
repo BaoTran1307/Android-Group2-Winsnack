@@ -354,34 +354,35 @@
 
 
             <!-- Promo Banner -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:src="@mipmap/ic_discount_banner"
-                    android:scaleType="centerCrop"
-                    android:background="@drawable/bg_banner_rounded" />
-            </LinearLayout>
 
             <!-- Recommend -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:background="@drawable/bg_banner_rounded"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/ic_discount_banner" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Recommend"
+                    android:textColor="#FF5722"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="#FF5722" />
+                    android:textStyle="bold" />
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
@@ -398,43 +399,43 @@
                         <LinearLayout
                             android:layout_width="180dp"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_marginEnd="8dp">
+                            android:layout_marginEnd="8dp"
+                            android:orientation="vertical">
 
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="120dp"
-                                android:src="@mipmap/ic_recommend1"
-                                android:scaleType="centerCrop" />
+                                android:scaleType="centerCrop"
+                                android:src="@mipmap/ic_recommend1" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
                                 android:text="$10.0"
-                                android:textSize="14sp"
                                 android:textColor="#FF5722"
-                                android:layout_marginTop="4dp" />
+                                android:textSize="14sp" />
                         </LinearLayout>
                         <!-- Product 1 -->
                         <LinearLayout
                             android:layout_width="180dp"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_marginEnd="8dp">
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="120dp"
-                                android:src="@mipmap/ic_recommend2"
-                                android:scaleType="centerCrop" />
+                            android:layout_marginEnd="8dp"
+                            android:orientation="vertical">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
                                 android:text="$10.0"
-                                android:textSize="14sp"
                                 android:textColor="#FF5722"
-                                android:layout_marginTop="4dp" />
+                                android:textSize="14sp" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="120dp"
+                                android:scaleType="centerCrop"
+                                android:src="@mipmap/ic_recommend2" />
                         </LinearLayout>
                         <!-- Clone more recommends -->
                     </LinearLayout>
