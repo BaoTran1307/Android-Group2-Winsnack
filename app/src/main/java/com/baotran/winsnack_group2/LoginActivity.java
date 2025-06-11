@@ -26,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         initViews();
+        setupMockData(); // Thêm dữ liệu giả lập
         setupListeners();
     }
 
@@ -40,6 +41,21 @@ public class LoginActivity extends AppCompatActivity {
         btnFingerprint = findViewById(R.id.btn_fingerprint);
         tvForgotPassword = findViewById(R.id.tv_forgot_password);
         tvSignUp = findViewById(R.id.tv_sign_up);
+    }
+
+    private void setupMockData() {
+        SharedPreferences prefs = getSharedPreferences("MockUsers", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        // Dữ liệu giả lập
+        editor.putString("user@example.com", "123"); // Email và password
+        editor.putString("user@example.com_username", "JohnDoe"); // Username tương ứng
+        editor.putString("1234567890", "password123"); // Phone và password
+        editor.putString("1234567890_username", "JaneDoe"); // Username tương ứng
+        editor.putString("0987654321", "pass123"); // Phone khác và password
+        editor.putString("0987654321_username", "MikeSmith"); // Username tương ứng
+
+        editor.apply();
     }
 
     private void setupListeners() {

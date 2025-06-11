@@ -12,73 +12,91 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WinSnackGroup2"
         tools:targetApi="31">
+
+        <!-- Activity chính khởi đầu -->
         <activity
-            android:name=".PaymentActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ChatbotActivity"
-            android:exported="false" />
-        <activity
-            android:name=".AboutUsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".FingerprintActiveActivity"
-            android:exported="false" />
-        <activity
-            android:name=".FingerprintSetupActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SignUpMainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".OtpVerificationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SignUpActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ForgetPasswordActivity"
-            android:exported="false" />
-        <activity
-            android:name=".LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".HomeActivity"
-            android:exported="true" />
-        <activity
-            android:name=".LaunchFirstScreenActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Splash Screen -->
+        <activity
+            android:name=".LaunchFirstScreenActivity"
+            android:exported="false" />
+
+        <!-- Welcome Screen -->
         <activity
             android:name=".LaunchWelcomeScreenActivity"
             android:exported="false" />
+
+        <!-- Onboarding -->
         <activity
             android:name=".OnboardingActivity"
             android:exported="false" />
-        <activity
-            android:name=".OrderConfirmedActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
 
+        <!-- Home Screen -->
         <activity
-            android:name=".DeliveryTrackingActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+            android:name=".HomeActivity"
+            android:exported="false" />
+
+        <!-- Login -->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+
+        <!-- Sign Up -->
+        <activity
+            android:name=".SignUpActivity"
+            android:exported="false" />
+
+        <!-- Sign Up Main (nếu cần) -->
+        <activity
+            android:name=".SignUpMainActivity"
+            android:exported="false" />
+
+        <!-- OTP Verification -->
+<!--        <activity-->
+<!--            android:name=".OtpVerificationActivity"-->
+<!--            android:exported="false" />-->
+
+        <!-- Forget Password -->
+        <activity
+            android:name=".ForgetPasswordActivity"
+            android:exported="false" />
+
+        <!-- Fingerprint Active -->
+<!--        <activity-->
+<!--            android:name=".FingerprintActiveActivity"-->
+<!--            android:exported="false" />-->
+
+        <!-- Chatbot -->
+        <activity
+            android:name=".ChatbotActivity"
+            android:exported="false" />
+
+        <!-- About Us -->
+        <activity
+            android:name=".AboutUsActivity"
+            android:exported="false" />
+
+        <!-- Order Confirmed -->
+<!--        <activity-->
+<!--            android:name=".OrderConfirmedActivity"-->
+<!--            android:exported="false"-->
+<!--            android:screenOrientation="portrait"-->
+<!--            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />-->
+
+<!--        &lt;!&ndash; Delivery Tracking &ndash;&gt;-->
+<!--        <activity-->
+<!--            android:name=".DeliveryTrackingActivity"-->
+<!--            android:exported="false"-->
+<!--            android:screenOrientation="portrait"-->
+<!--            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />-->
+
     </application>
 
 </manifest>
