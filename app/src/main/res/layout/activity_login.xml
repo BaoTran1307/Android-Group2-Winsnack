@@ -26,9 +26,9 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_arrow_back"
-            android:tint="@color/white"
             android:background="?selectableItemBackgroundBorderless"
-            android:padding="4dp" />
+            android:padding="4dp"
+            app:tint="@color/white" />
 
         <TextView
             android:layout_width="0dp"
@@ -136,7 +136,7 @@
                 android:background="?selectableItemBackgroundBorderless"
                 android:padding="4dp"
                 android:src="@mipmap/ic_eye_off"
-                android:tint="@color/orange_primary" />
+                app:tint="@color/orange_primary" />
 
         </RelativeLayout>
 
