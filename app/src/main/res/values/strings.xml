@@ -3,22 +3,13 @@
     <string name="title_log_in">Log In</string>
     <string name="title_sign_up">Sign Up</string>
 
-    <string name="about_us_description"><![CDATA[
-        Win Snack is a snack brand specializing in a wide variety of rice paper snacks, ranging from familiar traditional flavors to creatively modern combinations — perfect for all ages. With the slogan "One bite, you're hooked," we always prioritize quality and customer satisfaction.
-        Every product at Win Snack is more than just a regular snack — it's a reflection of our dedication, creativity, and passion to bring joy in every bite. We aim to become everyone's favorite choice, a companion for every moment — from light parties, gatherings with friends, to peaceful, personal indulgence.
-    ]]></string>
+    <string name="about_us_description">a </string>
 
-    <string name="title_commitmentQuality"><![CDATA[
-        Every Win Snack product is made from carefully selected ingredients, processed hygienically, and strictly adheres to food safety standards.
-    ]]></string>
+    <string name="title_commitmentQuality">a></string>
 
-    <string name="titlecommitmentOrigin"><![CDATA[
-        Ingredients are supplied by reputable local sources from Tay Ninh (rice paper, shrimp), Da Lat (dried fruits), and other regions known for their high-quality raw materials.
-    ]]></string>
+    <string name="titlecommitmentOrigin">a></string>
 
-    <string name="title_commitmentCerts"><![CDATA[
-        Meets HACCP, ISO standards and other certifications related to food hygiene and safety.
-    ]]></string>
+    <string name="title_commitmentCerts">a</string>
 
     <string name="title_commitment_quality">Quality Commitment</string>
     <string name="title_commitment_origin">Clear Origin</string>
@@ -58,4 +49,6 @@
     <string name="title_recommendation_description">Discover the dishes recommended by the chef.</string>
     <string name="title_product_details">Product details</string>
     <string name="original_price"><strike>$20.00</strike></string>
+    <string name="back_button">Back</string>
+
 </resources>
