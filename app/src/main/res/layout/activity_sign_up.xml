@@ -6,12 +6,16 @@
     android:orientation="vertical"
     android:background="@drawable/gradient_background">
 
-    <!-- Header -->
+    <!-- Header Section -->
     <RelativeLayout
+        android:id="@+id/header_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:paddingTop="40dp">
+        android:layout_alignParentTop="true"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp">
 
         <ImageView
             android:id="@+id/btn_back"
@@ -20,195 +24,151 @@
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_arrow_back"
-            app:tint="@color/white" />
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:padding="4dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
             android:text="@string/sign_up"
             android:textColor="@color/white"
-            android:textSize="18sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
     </RelativeLayout>
 
-    <!-- Content Container -->
-    <LinearLayout
+    <!-- ScrollView for Main Content -->
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/rounded_top_background"
-        android:orientation="vertical"
-        android:padding="24dp">
-
-        <!-- Phone Number Input -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/phone_number"
-            android:textColor="@color/text_primary"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp" />
-
-        <EditText
-            android:id="@+id/et_phone_number"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@drawable/input_background"
-            android:hint="@string/enter_phone_number"
-            android:inputType="phone"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textColorHint="@color/text_hint"
-            android:textSize="14sp"
-            android:layout_marginBottom="40dp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <!-- Terms Text -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/by_clicking_continue"
-            android:textColor="@color/text_secondary"
-            android:textSize="12sp"
-            android:gravity="center"
-            android:layout_marginBottom="20dp">
-<!--            <![CDATA[By clicking <font color='#FF9500'>Continue</font>, you will receive an <font color='#FF9500'>OTP code</font> via the phone number above.]]>-->
-        </TextView>
-
-        <!-- Continue Button -->
-        <Button
-            android:id="@+id/btn_continue"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginBottom="20dp"
-            android:backgroundTint="@color/orange"
-            android:text="@string/continue_text"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-
-        <!-- Social Login -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/or_sign_up_with"
-            android:textColor="@color/text_secondary"
-            android:textSize="14sp"
-            android:layout_marginBottom="16dp" />
+        android:layout_marginTop="16dp"
+        android:fillViewport="true">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal"
-            android:layout_marginBottom="20dp">
-
-            <ImageButton
-                android:id="@+id/btn_google"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@drawable/social_button_background"
-                android:src="@mipmap/ic_google"
-                android:layout_marginEnd="16dp" />
-
-            <ImageButton
-                android:id="@+id/btn_apple"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@drawable/social_button_background"
-                android:src="@mipmap/ic_facebook"
-                android:layout_marginEnd="16dp" />
-
-            <ImageButton
-                android:id="@+id/btn_fingerprint"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@drawable/social_button_background"
-                android:src="@mipmap/ic_fingerprint" />
-
-        </LinearLayout>
-
-        <!-- Login Link -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
+            android:background="@drawable/rounded_top_background"
+            android:orientation="vertical"
+            android:padding="24dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/already_have_account"
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tv_log_in"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/log_in"
-                android:textColor="@color/orange_primary"
-                android:textSize="14sp"
+                android:text="@string/phone_number"
+                android:textColor="@color/text_primary"
+                android:textSize="16sp"
                 android:textStyle="bold"
-                android:layout_marginStart="4dp" />
+                android:layout_marginBottom="8dp" />
+
+            <EditText
+                android:id="@+id/et_phone_number"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/input_background"
+                android:hint="@string/enter_phone_number"
+                android:inputType="phone"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textColorHint="@color/text_hint"
+                android:textSize="14sp"
+                android:layout_marginBottom="40dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/by_clicking_continue"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:layout_marginBottom="20dp">
+            </TextView>
+
+            <Button
+                android:id="@+id/btn_continue"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="@color/orange"
+                android:text="@string/continue_text"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/or_sign_up_with"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp"
+                android:layout_marginBottom="16dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp">
+
+                <ImageButton
+                    android:id="@+id/btn_google"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/social_button_background"
+                    android:src="@mipmap/ic_google"
+                    android:layout_marginEnd="16dp" />
+
+                <ImageButton
+                    android:id="@+id/btn_apple"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/social_button_background"
+                    android:src="@mipmap/ic_facebook"
+                    android:layout_marginEnd="16dp" />
+
+                <ImageButton
+                    android:id="@+id/btn_fingerprint"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/social_button_background"
+                    android:src="@mipmap/ic_fingerprint" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/already_have_account"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_log_in"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/log_in"
+                    android:textColor="@color/orange_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="4dp" />
+
+            </LinearLayout>
 
         </LinearLayout>
-
-    </LinearLayout>
-
-    <!-- Bottom Navigation -->
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="60dp"-->
-<!--        android:background="@color/orange_primary"-->
-<!--        android:orientation="horizontal"-->
-<!--        android:gravity="center">-->
-
-<!--        <ImageView-->
-<!--            android:layout_width="24dp"-->
-<!--            android:layout_height="24dp"-->
-<!--            android:src="@drawable/ic_home"-->
-<!--            android:tint="@color/white"-->
-<!--            android:layout_weight="1" />-->
-
-<!--        <ImageView-->
-<!--            android:layout_width="24dp"-->
-<!--            android:layout_height="24dp"-->
-<!--            android:src="@drawable/ic_search"-->
-<!--            android:tint="@color/white"-->
-<!--            android:layout_weight="1" />-->
-
-<!--        <ImageView-->
-<!--            android:layout_width="24dp"-->
-<!--            android:layout_height="24dp"-->
-<!--            android:src="@drawable/ic_headphones"-->
-<!--            android:tint="@color/white"-->
-<!--            android:layout_weight="1" />-->
-
-<!--        <ImageView-->
-<!--            android:layout_width="24dp"-->
-<!--            android:layout_height="24dp"-->
-<!--            android:src="@drawable/ic_close"-->
-<!--            android:tint="@color/white"-->
-<!--            android:layout_weight="1" />-->
-
-<!--        <ImageView-->
-<!--            android:layout_width="24dp"-->
-<!--            android:layout_height="24dp"-->
-<!--            android:src="@drawable/ic_menu"-->
-<!--            android:tint="@color/white"-->
-<!--            android:layout_weight="1" />-->
-
-<!--    </LinearLayout>-->
+    </ScrollView>
 
 </LinearLayout>

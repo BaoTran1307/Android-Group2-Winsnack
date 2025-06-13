@@ -21,11 +21,14 @@ public class SignUpMainActivity extends AppCompatActivity {
     private TextView tvLogin;
     private boolean isPasswordVisible = false;
     private boolean isConfirmPasswordVisible = false;
+    private String phoneNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_main);
+
+        phoneNumber = getIntent().getStringExtra("phone_number");
 
         initViews();
         setupClickListeners();
@@ -70,7 +73,6 @@ public class SignUpMainActivity extends AppCompatActivity {
         String password = etPassword.getText().toString().trim();
         String confirmPassword = etConfirmPassword.getText().toString().trim();
 
-        // Validation
         if (TextUtils.isEmpty(username)) {
             etUsername.setError("Username is required");
             etUsername.requestFocus();
@@ -113,7 +115,6 @@ public class SignUpMainActivity extends AppCompatActivity {
             return;
         }
 
-        // Check if email exists
         SharedPreferences prefs = getSharedPreferences("MockUsers", MODE_PRIVATE);
         if (prefs.contains(email)) {
             etEmail.setError("Email already exists");
@@ -121,10 +122,12 @@ public class SignUpMainActivity extends AppCompatActivity {
             return;
         }
 
-        // Save user data
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(email, password);
         editor.putString(email + "_username", username);
+        if (phoneNumber != null) {
+            editor.putString(email + "_phone", phoneNumber);
+        }
         editor.apply();
 
         Toast.makeText(this, "Sign up successful!", Toast.LENGTH_SHORT).show();

@@ -59,19 +59,22 @@
             android:exported="false" />
 
         <!-- OTP Verification -->
-<!--        <activity-->
-<!--            android:name=".OtpVerificationActivity"-->
-<!--            android:exported="false" />-->
+        <activity
+            android:name=".OtpVerificationActivity"
+            android:exported="false" />
 
         <!-- Forget Password -->
         <activity
             android:name=".ForgetPasswordActivity"
             android:exported="false" />
 
-        <!-- Fingerprint Active -->
-<!--        <activity-->
-<!--            android:name=".FingerprintActiveActivity"-->
-<!--            android:exported="false" />-->
+        <activity
+            android:name=".FingerprintActiveActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".FingerprintSetupActivity"
+            android:exported="false" />
 
         <!-- Chatbot -->
         <activity
