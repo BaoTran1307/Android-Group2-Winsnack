@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         initViews();
-        setupMockData(); // Thêm dữ liệu giả lập
+        setupMockData();
         setupListeners();
     }
 
@@ -47,13 +47,12 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("MockUsers", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
-        // Dữ liệu giả lập
-        editor.putString("user@example.com", "123"); // Email và password
-        editor.putString("user@example.com_username", "JohnDoe"); // Username tương ứng
-        editor.putString("1234567890", "password123"); // Phone và password
-        editor.putString("1234567890_username", "JaneDoe"); // Username tương ứng
-        editor.putString("0987654321", "pass123"); // Phone khác và password
-        editor.putString("0987654321_username", "MikeSmith"); // Username tương ứng
+        editor.putString("user@example.com", "123");
+        editor.putString("user@example.com_username", "JohnDoe");
+        editor.putString("1234567890", "password123");
+        editor.putString("1234567890_username", "JaneDoe");
+        editor.putString("0987654321", "pass123");
+        editor.putString("0987654321_username", "MikeSmith");
 
         editor.apply();
     }
@@ -67,7 +66,14 @@ public class LoginActivity extends AppCompatActivity {
 
         btnGoogle.setOnClickListener(v -> Toast.makeText(this, "Google Login - Coming Soon", Toast.LENGTH_SHORT).show());
         btnApple.setOnClickListener(v -> Toast.makeText(this, "Apple Login - Coming Soon", Toast.LENGTH_SHORT).show());
-        btnFingerprint.setOnClickListener(v -> Toast.makeText(this, "Fingerprint Login - Coming Soon", Toast.LENGTH_SHORT).show());
+        btnFingerprint.setOnClickListener(v -> {
+            try {
+                Intent intent = new Intent(LoginActivity.this, FingerprintSetupActivity.class);
+                startActivity(intent);
+            } catch (Exception e) {
+                Toast.makeText(LoginActivity.this, "Error opening Fingerprint Setup: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         tvForgotPassword.setOnClickListener(v -> Toast.makeText(this, "Forgot password not implemented", Toast.LENGTH_SHORT).show());
 

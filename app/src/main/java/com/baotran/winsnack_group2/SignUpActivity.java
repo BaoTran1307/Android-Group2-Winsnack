@@ -1,7 +1,6 @@
 package com.baotran.winsnack_group2;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
@@ -67,23 +66,9 @@ public class SignUpActivity extends AppCompatActivity {
             return;
         }
 
-        SharedPreferences prefs = getSharedPreferences("MockUsers", MODE_PRIVATE);
-        if (prefs.contains(phoneNumber)) {
-            etPhoneNumber.setError("Phone number already exists");
-            etPhoneNumber.requestFocus();
-            return;
-        }
-
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(phoneNumber, "default123");
-        editor.putString(phoneNumber + "_username", "PhoneUser_" + phoneNumber);
-        editor.apply();
-
-        Toast.makeText(this, "Sign up successful! OTP verified.", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, HomeActivity.class);
-        intent.putExtra("USERNAME", "PhoneUser_" + phoneNumber);
+        Intent intent = new Intent(this, OtpVerificationActivity.class);
+        intent.putExtra("phone_number", phoneNumber);
         startActivity(intent);
-        finish();
     }
 
     private boolean isValidPhoneNumber(String phoneNumber) {
