@@ -92,6 +92,7 @@
                     <!-- Right Icons -->
 
                     <ImageButton
+                        android:id="@+id/cart_button"
                         android:layout_width="27dp"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
@@ -100,6 +101,7 @@
                         android:src="@mipmap/ic_cart" />
 
                     <ImageButton
+                        android:id="@+id/notification_button"
                         android:layout_width="27dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="8dp"
@@ -108,6 +110,7 @@
                         android:src="@mipmap/ic_notification" />
 
                     <ImageButton
+                        android:id="@+id/profile_button"
                         android:layout_width="27dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="8dp"
@@ -133,6 +136,7 @@
 
                     <!-- Mixed -->
                     <LinearLayout
+                        android:id="@+id/mixed_category"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -156,6 +160,7 @@
 
                     <!-- Grilled -->
                     <LinearLayout
+                        android:id="@+id/grilled_category"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -179,6 +184,7 @@
 
                     <!-- Sweet -->
                     <LinearLayout
+                        android:id="@+id/sweet_category"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -202,6 +208,7 @@
 
                     <!-- Combo -->
                     <LinearLayout
+                        android:id="@+id/combo_category"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -225,6 +232,7 @@
 
                     <!-- Ingredients -->
                     <LinearLayout
+                        android:id="@+id/ingredients_category"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -252,6 +260,7 @@
 
             <!-- Best Seller -->
             <LinearLayout
+                android:id="@+id/best_seller_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
@@ -435,6 +444,7 @@
 
             <!-- Recommend -->
             <LinearLayout
+                android:id="@+id/recommend_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
