@@ -139,8 +139,8 @@ public class HomeActivity extends AppCompatActivity {
         // Khởi tạo danh sách banner với resource ID từ mipmap
         bannerList = new ArrayList<>();
         bannerList.add(new Banner(R.mipmap.ic_discount_banner));
-        bannerList.add(new Banner(R.mipmap.ic_discount_banner)); // Tạm dùng ic_discount_banner
-        bannerList.add(new Banner(R.mipmap.ic_discount_banner));
+        bannerList.add(new Banner(R.mipmap.ic_banner2)); // Tạm dùng ic_discount_banner
+        bannerList.add(new Banner(R.mipmap.ic_banner3));
 
         // Thiết lập adapter
         bannerAdapter = new BannerAdapter(this, bannerList);
