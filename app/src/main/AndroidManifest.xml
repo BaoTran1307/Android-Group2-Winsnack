@@ -12,94 +12,69 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WinSnackGroup2"
         tools:targetApi="31">
-
-        <!-- Activity chính khởi đầu -->
+        <activity
+            android:name=".AddNewAddressActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DeliveryAddressActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MyProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OrderDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OrderHistoryActivity"
+            android:exported="false" /> <!-- Activity chính khởi đầu -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- Splash Screen -->
+        </activity> <!-- Splash Screen -->
         <activity
             android:name=".LaunchFirstScreenActivity"
-            android:exported="false" />
-
-        <!-- Welcome Screen -->
+            android:exported="false" /> <!-- Welcome Screen -->
         <activity
             android:name=".LaunchWelcomeScreenActivity"
-            android:exported="false" />
-
-        <!-- Onboarding -->
+            android:exported="false" /> <!-- Onboarding -->
         <activity
             android:name=".OnboardingActivity"
-            android:exported="false" />
-
-        <!-- Home Screen -->
+            android:exported="false" /> <!-- Home Screen -->
         <activity
             android:name=".HomeActivity"
-            android:exported="false" />
-
-        <!-- Login -->
+            android:exported="false" /> <!-- Login -->
         <activity
             android:name=".LoginActivity"
-            android:exported="false" />
-
-        <!-- Sign Up -->
+            android:exported="false" /> <!-- Sign Up -->
         <activity
             android:name=".SignUpActivity"
-            android:exported="false" />
-
-        <!-- Sign Up Main (nếu cần) -->
+            android:exported="false" /> <!-- Sign Up Main (nếu cần) -->
         <activity
             android:name=".SignUpMainActivity"
-            android:exported="false" />
-
-        <!-- OTP Verification -->
+            android:exported="false" /> <!-- OTP Verification -->
         <activity
             android:name=".OtpVerificationActivity"
-            android:exported="false" />
-
-        <!-- Forget Password -->
+            android:exported="false" /> <!-- Forget Password -->
         <activity
             android:name=".ForgetPasswordActivity"
             android:exported="false" />
-
         <activity
             android:name=".FingerprintActiveActivity"
             android:exported="false" />
-
         <activity
             android:name=".FingerprintSetupActivity"
-            android:exported="false" />
-
-        <!-- Chatbot -->
+            android:exported="false" /> <!-- Chatbot -->
         <activity
             android:name=".ChatbotActivity"
-            android:exported="false" />
-
-        <!-- About Us -->
+            android:exported="false" /> <!-- About Us -->
         <activity
             android:name=".AboutUsActivity"
             android:exported="false" />
-
-        <!-- Order Confirmed -->
-<!--        <activity-->
-<!--            android:name=".OrderConfirmedActivity"-->
-<!--            android:exported="false"-->
-<!--            android:screenOrientation="portrait"-->
-<!--            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />-->
-
-<!--        &lt;!&ndash; Delivery Tracking &ndash;&gt;-->
-<!--        <activity-->
-<!--            android:name=".DeliveryTrackingActivity"-->
-<!--            android:exported="false"-->
-<!--            android:screenOrientation="portrait"-->
-<!--            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />-->
-
     </application>
 
 </manifest>

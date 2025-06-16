@@ -41,6 +41,12 @@
     <string name="shipping_address">Shipping Address</string>
     <string name="order_summary">Order Summary</string>
     <string name="note">Note</string>
+    <string name="history">History</string>
+    <string name="order_details">Order Details</string>
+    <string name="my_profile">My profile</string>
+    <string name="delivery_address">Delivery Address</string>
+    <string name="add_new_address">Add New Address</string>
+
     <string name="payment_method">Payment Method</string>
     <string name="delivery_time">Delivery Time</string>
     <string name="coupon">Coupon</string>
