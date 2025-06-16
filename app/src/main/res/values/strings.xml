@@ -56,5 +56,6 @@
     <string name="title_product_details">Product details</string>
     <string name="original_price"><strike>$20.00</strike></string>
     <string name="back_button">Back</string>
+    <string name="banner_image">banner_image</string>
 
 </resources>

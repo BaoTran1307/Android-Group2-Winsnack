@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -40,8 +41,7 @@
                     android:textSize="16sp"
                     android:textColor="#757575"
                     android:layout_marginTop="2dp"
-                    android:layout_marginBottom="10dp"
-                    />
+                    android:layout_marginBottom="10dp" />
 
                 <LinearLayout
                     android:id="@+id/search_container"
@@ -51,7 +51,7 @@
 
                     <!-- Search Box -->
                     <LinearLayout
-                        android:layout_width="227dp"
+                        android:layout_width="0dp"
                         android:layout_height="36dp"
                         android:layout_marginEnd="6dp"
                         android:layout_weight="0.8"
@@ -61,6 +61,7 @@
                         android:paddingHorizontal="6dp">
 
                         <EditText
+                            android:id="@+id/search_edit_text"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -73,6 +74,7 @@
                             android:textSize="14sp" />
 
                         <ImageButton
+                            android:id="@+id/voice_button"
                             android:layout_width="23dp"
                             android:layout_height="23dp"
                             android:layout_marginStart="4dp"
@@ -81,6 +83,7 @@
                             android:src="@mipmap/ic_voice" />
 
                         <ImageButton
+                            android:id="@+id/filter_button"
                             android:layout_width="27dp"
                             android:layout_height="23dp"
                             android:layout_marginStart="4dp"
@@ -90,16 +93,17 @@
                     </LinearLayout>
 
                     <!-- Right Icons -->
-
                     <ImageButton
+                        android:id="@+id/cart_button"
                         android:layout_width="27dp"
                         android:layout_height="match_parent"
+                        android:layout_marginStart="8dp"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
-                        android:layout_marginLeft="20dp"
                         android:src="@mipmap/ic_cart" />
 
                     <ImageButton
+                        android:id="@+id/notification_button"
                         android:layout_width="27dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="8dp"
@@ -108,6 +112,7 @@
                         android:src="@mipmap/ic_notification" />
 
                     <ImageButton
+                        android:id="@+id/profile_button"
                         android:layout_width="27dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="8dp"
@@ -128,337 +133,220 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                    <!-- Mixed -->
+                    <!-- Category BT01 -->
                     <LinearLayout
+                        android:id="@+id/mixed_category"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
+                        android:layout_marginEnd="16dp"
                         android:gravity="center"
-                        android:layout_marginEnd="16dp">
+                        android:orientation="vertical">
 
                         <ImageButton
                             android:layout_width="60dp"
                             android:layout_height="60dp"
-                            android:src="@mipmap/ic_mixed"
                             android:background="@android:color/transparent"
-                            android:scaleType="fitCenter" />
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_mixed" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
                             android:text="Mixed"
-                            android:textSize="14sp"
                             android:textColor="#391713"
-                            android:layout_marginTop="4dp" />
+                            android:textSize="14sp" />
                     </LinearLayout>
 
-                    <!-- Grilled -->
+                    <!-- Category BT02 -->
                     <LinearLayout
+                        android:id="@+id/grilled_category"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
+                        android:layout_marginEnd="16dp"
                         android:gravity="center"
-                        android:layout_marginEnd="16dp">
+                        android:orientation="vertical">
 
                         <ImageButton
                             android:layout_width="60dp"
                             android:layout_height="60dp"
-                            android:src="@mipmap/ic_grilled"
                             android:background="@android:color/transparent"
-                            android:scaleType="fitCenter" />
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_grilled" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
                             android:text="Grilled"
-                            android:textSize="14sp"
                             android:textColor="#391713"
-                            android:layout_marginTop="4dp" />
+                            android:textSize="14sp" />
                     </LinearLayout>
 
-                    <!-- Sweet -->
+                    <!-- Category BT03 -->
                     <LinearLayout
+                        android:id="@+id/sweet_category"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
+                        android:layout_marginEnd="16dp"
                         android:gravity="center"
-                        android:layout_marginEnd="16dp">
+                        android:orientation="vertical">
 
                         <ImageButton
                             android:layout_width="60dp"
                             android:layout_height="60dp"
-                            android:src="@mipmap/ic_sweet"
                             android:background="@android:color/transparent"
-                            android:scaleType="fitCenter" />
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_sweet" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
                             android:text="Sweet"
-                            android:textSize="14sp"
                             android:textColor="#391713"
-                            android:layout_marginTop="4dp" />
+                            android:textSize="14sp" />
                     </LinearLayout>
 
-                    <!-- Combo -->
+                    <!-- Category BT04 -->
                     <LinearLayout
+                        android:id="@+id/combo_category"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
+                        android:layout_marginEnd="16dp"
                         android:gravity="center"
-                        android:layout_marginEnd="16dp">
+                        android:orientation="vertical">
 
                         <ImageButton
                             android:layout_width="60dp"
                             android:layout_height="60dp"
-                            android:src="@mipmap/ic_combo"
                             android:background="@android:color/transparent"
-                            android:scaleType="fitCenter" />
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_combo" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
                             android:text="Combo"
-                            android:textSize="14sp"
                             android:textColor="#391713"
-                            android:layout_marginTop="4dp" />
+                            android:textSize="14sp" />
                     </LinearLayout>
 
-                    <!-- Ingredients -->
+                    <!-- Category BT05 -->
                     <LinearLayout
+                        android:id="@+id/ingredients_category"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
+                        android:layout_marginEnd="8dp"
                         android:gravity="center"
-                        android:layout_marginEnd="8dp">
+                        android:orientation="vertical">
 
                         <ImageButton
                             android:layout_width="60dp"
                             android:layout_height="60dp"
-                            android:src="@mipmap/ic_ingredients"
                             android:background="@android:color/transparent"
-                            android:scaleType="fitCenter" />
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_ingredients" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
                             android:text="Ingredients"
-                            android:textSize="14sp"
                             android:textColor="#391713"
-                            android:layout_marginTop="4dp" />
+                            android:textSize="14sp" />
                     </LinearLayout>
                 </LinearLayout>
             </HorizontalScrollView>
 
-
-
             <!-- Best Seller -->
             <LinearLayout
+                android:id="@+id/best_seller_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="16dp">
 
                 <!-- Tiêu đề và View All -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Best Seller"
+                        android:textColor="#FF5722"
                         android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="#FF5722" />
+                        android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/best_seller_view_all"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_gravity="end"
+                        android:gravity="end"
                         android:text="View All >"
-                        android:textSize="12sp"
                         android:textColor="#FF5722"
-                        android:gravity="end" />
+                        android:textSize="12sp" />
                 </LinearLayout>
 
-                <!-- Danh sách sản phẩm -->
-                <HorizontalScrollView
+                <!-- RecyclerView cho Best Seller -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/best_seller_recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:overScrollMode="never"
-                    android:scrollbars="none">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <!-- Product 1 -->
-                        <LinearLayout
-                            android:layout_width="80dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="70dp"
-                                android:layout_height="100dp"
-                                android:background="@android:color/transparent"
-                                android:scaleType="fitCenter"
-                                android:src="@mipmap/ic_product1" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="$103.0"
-                                android:textSize="14sp"
-                                android:textColor="#FF5722"
-                                android:layout_marginTop="4dp" />
-                        </LinearLayout>
-
-                        <!-- Product 2 -->
-                        <LinearLayout
-                            android:layout_width="80dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="70dp"
-                                android:layout_height="100dp"
-                                android:background="@android:color/transparent"
-                                android:scaleType="fitCenter"
-                                android:src="@mipmap/ic_product2"
-                                />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="$50.0"
-                                android:textSize="14sp"
-                                android:textColor="#FF5722"
-                                android:layout_marginTop="4dp" />
-                        </LinearLayout>
-
-                        <!-- Product 3 -->
-                        <LinearLayout
-                            android:layout_width="80dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="70dp"
-                                android:layout_height="100dp"
-                                android:background="@android:color/transparent"
-                                android:src="@mipmap/ic_product3"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="$12.99"
-                                android:textSize="14sp"
-                                android:textColor="#FF5722"
-                                android:layout_marginTop="4dp" />
-                        </LinearLayout>
-
-                        <!-- Product 4 -->
-                        <LinearLayout
-                            android:layout_width="80dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="70dp"
-                                android:layout_height="100dp"
-                                android:background="@android:color/transparent"
-                                android:src="@mipmap/ic_product4"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="$8.20"
-                                android:textSize="14sp"
-                                android:textColor="#FF5722"
-                                android:layout_marginTop="4dp" />
-                        </LinearLayout>
-                        <!-- Product 4 -->
-                        <LinearLayout
-                            android:layout_width="80dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="70dp"
-                                android:layout_height="100dp"
-                                android:background="@android:color/transparent"
-                                android:scaleType="fitCenter"
-                                android:src="@mipmap/ic_product1" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="$103.0"
-                                android:textSize="14sp"
-                                android:textColor="#FF5722"
-                                android:layout_marginTop="4dp" />
-                        </LinearLayout>
-
-                        <!-- Product 5 -->
-                        <LinearLayout
-                            android:layout_width="80dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="70dp"
-                                android:layout_height="100dp"
-                                android:background="@android:color/transparent"
-                                android:scaleType="fitCenter"
-                                android:src="@mipmap/ic_product2"
-                                />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="$50.0"
-                                android:textSize="14sp"
-                                android:textColor="#FF5722"
-                                android:layout_marginTop="4dp" />
-                        </LinearLayout>
-                    </LinearLayout>
-                </HorizontalScrollView>
+                    android:nestedScrollingEnabled="false"
+                    android:overScrollMode="never" />
             </LinearLayout>
 
-
             <!-- Promo Banner -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/banner_view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:clipToPadding="false"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp" />
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/banner_dots"
+                    android:layout_width="wrap_content"
+                    android:layout_height="6dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    app:tabBackground="@drawable/dot_selector"
+                    app:tabGravity="center"
+                    app:tabIndicatorHeight="0dp" />
+            </LinearLayout>
 
             <!-- Recommend -->
             <LinearLayout
+                android:id="@+id/recommend_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:background="@drawable/bg_banner_rounded"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/ic_discount_banner" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
+                <!-- Tiêu đề và View All -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -469,144 +357,73 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/recommend_view_all"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_gravity="end"
+                        android:gravity="end"
                         android:text="View All >"
-                        android:textSize="12sp"
                         android:textColor="#FF5722"
-                        android:gravity="end" />
+                        android:textSize="12sp" />
                 </LinearLayout>
 
-                <HorizontalScrollView
+                <!-- RecyclerView cho Recommend -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recommend_recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:overScrollMode="never">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <!-- Product 1 -->
-                        <LinearLayout
-                            android:layout_width="140dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:orientation="vertical"
-                            >
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="120dp"
-                                android:scaleType="fitCenter"
-                                android:src="@mipmap/ic_recommend1"
-                                />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:text="$10.0"
-                                android:textColor="#FF5722"
-                                android:textSize="14sp" />
-                        </LinearLayout>
-                        <!-- Product 1 -->
-                        <LinearLayout
-                            android:layout_width="140dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="120dp"
-                                android:scaleType="fitCenter"
-                                android:src="@mipmap/ic_recommend2" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:text="$10.0"
-                                android:textColor="#FF5722"
-                                android:textSize="14sp" />
-
-                        </LinearLayout>
-                        <!-- Product 1 -->
-                        <LinearLayout
-                            android:layout_width="140dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="120dp"
-                                android:scaleType="fitCenter"
-                                android:src="@mipmap/ic_recommend2" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:text="$10.0"
-                                android:textColor="#FF5722"
-                                android:textSize="14sp" />
-
-                        </LinearLayout>
-                        <!-- Clone more recommends -->
-                    </LinearLayout>
-                </HorizontalScrollView>
+                    android:nestedScrollingEnabled="false"
+                    android:overScrollMode="never" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
-    <!-- Bottom Navigation -->
-<!--    <LinearLayout-->
-<!--        android:id="@+id/bottomNav"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="60dp"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:orientation="horizontal"-->
-<!--        android:gravity="center"-->
-<!--        android:background="#FF9800"-->
-<!--        android:paddingHorizontal="12dp">-->
+    <!-- Bottom Navigation (Uncomment if needed) -->
+    <!--
+    <LinearLayout
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="#FF9800"
+        android:paddingHorizontal="12dp">
 
-<!--        <ImageButton-->
-<!--            android:layout_width="48dp"-->
-<!--            android:layout_height="48dp"-->
-<!--            android:src="@mipmap/ic_navi1"-->
-<!--            android:background="@android:color/transparent" />-->
+        <ImageButton
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@mipmap/ic_navi1"
+            android:background="@android:color/transparent" />
 
-<!--        <ImageButton-->
-<!--            android:layout_width="48dp"-->
-<!--            android:layout_height="48dp"-->
-<!--            android:layout_marginStart="16dp"-->
-<!--            android:src="@mipmap/ic_navi2"-->
-<!--            android:background="@android:color/transparent" />-->
+        <ImageButton
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:src="@mipmap/ic_navi2"
+            android:background="@android:color/transparent" />
 
-<!--        <ImageButton-->
-<!--            android:layout_width="48dp"-->
-<!--            android:layout_height="48dp"-->
-<!--            android:layout_marginStart="16dp"-->
-<!--            android:src="@mipmap/ic_navi3"-->
-<!--            android:background="@android:color/transparent" />-->
+        <ImageButton
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:src="@mipmap/ic_navi3"
+            android:background="@android:color/transparent" />
 
-<!--        <ImageButton-->
-<!--            android:layout_width="48dp"-->
-<!--            android:layout_height="48dp"-->
-<!--            android:layout_marginStart="16dp"-->
-<!--            android:src="@mipmap/ic_navi4"-->
-<!--            android:background="@android:color/transparent" />-->
+        <ImageButton
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:src="@mipmap/ic_navi4"
+            android:background="@android:color/transparent" />
 
-<!--        <ImageButton-->
-<!--            android:layout_width="48dp"-->
-<!--            android:layout_height="48dp"-->
-<!--            android:layout_marginStart="16dp"-->
-<!--            android:src="@mipmap/ic_navi5"-->
-<!--            android:background="@android:color/transparent" />-->
-<!--    </LinearLayout>-->
+        <ImageButton
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:src="@mipmap/ic_navi5"
+            android:background="@android:color/transparent" />
+    </LinearLayout>
+    -->
 </RelativeLayout>
