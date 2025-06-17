@@ -17,10 +17,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_cart"
-            android:contentDescription="Cart Icon" />
+            android:layout_width="45dp"
+            android:layout_height="42dp"
+            android:contentDescription="Cart Icon"
+            android:src="@drawable/ic_cart" />
 
         <TextView
             android:layout_width="wrap_content"

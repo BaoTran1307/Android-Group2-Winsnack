@@ -61,5 +61,12 @@
     <string name="title_contact">Contact</string>
     <string name="title_policy">Policy</string>
     <string name="title_order_page">Order Pages</string>
+    <string name="title_myprofile">My Profile</string>
+    <string name="title_delivery_address">Delivery Address</string>
+    <string name="title_payment_method">Payment Method</string>
+    <string name="title_contact_us">Contact Us</string>
+    <string name="title_faqs"><![CDATA[Help & FAQs]]></string>
+    <string name="title_setting">Settings</string>
+    <string name="title_log_out">Log Out</string>
 
 </resources>
