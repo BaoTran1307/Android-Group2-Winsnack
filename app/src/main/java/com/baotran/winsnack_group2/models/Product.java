@@ -1,6 +1,8 @@
 package com.baotran.winsnack_group2.models;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
     private String CategoryID;
     private String Description;
     private String Image;
@@ -15,7 +17,7 @@ public class Product {
 
     // Getters và setters
     public String getCategoryID() { return CategoryID; }
-    public void setCategoryID(String categoryID) { CategoryID = categoryID; }
+    public void setCategoryID(String CategoryID) { this.CategoryID = CategoryID; }
     public String getDescription() { return Description; }
     public void setDescription(String description) { Description = description; }
     public String getImage() { return Image; }

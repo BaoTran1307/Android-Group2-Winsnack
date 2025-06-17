@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -99,8 +98,8 @@ public class HomeActivity extends AppCompatActivity {
 
         // Thiết lập RecyclerView
         productList = new ArrayList<>();
-        bestSellerAdapter = new ProductAdapter(this, productList);
-        recommendAdapter = new ProductAdapter(this, productList);
+        bestSellerAdapter = new ProductAdapter(this, productList, R.layout.product_item);
+        recommendAdapter = new ProductAdapter(this, productList, R.layout.product_item);
 
         bestSellerRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         bestSellerRecyclerView.setHasFixedSize(true);
@@ -266,12 +265,15 @@ public class HomeActivity extends AppCompatActivity {
         };
 
         String[] categoryCodes = {"BT01", "BT02", "BT03", "BT04", "BT05"};
+        String[] categoryNames = {"Mixed", "Grilled", "Sweet", "Combo", "Ingredients"};
+
 
         for (int i = 0; i < categoryIds.length; i++) {
             LinearLayout categoryLayout = findViewById(categoryIds[i]);
             if (categoryLayout != null) {
-                final String categoryCode = categoryCodes[i];
-                categoryLayout.setOnClickListener(v -> filterByCategory(categoryCode));
+                final String code = categoryCodes[i];
+                final String name = categoryNames[i];
+                categoryLayout.setOnClickListener(v -> openCategory(code, name));
             }
         }
     }
@@ -286,6 +288,7 @@ public class HomeActivity extends AppCompatActivity {
         bestSellerAdapter.updateList(filteredList);
         recommendAdapter.updateList(filteredList);
     }
+
 
     private void setupNavigationButtons() {
         ImageButton cartButton = findViewById(R.id.cart_button);
@@ -307,7 +310,22 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setupViewAllButtons() {
         TextView bestSellerViewAll = findViewById(R.id.best_seller_view_all);
+        if (bestSellerViewAll != null) {
+            bestSellerViewAll.setOnClickListener(v -> {
+                Intent intent = new Intent(HomeActivity.this, BestSellerActivity.class);
+                intent.putExtra("bestSellerList", new ArrayList<>(productList)); // truyền list
+                startActivity(intent);
+            });
+        }
+
         TextView recommendViewAll = findViewById(R.id.recommend_view_all);
+        if (recommendViewAll != null) {
+            recommendViewAll.setOnClickListener(v -> {
+                Intent intent = new Intent(HomeActivity.this, RecommendActivity.class);
+                intent.putExtra("recommendList", new ArrayList<>(productList)); // truyền list đang hiển thị
+                startActivity(intent);
+            });
+        }
 
 //        if (bestSellerViewAll != null) {
 //            bestSellerViewAll.setOnClickListener(v -> {
@@ -347,4 +365,12 @@ public class HomeActivity extends AppCompatActivity {
         stopAutoScroll();
         // Không đặt null để tránh lỗi, chỉ xóa callbacks
     }
+        private void openCategory(String code, String name) {
+        Intent intent = new Intent(HomeActivity.this, CategoryActivity.class);
+        intent.putExtra("category_code", code);
+        intent.putExtra("category_name", name);
+        startActivity(intent);
+    }
+
+
 }

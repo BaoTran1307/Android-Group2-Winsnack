@@ -31,10 +31,12 @@ import java.util.List;
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
     private List<Product> products;
     private Context context;
+    private int layoutResId;
 
-    public ProductAdapter(Context context, List<Product> products) {
+    public ProductAdapter(Context context, List<Product> products, int layoutResId) {
         this.context = context;
         this.products = products;
+        this.layoutResId = layoutResId;
     }
 
     public void updateList(List<Product> newList) {
@@ -45,8 +47,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.product_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(layoutResId, parent, false);
         return new ProductViewHolder(view);
     }
 
@@ -54,8 +55,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product product = products.get(position);
         holder.productName.setText(product.getProductName());
-        holder.productPrice.setText(String.format("$%.2f", product.getPrice()));
-        Log.d(TAG, "Loading image: " + product.getImage());
+        holder.productPrice.setText(String.format("$%.0f", product.getPrice()));
+
         Glide.with(context)
                 .load(product.getImage())
                 .thumbnail(0.25f)
@@ -90,8 +91,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         return products.size();
     }
 
-    static class ProductViewHolder extends RecyclerView.ViewHolder {
-        ImageView productImage;
+    class ProductViewHolder extends RecyclerView.ViewHolder {
+        ImageView productImage, iconCart, iconStar;
         TextView productPrice, productName;
 
         public ProductViewHolder(@NonNull View itemView) {
@@ -99,6 +100,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             productImage = itemView.findViewById(R.id.product_image);
             productPrice = itemView.findViewById(R.id.product_price);
             productName = itemView.findViewById(R.id.product_name);
+
+            // optional icon mapping – ignore if layout doesn't have them
+            iconCart = itemView.findViewById(R.id.icon_cart);
+            iconStar = itemView.findViewById(R.id.icon_star);
         }
     }
 }

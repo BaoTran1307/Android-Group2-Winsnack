@@ -24,6 +24,10 @@
         <activity
             android:name=".OrderDetailsActivity"
             android:exported="false" />
+        <activity android:name=".BestSellerActivity" />
+        <activity android:name=".RecommendActivity" />
+        <activity android:name=".CategoryActivity" />
+
         <activity
             android:name=".OrderHistoryActivity"
             android:exported="false" /> <!-- Activity chính khởi đầu -->
