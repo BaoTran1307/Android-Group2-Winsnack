@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Header -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFCF59"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_back"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Policy"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_title"
+                android:layout_centerHorizontal="true"
+                android:text="How Can We Help You?"
+                android:textAlignment="center"
+                android:textColor="#FF9413"
+                android:textSize="14sp"
+                android:layout_marginTop="8dp"
+                android:paddingBottom="4dp" />
+        </RelativeLayout>
+
+        <!-- Search bar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:background="#F6F6F6"
+            android:padding="12dp"
+            android:backgroundTint="#EEEEEE"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Search"
+                android:background="@null"
+                android:padding="0dp"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_filter"
+                android:layout_marginStart="12dp" />
+        </LinearLayout>
+
+        <!-- FAQ items -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp">
+
+            <!-- SALES POLICY -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sales Policy"
+                android:textColor="#FF9413"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:drawableEnd="@drawable/ic_dropdown"
+                android:gravity="center_vertical"
+                android:drawablePadding="8dp"
+                android:paddingVertical="12dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="We are committed to providing high-quality products at reasonable prices. All product information, including prices and promotions, is clearly stated and regularly updated. Customers are encouraged to review product details carefully before making a purchase. Orders will only be confirmed once full payment is received."
+                android:textColor="#555555"
+                android:textSize="13sp"
+                android:lineSpacingExtra="4dp"
+                android:paddingBottom="12dp" />
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#FFDDC1" />
+
+            <!-- RETURN POLICY -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Return and Exchange Policy"
+                android:textColor="#FF9413"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:drawableEnd="@drawable/ic_dropdown"
+                android:gravity="center_vertical"
+                android:drawablePadding="8dp"
+                android:paddingVertical="12dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="WinSnack accepts returns within 7 days of delivery in the following cases:\n• Wrong product type or model\n• Damaged during shipping\n• Unused items with intact packaging (for personal change of mind)\n\nHow it works:\n1. Contact us via hotline or email with your order info\n2. Send the item back after confirmation\n3. Get a replacement or refund after inspection\n\nRefunds are processed via bank transfer or e-wallet (if applicable)."
+                android:textColor="#555555"
+                android:textSize="13sp"
+                android:lineSpacingExtra="4dp"
+                android:paddingBottom="12dp" />
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#FFDDC1" />
+
+            <!-- SHIPPING POLICY -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Shipping Policy"
+                android:textColor="#FF9413"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:drawableEnd="@drawable/ic_dropdown"
+                android:gravity="center_vertical"
+                android:drawablePadding="8dp"
+                android:paddingVertical="12dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="We deliver via Giao Hàng Nhanh, Giao Hàng Tiết Kiệm, and Viettel Post.\n\nDelivery Time:\n• Urban areas: 1–2 business days\n• Other areas: 3–5 business days\n\nShipping Fee:\nCalculated at checkout.\n\nFree shipping for orders from 50,000 VND.\n\nOptions:\n• Standard Shipping\n• Express Shipping (Ho Chi Minh City only)"
+                android:textColor="#555555"
+                android:textSize="13sp"
+                android:lineSpacingExtra="4dp"
+                android:paddingBottom="12dp" />
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#FFDDC1" />
+
+            <!-- PRIVACY POLICY -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Privacy Policy"
+                android:textColor="#FF9413"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:drawableEnd="@drawable/ic_dropdown"
+                android:gravity="center_vertical"
+                android:drawablePadding="8dp"
+                android:paddingVertical="12dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="We are committed to protecting your personal information. All customer data collected during the ordering and payment process is kept confidential and used solely for order processing, customer service, and internal analytics. We do not sell or share your information with third parties without your consent."
+                android:textColor="#555555"
+                android:textSize="13sp"
+                android:lineSpacingExtra="4dp"
+                android:paddingBottom="16dp" />
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#FFDDC1" />
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

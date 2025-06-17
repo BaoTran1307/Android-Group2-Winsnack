@@ -57,5 +57,9 @@
     <string name="original_price"><strike>$20.00</strike></string>
     <string name="back_button">Back</string>
     <string name="banner_image">banner_image</string>
+    <string name="title_blog">Blog</string>
+    <string name="title_contact">Contact</string>
+    <string name="title_policy">Policy</string>
+    <string name="title_order_page">Order Pages</string>
 
 </resources>
