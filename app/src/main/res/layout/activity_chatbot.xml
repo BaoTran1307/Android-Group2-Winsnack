@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="#FFF9E4">
 
     <!-- 🟨 Header -->
@@ -26,12 +27,12 @@
     <ScrollView
         android:id="@+id/scrollChat"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/chatInputBar"
-        android:layout_below="@+id/chatHeader"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:padding="16dp">
 
         <LinearLayout
+            android:id="@+id/chatContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -40,9 +41,9 @@
             <ImageView
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:src="@mipmap/ic_bot_avatar"
                 android:layout_gravity="center"
-                android:layout_marginBottom="12dp" />
+                android:layout_marginBottom="12dp"
+                android:src="@mipmap/ic_bot_avatar" />
 
             <!-- Bot message -->
             <LinearLayout
@@ -53,40 +54,40 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_ai_bubble"
+                    android:padding="12dp"
                     android:text="I see there's another nice café nearby. Let's go there in a bit."
                     android:textColor="#000000"
-                    android:textSize="14sp"
-                    android:background="@drawable/bg_ai_bubble"
-                    android:padding="12dp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <!-- User message -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="end"
-                android:layout_marginBottom="8dp">
+                android:layout_marginBottom="8dp"
+                android:gravity="end">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/bg_user_bubble"
+                        android:padding="12dp"
                         android:text="Sounds good!"
                         android:textColor="#000000"
-                        android:textSize="14sp"
-                        android:background="@drawable/bg_user_bubble"
-                        android:padding="12dp" />
+                        android:textSize="14sp" />
 
                     <ImageView
                         android:layout_width="32dp"
                         android:layout_height="32dp"
-                        android:src="@mipmap/ic_user_avatar"
-                        android:layout_marginStart="8dp" />
+                        android:layout_marginStart="8dp"
+                        android:src="@mipmap/ic_user_avatar" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -94,40 +95,39 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="8dp"
+                android:orientation="vertical">
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/bg_suggest_button"
+                    android:drawableEnd="@mipmap/ic_send"
+                    android:padding="12dp"
                     android:text="What types of rice paper snacks do you have?"
-                    android:background="@drawable/bg_suggest_button"
                     android:textColor="#FFFFFF"
-                    android:textSize="14sp"
-                    android:drawableEnd="@mipmap/ic_send"
-                    android:padding="12dp"
-                    android:layout_marginBottom="8dp" />
+                    android:textSize="14sp" />
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Is there free shipping?"
+                    android:layout_marginBottom="8dp"
                     android:background="@drawable/bg_suggest_button"
-                    android:textColor="#FFFFFF"
-                    android:textSize="14sp"
                     android:drawableEnd="@mipmap/ic_send"
                     android:padding="12dp"
-                    android:layout_marginBottom="8dp" />
+                    android:text="Is there free shipping?"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
-    <!-- 🔻 Chat input bar fixed bottom -->
+    <!-- 🔻 Chat input bar -->
     <LinearLayout
         android:id="@+id/chatInputBar"
         android:layout_width="match_parent"
         android:layout_height="72dp"
-        android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:background="#FFF3D3"
         android:paddingHorizontal="12dp"
@@ -141,12 +141,13 @@
             android:background="@android:color/transparent" />
 
         <EditText
+            android:id="@+id/messageInput"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginStart="8dp"
-            android:hint="Type a message"
+            android:layout_weight="1"
             android:background="@drawable/bg_input"
+            android:hint="Type a message"
             android:padding="12dp"
             android:textColor="#000000"
             android:textSize="14sp" />
@@ -159,11 +160,12 @@
             android:background="@android:color/transparent" />
 
         <ImageButton
+            android:id="@+id/btnSend"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="8dp"
-            android:src="@mipmap/ic_send"
-            android:background="@android:color/transparent" />
+            android:background="@android:color/transparent"
+            android:src="@mipmap/ic_send" />
 
         <ImageButton
             android:layout_width="40dp"
@@ -172,4 +174,63 @@
             android:src="@mipmap/ic_bot_avatar"
             android:background="@android:color/transparent" />
     </LinearLayout>
-</RelativeLayout>
+    <!-- Footer -->
+    <LinearLayout
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@drawable/footer_background"
+        android:paddingHorizontal="12dp">
+
+        <ImageButton
+            android:id="@+id/btnHome"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@android:color/transparent"
+            android:padding="0dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_navi1" />
+
+        <ImageButton
+            android:id="@+id/btnMenu"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="40dp"
+            android:background="@android:color/transparent"
+            android:padding="0dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_navi2" />
+
+        <ImageButton
+            android:id="@+id/btnChatbot"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="40dp"
+            android:src="@mipmap/ic_navi3"
+            android:background="@android:color/transparent"
+            android:padding="0dp"
+            android:scaleType="fitCenter" />
+
+        <ImageButton
+            android:id="@+id/btnEvent"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="40dp"
+            android:src="@mipmap/ic_navi4"
+            android:background="@android:color/transparent"
+            android:padding="0dp"
+            android:scaleType="fitCenter"/>
+
+        <ImageButton
+            android:id="@+id/btnOthers"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="40dp"
+            android:src="@mipmap/ic_navi5"
+            android:background="@android:color/transparent"
+            android:padding="0dp"
+            android:scaleType="fitCenter"/>
+    </LinearLayout>
+</LinearLayout>

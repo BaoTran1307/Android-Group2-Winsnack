@@ -34,7 +34,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends FooterActivity {
 
     private RecyclerView bestSellerRecyclerView, recommendRecyclerView;
     private ProductAdapter bestSellerAdapter, recommendAdapter;
@@ -55,6 +55,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        setupFooter();
 
         // Kiểm tra Google Play Services
         int resultCode = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
