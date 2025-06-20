@@ -5,12 +5,18 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.baotran.winsnack_group2.models.Customer;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -19,14 +25,28 @@ public class LoginActivity extends AppCompatActivity {
     private ImageView btnBack, btnTogglePassword, btnGoogle, btnApple, btnFingerprint;
     private TextView tvForgotPassword, tvSignUp;
     private boolean isPasswordVisible = false;
+    private FirebaseFirestore db;
+    private static final String TAG = "LoginActivity";
+    private static final String PREFS_NAME = "UserPrefs";
+    private static final String KEY_CUSTOMER_ID = "CustomerID";
+    private static final String KEY_USERNAME = "Username";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        db = FirebaseFirestore.getInstance();
+        FirebaseFirestore.setLoggingEnabled(true);
+
+        // Print all documents for debug
+        db.collection("CUSTOMER").get().addOnSuccessListener(snapshot -> {
+            for (QueryDocumentSnapshot doc : snapshot) {
+                Log.d(TAG, "Document ID: " + doc.getId() + ", Data: " + doc.getData().toString());
+            }
+        }).addOnFailureListener(e -> Log.e(TAG, "Query error: ", e));
+
         initViews();
-        setupMockData();
         setupListeners();
     }
 
@@ -43,20 +63,6 @@ public class LoginActivity extends AppCompatActivity {
         tvSignUp = findViewById(R.id.tv_sign_up);
     }
 
-    private void setupMockData() {
-        SharedPreferences prefs = getSharedPreferences("MockUsers", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-
-        editor.putString("user@example.com", "123");
-        editor.putString("user@example.com_username", "JohnDoe");
-        editor.putString("1234567890", "password123");
-        editor.putString("1234567890_username", "JaneDoe");
-        editor.putString("0987654321", "pass123");
-        editor.putString("0987654321_username", "MikeSmith");
-
-        editor.apply();
-    }
-
     private void setupListeners() {
         btnBack.setOnClickListener(v -> finish());
 
@@ -71,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
                 Intent intent = new Intent(LoginActivity.this, FingerprintSetupActivity.class);
                 startActivity(intent);
             } catch (Exception e) {
-                Toast.makeText(LoginActivity.this, "Error opening Fingerprint Setup: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Error opening Fingerprint Setup: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -91,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void handleLogin() {
-        String emailPhone = etEmailPhone.getText().toString().trim();
+        String emailPhone = etEmailPhone.getText().toString().trim(); // No .toLowerCase()
         String password = etPassword.getText().toString().trim();
 
         if (TextUtils.isEmpty(emailPhone)) {
@@ -106,18 +112,85 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        SharedPreferences prefs = getSharedPreferences("MockUsers", MODE_PRIVATE);
-        String storedPassword = prefs.getString(emailPhone, null);
-        String username = prefs.getString(emailPhone + "_username", "User");
+        btnLogin.setEnabled(false);
+        Toast.makeText(this, "Logging in...", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Input email/phone: " + emailPhone + ", Password: " + password);
 
-        if (storedPassword != null && storedPassword.equals(password)) {
-            Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, HomeActivity.class);
-            intent.putExtra("USERNAME", username);
-            startActivity(intent);
-            finish();
-        } else {
-            Toast.makeText(this, "Invalid email/phone or password", Toast.LENGTH_SHORT).show();
-        }
+        db.collection("CUSTOMER")
+                .whereEqualTo("Email", emailPhone)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "Email query successful, number of documents: " + task.getResult().size());
+                        if (!task.getResult().isEmpty()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Customer customer = document.toObject(Customer.class);
+                                Log.d(TAG, "Found email: " + customer.getEmail() + ", Password: " + customer.getPassword());
+                                if (customer.getPassword().equals(password)) {
+                                    loginSuccess(customer);
+                                    return;
+                                } else {
+                                    Log.d(TAG, "Password mismatch: Input=" + password + ", DB=" + customer.getPassword());
+                                    loginFailed("Incorrect password");
+                                    return;
+                                }
+                            }
+                        } else {
+                            Log.d(TAG, "Email not found, trying phone...");
+                            db.collection("CUSTOMER")
+                                    .whereEqualTo("Phone", emailPhone)
+                                    .get()
+                                    .addOnCompleteListener(phoneTask -> {
+                                        if (phoneTask.isSuccessful()) {
+                                            Log.d(TAG, "Phone query successful, number of documents: " + phoneTask.getResult().size());
+                                            if (!phoneTask.getResult().isEmpty()) {
+                                                for (QueryDocumentSnapshot document : phoneTask.getResult()) {
+                                                    Customer customer = document.toObject(Customer.class);
+                                                    Log.d(TAG, "Found phone: " + customer.getPhone() + ", Password: " + customer.getPassword());
+                                                    if (customer.getPassword().equals(password)) {
+                                                        loginSuccess(customer);
+                                                        return;
+                                                    } else {
+                                                        Log.d(TAG, "Password mismatch: Input=" + password + ", DB=" + customer.getPassword());
+                                                        loginFailed("Incorrect password");
+                                                        return;
+                                                    }
+                                                }
+                                            } else {
+                                                Log.d(TAG, "Phone not found");
+                                                loginFailed("Email or phone number does not exist");
+                                            }
+                                        } else {
+                                            Log.e(TAG, "Phone query failed: ", phoneTask.getException());
+                                            loginFailed("Query error: " + phoneTask.getException().getMessage());
+                                        }
+                                    });
+                        }
+                    } else {
+                        Log.e(TAG, "Email query failed: ", task.getException());
+                        loginFailed("Query error: " + task.getException().getMessage());
+                    }
+                });
+    }
+
+    private void loginSuccess(Customer customer) {
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(KEY_CUSTOMER_ID, customer.getCustomerID());
+        editor.putString(KEY_USERNAME, customer.getUsername());
+        editor.apply();
+
+        Log.d(TAG, "Login successful for user: " + customer.getUsername());
+        Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.putExtra("USERNAME", customer.getUsername());
+        startActivity(intent);
+        finish();
+        btnLogin.setEnabled(true);
+    }
+
+    private void loginFailed(String message) {
+        btnLogin.setEnabled(true);
+        Toast.makeText(this, "Login failed: " + message, Toast.LENGTH_LONG).show();
     }
 }

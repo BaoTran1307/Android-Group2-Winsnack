@@ -59,7 +59,7 @@ public class HomeActivity extends AppCompatActivity {
         // Kiểm tra Google Play Services
         int resultCode = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
         if (resultCode != ConnectionResult.SUCCESS) {
-            Toast.makeText(this, "Google Play Services không khả dụng: " + resultCode, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Google Play Services not available: " + resultCode, Toast.LENGTH_LONG).show();
             if (GoogleApiAvailability.getInstance().isUserResolvableError(resultCode)) {
                 GoogleApiAvailability.getInstance().getErrorDialog(this, resultCode, 9000).show();
             }
@@ -74,7 +74,7 @@ public class HomeActivity extends AppCompatActivity {
         // Kiểm tra kết nối mạng
         db.enableNetwork().addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
-                Toast.makeText(HomeActivity.this, "Không thể kết nối Firestore. Chạy ở chế độ offline.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeActivity.this, "Cannot connect to Firestore. Running in offline mode.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -89,7 +89,7 @@ public class HomeActivity extends AppCompatActivity {
         // Kiểm tra null cho bannerViewPager
         if (bannerViewPager == null || bannerDots == null) {
             Log.e(TAG, "Banner ViewPager or TabLayout is null. Check activity_home.xml for IDs.");
-            Toast.makeText(this, "Lỗi giao diện banner. Vui lòng kiểm tra lại.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Banner interface error. Please check again.", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -221,7 +221,7 @@ public class HomeActivity extends AppCompatActivity {
                             bestSellerAdapter.notifyDataSetChanged();
                             recommendAdapter.notifyDataSetChanged();
                         } else {
-                            Toast.makeText(HomeActivity.this, "Tải sản phẩm thất bại: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(HomeActivity.this, "Failed to load products: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -267,7 +267,6 @@ public class HomeActivity extends AppCompatActivity {
         String[] categoryCodes = {"BT01", "BT02", "BT03", "BT04", "BT05"};
         String[] categoryNames = {"Mixed", "Grilled", "Sweet", "Combo", "Ingredients"};
 
-
         for (int i = 0; i < categoryIds.length; i++) {
             LinearLayout categoryLayout = findViewById(categoryIds[i]);
             if (categoryLayout != null) {
@@ -289,7 +288,6 @@ public class HomeActivity extends AppCompatActivity {
         recommendAdapter.updateList(filteredList);
     }
 
-
     private void setupNavigationButtons() {
         ImageButton cartButton = findViewById(R.id.cart_button);
         ImageButton notificationButton = findViewById(R.id.notification_button);
@@ -302,10 +300,10 @@ public class HomeActivity extends AppCompatActivity {
 //        if (notificationButton != null) {
 //            notificationButton.setOnClickListener(v -> startActivity(new Intent(HomeActivity.this, NotificationActivity.class)));
 //        }
-//
-//        if (profileButton != null) {
-//            profileButton.setOnClickListener(v -> startActivity(new Intent(HomeActivity.this, ProfileActivity.class)));
-//        }
+
+        if (profileButton != null) {
+            profileButton.setOnClickListener(v -> startActivity(new Intent(HomeActivity.this, MyProfileActivity.class)));
+        }
     }
 
     private void setupViewAllButtons() {
@@ -326,22 +324,6 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             });
         }
-
-//        if (bestSellerViewAll != null) {
-//            bestSellerViewAll.setOnClickListener(v -> {
-//                Intent intent = new Intent(HomeActivity.this, AllProductsActivity.class);
-//                intent.putExtra("category", "BestSeller");
-//                startActivity(intent);
-//            });
-//        }
-//
-//        if (recommendViewAll != null) {
-//            recommendViewAll.setOnClickListener(v -> {
-//                Intent intent = new Intent(HomeActivity.this, AllProductsActivity.class);
-//                intent.putExtra("category", "Recommend");
-//                startActivity(intent);
-//            });
-//        }
     }
 
     @Override
@@ -365,12 +347,11 @@ public class HomeActivity extends AppCompatActivity {
         stopAutoScroll();
         // Không đặt null để tránh lỗi, chỉ xóa callbacks
     }
-        private void openCategory(String code, String name) {
+
+    private void openCategory(String code, String name) {
         Intent intent = new Intent(HomeActivity.this, CategoryActivity.class);
         intent.putExtra("category_code", code);
         intent.putExtra("category_name", name);
         startActivity(intent);
     }
-
-
 }
