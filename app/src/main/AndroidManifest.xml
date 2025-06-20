@@ -24,9 +24,21 @@
         <activity
             android:name=".OrderDetailsActivity"
             android:exported="false" />
-        <activity android:name=".BestSellerActivity" />
-        <activity android:name=".RecommendActivity" />
-        <activity android:name=".CategoryActivity" />
+        <activity
+            android:name=".BestSellerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RecommendActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CartActivity"
+            android:exported="false" />
 
         <activity
             android:name=".OrderHistoryActivity"

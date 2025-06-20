@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -228,19 +230,46 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setupSearch() {
-        ImageButton searchButton = findViewById(R.id.filter_button);
+        ImageButton filterButton = findViewById(R.id.filter_button);
+        if (filterButton != null) {
+            filterButton.setOnClickListener(v ->
+                    startActivity(new Intent(HomeActivity.this,
+                            SearchActivity.class))); // đặt đúng tên class của trang 3.1
+        }
         ImageButton voiceButton = findViewById(R.id.voice_button);
-        if (searchButton != null) {
-            searchButton.setOnClickListener(v -> {
-                String query = searchEditText.getText().toString().trim();
-                filterProducts(query);
-            });
+        if (voiceButton != null) {
+            voiceButton.setOnClickListener(v ->
+                    Toast.makeText(this,
+                            "Voice search not implemented",
+                            Toast.LENGTH_SHORT).show());
         }
         if (voiceButton != null) {
             voiceButton.setOnClickListener(v -> {
                 Toast.makeText(this, "Voice search not implemented", Toast.LENGTH_SHORT).show();
             });
         }
+        // 1. Người dùng nhấn Enter (IME_ACTION_SEARCH) để lọc ngay trên trang Home
+        searchEditText.setOnEditorActionListener((v, actionId, event) -> {
+            boolean isSearchKey =
+                    actionId == EditorInfo.IME_ACTION_SEARCH ||
+                            (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN);
+
+            if (isSearchKey) {
+                String query = searchEditText.getText().toString().trim();
+                if (!query.isEmpty()) {
+                    Intent intent = new Intent(HomeActivity.this, CategoryActivity.class);
+                    intent.putExtra("search_query", query); // ví dụ: "combo"
+                    startActivity(intent);
+
+                } else {
+                    Toast.makeText(this, "Please enter a keyword", Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            }
+            return false;
+        });
+
+
     }
 
     private void filterProducts(String query) {

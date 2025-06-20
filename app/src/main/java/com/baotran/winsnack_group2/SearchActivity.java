@@ -3,11 +3,10 @@ package com.baotran.winsnack_group2;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class CartActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cart); // tạo file layout tương ứng
+        setContentView(R.layout.activity_search);  // dùng layout bên dưới
     }
 }
-
