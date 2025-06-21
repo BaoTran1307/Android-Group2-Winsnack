@@ -404,6 +404,9 @@
         </LinearLayout>
     </ScrollView>
 
+    <!-- Include footer -->
+    <include layout="@layout/footer_layout" />
+
     <!-- Bottom Navigation (Uncomment if needed) -->
     <!--
     <LinearLayout
