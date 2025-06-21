@@ -16,6 +16,12 @@
             android:name=".AddNewAddressActivity"
             android:exported="false" />
         <activity
+            android:name=".OtherPageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EventActivity"
+            android:exported="false" />
+        <activity
             android:name=".DeliveryAddressActivity"
             android:exported="false" />
         <activity

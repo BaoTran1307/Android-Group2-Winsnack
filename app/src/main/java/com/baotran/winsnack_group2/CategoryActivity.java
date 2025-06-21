@@ -17,7 +17,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryActivity extends AppCompatActivity {
+public class CategoryActivity extends FooterActivity {
 
     private RecyclerView recyclerView;
     private ProductAdapter adapter;
@@ -29,7 +29,9 @@ public class CategoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu); // layout XML bạn đã tạo
+        setContentView(R.layout.activity_menu);
+        setupFooter();
+        // layout XML bạn đã tạo
 
         recyclerView = findViewById(R.id.recyclerViewCategory);
 //        ImageView btnBack = findViewById(R.id.btnBackCategory);
