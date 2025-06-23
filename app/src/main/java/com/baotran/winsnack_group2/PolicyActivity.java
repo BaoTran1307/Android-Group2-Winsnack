@@ -4,11 +4,11 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class DeliveryAddressActivity extends AppCompatActivity {
+public class PolicyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_delivery_address);
-        // TODO: Load user's saved addresses into RecyclerView
+        setContentView(R.layout.activity_policy);
+        // TODO: Show privacy or return policy
     }
 }
