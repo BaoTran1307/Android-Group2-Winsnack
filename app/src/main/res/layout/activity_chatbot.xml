@@ -168,11 +168,12 @@
             android:src="@mipmap/ic_send" />
 
         <ImageButton
+            android:id="@+id/imgChatbot"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="8dp"
-            android:src="@mipmap/ic_bot_avatar"
-            android:background="@android:color/transparent" />
+            android:background="@android:color/transparent"
+            android:src="@mipmap/ic_bot_avatar" />
     </LinearLayout>
     <!-- Footer -->
     <LinearLayout

@@ -11,7 +11,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottomNav"
+        android:layout_above="@id/footer_container"
         android:fillViewport="true">
 
         <LinearLayout
@@ -404,54 +404,11 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- Include footer -->
-    <include layout="@layout/footer_layout" />
-
-    <!-- Bottom Navigation (Uncomment if needed) -->
-    <!--
-    <LinearLayout
-        android:id="@+id/bottomNav"
+    <!-- Footer -->
+    <include
+        android:id="@+id/footer_container"
+        layout="@layout/footer_layout"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:background="#FF9800"
-        android:paddingHorizontal="12dp">
-
-        <ImageButton
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@mipmap/ic_navi1"
-            android:background="@android:color/transparent" />
-
-        <ImageButton
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="16dp"
-            android:src="@mipmap/ic_navi2"
-            android:background="@android:color/transparent" />
-
-        <ImageButton
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="16dp"
-            android:src="@mipmap/ic_navi3"
-            android:background="@android:color/transparent" />
-
-        <ImageButton
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="16dp"
-            android:src="@mipmap/ic_navi4"
-            android:background="@android:color/transparent" />
-
-        <ImageButton
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="16dp"
-            android:src="@mipmap/ic_navi5"
-            android:background="@android:color/transparent" />
-    </LinearLayout>
-    -->
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
 </RelativeLayout>

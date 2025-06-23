@@ -27,11 +27,65 @@ public abstract class FooterActivity extends AppCompatActivity {
         btnEvent = findViewById(R.id.btnEvent);
         btnOthers = findViewById(R.id.btnOthers);
 
-        imgChatbot.setOnClickListener(v -> Toast.makeText(this, "Chatbot clicked", Toast.LENGTH_SHORT).show());
-        btnHome.setOnClickListener(v -> startActivity(new Intent(this, HomeActivity.class)));
-//        btnMenu.setOnClickListener(v -> startActivity(new Intent(this, MenuActivity.class)));
-        btnChatbot.setOnClickListener(v -> startActivity(new Intent(this, ChatbotActivity.class)));
-//        btnEvent.setOnClickListener(v -> startActivity(new Intent(this, EventActivity.class)));
-//        btnOthers.setOnClickListener(v -> startActivity(new Intent(this, OtherActivity.class)));
+        if (imgChatbot != null) {
+            imgChatbot.setOnClickListener(v -> {
+                if (!(this instanceof ChatbotActivity)) {
+                    startActivity(new Intent(this, ChatbotActivity.class));
+                } else {
+                    Toast.makeText(this, "Bạn đang ở trang Chatbot", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        if (btnHome != null) {
+            btnHome.setOnClickListener(v -> {
+                if (!(this instanceof HomeActivity)) {
+                    startActivity(new Intent(this, HomeActivity.class));
+                } else {
+                    Toast.makeText(this, "Bạn đang ở trang Home", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        if (btnMenu != null) {
+            btnMenu.setOnClickListener(v -> {
+                if (!(this instanceof CategoryActivity)) {
+                    startActivity(new Intent(this, CategoryActivity.class));
+                } else {
+                    Toast.makeText(this, "Bạn đang ở trang Danh mục", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        if (btnChatbot != null) {
+            btnChatbot.setOnClickListener(v -> {
+                if (!(this instanceof ChatbotActivity)) {
+                    startActivity(new Intent(this, ChatbotActivity.class));
+                } else {
+                    Toast.makeText(this, "Bạn đang ở trang Chatbot", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+ if (btnEvent != null) {
+     btnEvent.setOnClickListener(v -> {
+         if (!(this instanceof EventActivity)) {
+             startActivity(new Intent(this, EventActivity.class));
+         } else {
+             Toast.makeText(this, "Bạn đang ở trang Sự kiện", Toast.LENGTH_SHORT).show();
+         }
+     });
+ }
+
+ if (btnOthers != null) {
+     btnOthers.setOnClickListener(v -> {
+         if (!(this instanceof OtherPageActivity)) {
+             startActivity(new Intent(this, OtherPageActivity.class));
+         } else {
+             Toast.makeText(this, "Bạn đang ở trang Khác", Toast.LENGTH_SHORT).show();
+         }
+     });
+ }
+
     }
 }
