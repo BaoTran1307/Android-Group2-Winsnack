@@ -11,6 +11,8 @@ public class Product implements Serializable {
     private int ProductID;
     private String ProductName;
     private int Quantity;
+    private double Rate; // Thêm trường Rate
+    private String Label; // Thêm trường Label
 
     public Product() {
     }
@@ -32,4 +34,8 @@ public class Product implements Serializable {
     public void setProductName(String productName) { ProductName = productName; }
     public int getQuantity() { return Quantity; }
     public void setQuantity(int quantity) { Quantity = quantity; }
+    public double getRate() { return Rate; } // Thêm getter cho Rate
+    public void setRate(double rate) { this.Rate = rate; } // Thêm setter cho Rate
+    public String getLabel() { return Label; } // Thêm getter cho Label
+    public void setLabel(String label) { this.Label = label; } // Thêm setter cho Label
 }

@@ -138,33 +138,25 @@ public class HomeActivity extends FooterActivity {
     }
 
     private void setupBanner() {
-        // Khởi tạo danh sách banner với resource ID từ mipmap
         bannerList = new ArrayList<>();
         bannerList.add(new Banner(R.mipmap.ic_discount_banner));
-        bannerList.add(new Banner(R.mipmap.ic_banner2)); // Tạm dùng ic_discount_banner
+        bannerList.add(new Banner(R.mipmap.ic_banner2));
         bannerList.add(new Banner(R.mipmap.ic_banner3));
 
-        // Thiết lập adapter
         bannerAdapter = new BannerAdapter(this, bannerList);
         bannerViewPager.setAdapter(bannerAdapter);
 
-        // Đồng bộ chấm chỉ báo
-        new TabLayoutMediator(bannerDots, bannerViewPager, (tab, position) -> {
-            // Không cần nội dung cho tab, chỉ dùng chấm
-        }).attach();
+        new TabLayoutMediator(bannerDots, bannerViewPager, (tab, position) -> {}).attach();
 
-        // Thêm hiệu ứng chuyển mượt
         bannerViewPager.setPageTransformer((page, position) -> {
             float absPos = Math.abs(position);
-            page.setAlpha(1 - absPos * 0.5f); // Hiệu ứng mờ
-            page.setScaleX(1 - absPos * 0.1f); // Thu nhỏ nhẹ
+            page.setAlpha(1 - absPos * 0.5f);
+            page.setScaleX(1 - absPos * 0.1f);
             page.setScaleY(1 - absPos * 0.1f);
         });
 
-        // Khởi tạo auto-scroll
         startAutoScroll();
 
-        // Tạm dừng auto-scroll khi người dùng vuốt
         bannerViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageScrollStateChanged(int state) {
@@ -179,26 +171,19 @@ public class HomeActivity extends FooterActivity {
     }
 
     private void startAutoScroll() {
-        // Khởi tạo Handler nếu null
         initAutoScrollHandler();
-
-        // Xóa các Runnable cũ
         stopAutoScroll();
 
-        // Khởi tạo Runnable
-        autoScrollRunnable = new Runnable() {
-            @Override
-            public void run() {
-                if (bannerViewPager != null && bannerList != null && !bannerList.isEmpty() && !isFinishing()) {
-                    int currentItem = bannerViewPager.getCurrentItem();
-                    int nextItem = (currentItem + 1) % bannerList.size();
-                    bannerViewPager.setCurrentItem(nextItem, true);
-                    autoScrollHandler.postDelayed(this, AUTO_SCROLL_DELAY);
-                    Log.d(TAG, "Auto-scroll to item: " + nextItem);
-                }
+        autoScrollRunnable = () -> {
+            if (bannerViewPager != null && bannerList != null && !bannerList.isEmpty() && !isFinishing()) {
+                int currentItem = bannerViewPager.getCurrentItem();
+                int nextItem = (currentItem + 1) % bannerList.size();
+                bannerViewPager.setCurrentItem(nextItem, true);
+                autoScrollHandler.postDelayed(autoScrollRunnable, AUTO_SCROLL_DELAY); // Sửa thành autoScrollRunnable
+                Log.d(TAG, "Auto-scroll to item: " + nextItem);
             }
         };
-        autoScrollHandler.postDelayed(autoScrollRunnable, AUTO_SCROLL_DELAY);
+        autoScrollHandler.postDelayed(autoScrollRunnable, AUTO_SCROLL_DELAY); // Sửa thành autoScrollRunnable
     }
 
     private void stopAutoScroll() {
@@ -233,35 +218,23 @@ public class HomeActivity extends FooterActivity {
     private void setupSearch() {
         ImageButton filterButton = findViewById(R.id.filter_button);
         if (filterButton != null) {
-            filterButton.setOnClickListener(v ->
-                    startActivity(new Intent(HomeActivity.this,
-                            SearchActivity.class))); // đặt đúng tên class của trang 3.1
+            filterButton.setOnClickListener(v -> startActivity(new Intent(HomeActivity.this, SearchActivity.class)));
         }
         ImageButton voiceButton = findViewById(R.id.voice_button);
         if (voiceButton != null) {
-            voiceButton.setOnClickListener(v ->
-                    Toast.makeText(this,
-                            "Voice search not implemented",
-                            Toast.LENGTH_SHORT).show());
+            voiceButton.setOnClickListener(v -> Toast.makeText(this, "Voice search not implemented", Toast.LENGTH_SHORT).show());
         }
-        if (voiceButton != null) {
-            voiceButton.setOnClickListener(v -> {
-                Toast.makeText(this, "Voice search not implemented", Toast.LENGTH_SHORT).show();
-            });
-        }
-        // 1. Người dùng nhấn Enter (IME_ACTION_SEARCH) để lọc ngay trên trang Home
+
         searchEditText.setOnEditorActionListener((v, actionId, event) -> {
-            boolean isSearchKey =
-                    actionId == EditorInfo.IME_ACTION_SEARCH ||
-                            (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN);
+            boolean isSearchKey = actionId == EditorInfo.IME_ACTION_SEARCH ||
+                    (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN);
 
             if (isSearchKey) {
                 String query = searchEditText.getText().toString().trim();
                 if (!query.isEmpty()) {
                     Intent intent = new Intent(HomeActivity.this, CategoryActivity.class);
-                    intent.putExtra("search_query", query); // ví dụ: "combo"
+                    intent.putExtra("search_query", query);
                     startActivity(intent);
-
                 } else {
                     Toast.makeText(this, "Please enter a keyword", Toast.LENGTH_SHORT).show();
                 }
@@ -269,8 +242,6 @@ public class HomeActivity extends FooterActivity {
             }
             return false;
         });
-
-
     }
 
     private void filterProducts(String query) {
@@ -286,14 +257,7 @@ public class HomeActivity extends FooterActivity {
     }
 
     private void setupCategoryButtons() {
-        int[] categoryIds = {
-                R.id.mixed_category,
-                R.id.grilled_category,
-                R.id.sweet_category,
-                R.id.combo_category,
-                R.id.ingredients_category
-        };
-
+        int[] categoryIds = {R.id.mixed_category, R.id.grilled_category, R.id.sweet_category, R.id.combo_category, R.id.ingredients_category};
         String[] categoryCodes = {"BT01", "BT02", "BT03", "BT04", "BT05"};
         String[] categoryNames = {"Mixed", "Grilled", "Sweet", "Combo", "Ingredients"};
 
@@ -327,10 +291,6 @@ public class HomeActivity extends FooterActivity {
             cartButton.setOnClickListener(v -> startActivity(new Intent(HomeActivity.this, CartActivity.class)));
         }
 
-//        if (notificationButton != null) {
-//            notificationButton.setOnClickListener(v -> startActivity(new Intent(HomeActivity.this, NotificationActivity.class)));
-//        }
-
         if (profileButton != null) {
             profileButton.setOnClickListener(v -> startActivity(new Intent(HomeActivity.this, MyProfileActivity.class)));
         }
@@ -341,7 +301,7 @@ public class HomeActivity extends FooterActivity {
         if (bestSellerViewAll != null) {
             bestSellerViewAll.setOnClickListener(v -> {
                 Intent intent = new Intent(HomeActivity.this, BestSellerActivity.class);
-                intent.putExtra("bestSellerList", new ArrayList<>(productList)); // truyền list
+                intent.putExtra("bestSellerList", new ArrayList<>(productList));
                 startActivity(intent);
             });
         }
@@ -350,7 +310,7 @@ public class HomeActivity extends FooterActivity {
         if (recommendViewAll != null) {
             recommendViewAll.setOnClickListener(v -> {
                 Intent intent = new Intent(HomeActivity.this, RecommendActivity.class);
-                intent.putExtra("recommendList", new ArrayList<>(productList)); // truyền list đang hiển thị
+                intent.putExtra("recommendList", new ArrayList<>(productList));
                 startActivity(intent);
             });
         }
@@ -359,23 +319,19 @@ public class HomeActivity extends FooterActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        // Tạm dừng auto-scroll
         stopAutoScroll();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        // Tiếp tục auto-scroll
         startAutoScroll();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Dọn dẹp
         stopAutoScroll();
-        // Không đặt null để tránh lỗi, chỉ xóa callbacks
     }
 
     private void openCategory(String code, String name) {

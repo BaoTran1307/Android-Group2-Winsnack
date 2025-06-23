@@ -17,6 +17,7 @@
             android:padding="12dp">
 
             <ImageView
+                android:id="@+id/back_button"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_back"
@@ -50,6 +51,23 @@
             </LinearLayout>
         </RelativeLayout>
 
+        <!-- Search Box -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <EditText
+                android:id="@+id/search_edit_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Search"
+                android:inputType="text"
+                android:imeOptions="actionSearch" />
+        </LinearLayout>
+
         <!-- Categories -->
         <TextView
             android:layout_width="match_parent"
@@ -66,8 +84,8 @@
             android:paddingHorizontal="16dp"
             android:gravity="center_vertical">
 
-            <!-- 5 categories -->
             <LinearLayout
+                android:id="@+id/mixed_category"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -88,6 +106,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/grilled_category"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -108,6 +127,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/sweet_category"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -128,6 +148,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/combo_category"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -148,6 +169,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ingredients_category"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -168,86 +190,6 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Sort by -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sort by"
-            android:textStyle="bold"
-            android:padding="16dp"
-            android:textSize="16sp" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingHorizontal="16dp">
-
-            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_star_filled" />
-            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_star_filled" />
-            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_star_filled" />
-            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_star_filled" />
-            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_star_outline" />
-        </LinearLayout>
-
-        <!-- Label -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Label"
-            android:textStyle="bold"
-            android:padding="16dp"
-            android:textSize="16sp" />
-
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:columnCount="3"
-            android:rowOrderPreserved="false"
-            android:padding="8dp"> <Button
-            android:text="New"
-            android:backgroundTint="#FF9413"
-            android:textColor="#FFFFFF"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill_horizontal"
-            android:layout_width="0dp"  android:layout_margin="4dp" /> <Button
-            android:text="Best Seller"
-            android:backgroundTint="#FF9413"
-            android:textColor="#FFFFFF"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill_horizontal"
-            android:layout_width="0dp"
-            android:layout_margin="4dp" />
-
-            <Button
-                android:text="Limited"
-                android:backgroundTint="#FF9413"
-                android:textColor="#FFFFFF"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill_horizontal"
-                android:layout_width="0dp"
-                android:layout_margin="4dp" />
-
-            <Button
-                android:text="Discount"
-                android:backgroundTint="#FF9413"
-                android:textColor="#FFFFFF"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill_horizontal"
-                android:layout_width="0dp"
-                android:layout_margin="4dp" />
-
-            <Button
-                android:backgroundTint="#FF9413"
-                android:text="Trending"
-                android:textColor="#FFFFFF"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill_horizontal"
-                android:layout_width="0dp"
-                android:layout_margin="4dp" />
-
-        </GridLayout>
-
         <!-- Price -->
         <TextView
             android:layout_width="match_parent"
@@ -257,8 +199,8 @@
             android:padding="16dp"
             android:textSize="16sp" />
 
-        <!-- Price scale -->
         <SeekBar
+            android:id="@+id/price_seekbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
@@ -272,33 +214,23 @@
             android:paddingHorizontal="16dp">
 
             <TextView
+                android:id="@+id/min_price_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="$1" />
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="$2" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="$5" />
-
-            <TextView
+                android:id="@+id/max_price_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="$10 >" />
         </LinearLayout>
 
-
         <!-- Apply button -->
         <Button
+            android:id="@+id/apply_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Apply"
