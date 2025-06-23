@@ -47,7 +47,7 @@
                 <!-- Right-side icons -->
                 <ImageButton
                     android:id="@+id/voice_button"
-                    android:layout_width="27dp"
+                    android:layout_width="22dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="8dp"
                     android:layout_alignParentEnd="true"

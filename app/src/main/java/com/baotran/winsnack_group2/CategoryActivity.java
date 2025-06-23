@@ -45,7 +45,7 @@ public class CategoryActivity extends FooterActivity {
 
         recyclerView = findViewById(R.id.recyclerViewCategory);
         titleView = findViewById(R.id.categoryTitle);
-        filterButton = findViewById(R.id.filterButton);
+        filterButton = findViewById(R.id.filter_button);
         searchEditText = findViewById(R.id.search_edit_text);
 
         // Lấy dữ liệu từ Intent
