@@ -1,132 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-    <LinearLayout
+    <!-- Header + Search -->
+    <RelativeLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:background="#FFCF59"
+        android:padding="16dp"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <!-- Header + Search -->
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/search_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FFCF59"
-            android:padding="16dp">
+            android:orientation="horizontal">
 
+            <!-- Search Box -->
             <LinearLayout
-                android:id="@+id/search_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_weight="0.8"
+                android:orientation="horizontal"
+                android:background="@drawable/bg_search_rounded"
+                android:paddingHorizontal="6dp"
+                android:gravity="center_vertical"
+                android:layout_marginEnd="6dp">
 
-                <!-- Search Box -->
-                <LinearLayout
+                <EditText
+                    android:id="@+id/search_edit_text"
                     android:layout_width="0dp"
-                    android:layout_height="36dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:background="@drawable/bg_search_rounded"
-                    android:paddingHorizontal="6dp"
-                    android:gravity="center_vertical">
-
-                    <EditText
-                        android:id="@+id/search_edit_text"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:drawableLeft="@android:drawable/ic_menu_search"
-                        android:drawablePadding="8dp"
-                        android:hint="Search"
-                        android:inputType="text"
-                        android:imeOptions="actionSearch"
-                        android:singleLine="true"
-                        android:paddingHorizontal="8dp"
-                        android:textSize="14sp" />
-
-                    <ImageButton
-                        android:id="@+id/voice_button"
-                        android:layout_width="27dp"
-                        android:layout_height="23dp"
-                        android:layout_marginStart="4dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:src="@mipmap/ic_voice" />
-
-                    <ImageButton
-                        android:id="@+id/filter_button"
-                        android:layout_width="27dp"
-                        android:layout_height="23dp"
-                        android:layout_marginStart="4dp"
-                        android:background="@android:color/transparent"
-                        android:scaleType="fitCenter"
-                        android:src="@mipmap/ic_filter" />
-                </LinearLayout>
+                    android:background="@android:color/transparent"
+                    android:drawableLeft="@android:drawable/ic_menu_search"
+                    android:drawablePadding="8dp"
+                    android:hint="Search"
+                    android:paddingHorizontal="8dp"
+                    android:textSize="14sp" />
 
                 <!-- Right-side icons -->
                 <ImageButton
-                    android:id="@+id/cart_button"
+                    android:id="@+id/voice_button"
                     android:layout_width="27dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="8dp"
                     android:layout_alignParentEnd="true"
                     android:background="@android:color/transparent"
                     android:scaleType="fitCenter"
-                    android:src="@mipmap/ic_cart" />
+                    android:src="@mipmap/ic_voice" />
 
                 <ImageButton
-                    android:id="@+id/profile_button"
+                    android:id="@+id/filter_button"
                     android:layout_width="27dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="8dp"
                     android:layout_toLeftOf="@id/cart_button"
                     android:background="@android:color/transparent"
                     android:scaleType="fitCenter"
-                    android:src="@mipmap/ic_profile" />
+                    android:src="@mipmap/ic_filter" />
             </LinearLayout>
-        </RelativeLayout>
 
-        <!-- Category Title + Filter -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="16dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="4dp">
+            <!-- Right Icons -->
+            <ImageButton
+                android:id="@+id/cart_button"
+                android:layout_width="27dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/ic_cart" />
 
-            <TextView
-                android:id="@+id/categoryTitle"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="Category Name"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="#FF5722" />
+            <ImageButton
+                android:id="@+id/notification_button"
+                android:layout_width="27dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/ic_notification" />
 
-            <ImageView
-                android:id="@+id/filterButton"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:clickable="true"
-                android:contentDescription="Filter"
-                android:focusable="true"
-                android:padding="8dp"
-                android:src="@drawable/ic_filter" />
+            <ImageButton
+                android:id="@+id/profile_button"
+                android:layout_width="27dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/ic_profile" />
         </LinearLayout>
+    </RelativeLayout>
 
-        <!-- Product List -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewCategory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:nestedScrollingEnabled="false"
-            android:overScrollMode="never" />
-    </LinearLayout>
-</ScrollView>
+    <!-- Tên danh mục -->
+    <TextView
+        android:id="@+id/categoryTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="Category Name"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#FF5722"
+        app:layout_constraintTop_toBottomOf="@id/header" />
+
+    <!-- Product List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewCategory"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/categoryTitle"
+        app:layout_constraintBottom_toTopOf="@id/footer_container" />
+
+    <!-- Footer cố định ở dưới -->
+    <include
+        android:id="@+id/footer_container"
+        layout="@layout/footer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

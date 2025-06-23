@@ -21,7 +21,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryActivity extends AppCompatActivity {
+public class CategoryActivity extends FooterActivity {
 
     private RecyclerView recyclerView;
     private ProductAdapter adapter;
@@ -40,6 +40,7 @@ public class CategoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        setupFooter();
         db = FirebaseFirestore.getInstance();
 
         recyclerView = findViewById(R.id.recyclerViewCategory);
