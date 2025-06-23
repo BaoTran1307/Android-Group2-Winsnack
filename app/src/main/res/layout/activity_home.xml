@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFF9E4">
@@ -60,6 +61,7 @@
                         android:orientation="horizontal"
                         android:paddingHorizontal="6dp">
 
+                        <!-- … giữ nguyên các thuộc tính cũ … -->
                         <EditText
                             android:id="@+id/search_edit_text"
                             android:layout_width="0dp"
@@ -69,9 +71,12 @@
                             android:drawableLeft="@android:drawable/ic_menu_search"
                             android:drawablePadding="8dp"
                             android:hint="Search"
+                            android:inputType="text"
+                            android:imeOptions="actionSearch"
                             android:paddingHorizontal="8dp"
-                            android:paddingVertical="0dp"
                             android:textSize="14sp" />
+
+
 
                         <ImageButton
                             android:id="@+id/voice_button"

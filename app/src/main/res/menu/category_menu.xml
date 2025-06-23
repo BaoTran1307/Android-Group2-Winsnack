@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_all"
+        android:title="All Products" />
+    <item android:id="@+id/menu_mixed"
+        android:title="Mixed" />
+    <item android:id="@+id/menu_grilled"
+        android:title="Grilled" />
+    <item android:id="@+id/menu_sweet"
+        android:title="Sweet" />
+    <item android:id="@+id/menu_combo"
+        android:title="Combo" />
+    <item android:id="@+id/menu_ingredients"
+        android:title="Ingredients" />
+</menu>
