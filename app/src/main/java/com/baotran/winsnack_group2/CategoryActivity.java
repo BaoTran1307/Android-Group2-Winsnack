@@ -1,5 +1,6 @@
 package com.baotran.winsnack_group2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -27,90 +28,68 @@ public class CategoryActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private String categoryCode;
     private String categoryName;
-    TextView titleView;
-    ImageView filterButton;
+    private TextView titleView;
+    private ImageView filterButton;
     private EditText searchEditText;
     private String searchQuery = null;
-    private List<Product> fullList = new ArrayList<>(); // tất cả sản phẩm
-    private List<Product> filteredList = new ArrayList<>(); // để adapter hiển thị
-
-
-
+    private List<Product> fullList = new ArrayList<>();
+    private List<Product> filteredList = new ArrayList<>();
+    private double maxPrice = Double.MAX_VALUE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu); // layout XML bạn đã tạo
+        setContentView(R.layout.activity_menu);
         db = FirebaseFirestore.getInstance();
 
-
         recyclerView = findViewById(R.id.recyclerViewCategory);
-//        ImageView btnBack = findViewById(R.id.btnBackCategory);
-//        btnBack.setOnClickListener(v -> finish());
-
-        // Lấy dữ liệu truyền từ HomeActivity
-        categoryCode = getIntent().getStringExtra("category_code");
-        categoryName = getIntent().getStringExtra("category_name");
         titleView = findViewById(R.id.categoryTitle);
         filterButton = findViewById(R.id.filterButton);
+        searchEditText = findViewById(R.id.search_edit_text);
 
-
-        filterButton.setOnClickListener(v -> showFilterMenu());
+        // Lấy dữ liệu từ Intent
         searchQuery = getIntent().getStringExtra("search_query");
         categoryCode = getIntent().getStringExtra("category_code");
         categoryName = getIntent().getStringExtra("category_name");
+        Double maxPriceExtra = getIntent().getDoubleExtra("max_price", Double.MAX_VALUE);
+        if (maxPriceExtra != null) maxPrice = maxPriceExtra;
 
-        if (searchQuery != null) {
-            titleView.setText("All Products");
-            searchEditText = findViewById(R.id.search_edit_text); // ✅ thêm dòng này trước khi dùng
-            searchEditText.setText(searchQuery); // hiển thị từ khoá
-            loadAllProducts(); // ✅ load toàn bộ trước
+        // Hiển thị tiêu đề
+        if (searchQuery != null && !searchQuery.isEmpty()) {
+            titleView.setText("Search Results for: " + searchQuery);
+            loadAllProductsAndFilter(searchQuery);
         } else if (categoryCode != null) {
             titleView.setText(categoryName);
             loadProductsByCategory(categoryCode);
         } else {
-            loadAllProducts(); // fallback
+            titleView.setText("All Products");
+            loadAllProducts();
         }
 
+        // Setup RecyclerView
+        adapter = new ProductAdapter(this, filteredList, R.layout.item_product_category);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2)); // 2 cột
+        recyclerView.setAdapter(adapter);
 
-
-        // Hiển thị tên danh mục
-        TextView titleView = findViewById(R.id.categoryTitle);
-        if (categoryName != null) {
-            titleView.setText(categoryName);
-        }
-//        if (categoryCode != null) {
-//            loadProductsByCategory(categoryCode);
-//        } else {
-//            loadAllProducts(); // ✅ THÊM DÒNG NÀY
-//        }
-        searchEditText = findViewById(R.id.search_edit_text);
-
+        // Tìm kiếm trực tiếp trên trang
         searchEditText.setOnEditorActionListener((v, actionId, event) -> {
-            boolean isSearchKey =
-                    actionId == EditorInfo.IME_ACTION_SEARCH ||
-                            (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER &&
-                                    event.getAction() == KeyEvent.ACTION_DOWN);
+            boolean isSearchKey = actionId == EditorInfo.IME_ACTION_SEARCH ||
+                    (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN);
 
             if (isSearchKey) {
                 String keyword = searchEditText.getText().toString().trim();
-                filterProductsByQuery(keyword);
+                if (!keyword.isEmpty()) {
+                    filterProductsByQuery(keyword);
+                }
                 return true;
             }
             return false;
         });
 
-
-        // Setup RecyclerView
-        filteredList = new ArrayList<>();
-        adapter = new ProductAdapter(this, filteredList, R.layout.item_product_category);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
-        recyclerView.setAdapter(adapter);
-
-        // Lấy dữ liệu từ Firestore
-        db = FirebaseFirestore.getInstance();
-        loadProductsByCategory(categoryCode);
+        // Mở SearchActivity khi nhấn filter
+        filterButton.setOnClickListener(v -> startActivity(new Intent(CategoryActivity.this, SearchActivity.class)));
     }
+
     private void loadAllProductsAndFilter(String keyword) {
         db.collection("PRODUCT")
                 .get()
@@ -118,17 +97,15 @@ public class CategoryActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         fullList.clear();
                         filteredList.clear();
-
                         for (QueryDocumentSnapshot doc : task.getResult()) {
                             Product product = doc.toObject(Product.class);
                             fullList.add(product);
-                            // 👉 Lọc trực tiếp khi load
-                            if (product.getProductName().toLowerCase().contains(keyword.toLowerCase()) ||
-                                    product.getDescription().toLowerCase().contains(keyword.toLowerCase())) {
+                            if (product.getPrice() <= maxPrice && // Lọc theo giá
+                                    (product.getProductName().toLowerCase().contains(keyword.toLowerCase()) ||
+                                            product.getDescription().toLowerCase().contains(keyword.toLowerCase()))) {
                                 filteredList.add(product);
                             }
                         }
-
                         adapter.notifyDataSetChanged();
                     } else {
                         Log.e("CategoryActivity", "Error loading products: " + task.getException());
@@ -137,57 +114,17 @@ public class CategoryActivity extends AppCompatActivity {
     }
 
     private void filterProductsByQuery(String query) {
-        List<Product> result = new ArrayList<>();
+        filteredList.clear();
         for (Product p : fullList) {
-            if ((p.getProductName() != null && p.getProductName().toLowerCase().contains(query.toLowerCase())) ||
-                    (p.getDescription() != null && p.getDescription().toLowerCase().contains(query.toLowerCase()))) {
-                result.add(p);
+            if (p.getPrice() <= maxPrice && // Lọc theo giá
+                    (p.getProductName() != null && p.getProductName().toLowerCase().contains(query.toLowerCase()) ||
+                            p.getDescription() != null && p.getDescription().toLowerCase().contains(query.toLowerCase()))) {
+                filteredList.add(p);
             }
         }
-        filteredList.clear();
-        filteredList.addAll(result);
         adapter.notifyDataSetChanged();
     }
 
-
-    private void showFilterMenu() {
-        android.widget.PopupMenu popup = new android.widget.PopupMenu(this, filterButton);
-        popup.getMenu().add("All Products");
-        popup.getMenu().add("Mixed");
-        popup.getMenu().add("Grilled");
-        popup.getMenu().add("Sweet");
-        popup.getMenu().add("Combo");
-        popup.getMenu().add("Ingredients");
-
-        popup.setOnMenuItemClickListener(item -> {
-            String selected = item.getTitle().toString();
-            titleView.setText(selected);
-
-            switch (selected) {
-                case "All Products":
-                    loadAllProducts();
-                    break;
-                case "Mixed":
-                    loadProductsByCategory("BT01");
-                    break;
-                case "Grilled":
-                    loadProductsByCategory("BT02");
-                    break;
-                case "Sweet":
-                    loadProductsByCategory("BT03");
-                    break;
-                case "Combo":
-                    loadProductsByCategory("BT04");
-                    break;
-                case "Ingredients":
-                    loadProductsByCategory("BT05");
-                    break;
-            }
-            return true;
-        });
-
-        popup.show();
-    }
     private void loadAllProducts() {
         db.collection("PRODUCT")
                 .get()
@@ -198,23 +135,14 @@ public class CategoryActivity extends AppCompatActivity {
                         for (QueryDocumentSnapshot doc : task.getResult()) {
                             Product product = doc.toObject(Product.class);
                             fullList.add(product);
+                            if (product.getPrice() <= maxPrice) {
+                                filteredList.add(product);
+                            }
                         }
-
-                        // Nếu có searchQuery truyền từ Home thì lọc
-                        if (searchQuery != null && !searchQuery.isEmpty()) {
-                            filterProductsByQuery(searchQuery);
-                        } else {
-                            filteredList.addAll(fullList);
-                            adapter.notifyDataSetChanged();
-                        }
+                        adapter.notifyDataSetChanged();
                     }
                 });
     }
-
-
-
-
-
 
     private void loadProductsByCategory(String categoryCode) {
         db.collection("PRODUCT")
@@ -227,12 +155,12 @@ public class CategoryActivity extends AppCompatActivity {
                         for (QueryDocumentSnapshot doc : task.getResult()) {
                             Product product = doc.toObject(Product.class);
                             fullList.add(product);
-                            filteredList.add(product);
+                            if (product.getPrice() <= maxPrice) {
+                                filteredList.add(product);
+                            }
                         }
                         adapter.notifyDataSetChanged();
                     }
                 });
     }
-
-
 }
