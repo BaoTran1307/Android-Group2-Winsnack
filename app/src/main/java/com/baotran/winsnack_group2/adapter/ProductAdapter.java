@@ -15,7 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.baotran.winsnack_group2.AboutUsActivity;
+import com.baotran.winsnack_group2.ProductDetailsActivity;
 import com.baotran.winsnack_group2.R;
 import com.baotran.winsnack_group2.models.Product;
 import com.bumptech.glide.Glide;
@@ -61,6 +61,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 .load(product.getImage())
                 .thumbnail(0.25f)
                 .timeout(30000)
+                .override(200, 200)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.placeholder)
@@ -80,8 +81,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 .into(holder.productImage);
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, AboutUsActivity.class);
-            intent.putExtra("productId", product.getProductID());
+            Intent intent = new Intent(context, ProductDetailsActivity.class);
+            intent.putExtra("product", product);
             context.startActivity(intent);
         });
     }

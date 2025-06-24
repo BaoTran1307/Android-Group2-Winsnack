@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#FFF9E8"
     tools:ignore="ExtraText">
 
     <!-- Header Section -->
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/header_layout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:paddingTop="20dp"
         android:paddingBottom="10dp"
         android:paddingStart="24dp"
@@ -23,41 +25,48 @@
             android:id="@+id/btn_back"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:src="@drawable/ic_back"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:padding="4dp" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_back"
+            app:layout_constraintEnd_toStartOf="@id/txtDiscount"
             android:text="Product details"
             android:textColor="#FFFFFF"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:gravity="center" />
 
         <TextView
             android:id="@+id/txtDiscount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:text="-30%"
             android:textColor="#FFFFFF"
             android:background="@drawable/circle_background_orange"
-            android:layout_marginTop="30dp"
             android:padding="8dp"
             android:textSize="16sp" />
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Scrollable Content -->
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/bottomNav"
-        android:layout_below="@+id/header_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/header_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:padding="16dp">
 
         <LinearLayout
@@ -69,9 +78,9 @@
             <ImageView
                 android:id="@+id/imgProduct"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
-                android:scaleType="fitCenter"
-                android:src="@mipmap/ic_recommend2" />
+                android:layout_height="300dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_recommend2" />
 
             <!-- Product Brand -->
             <TextView
@@ -81,14 +90,16 @@
                 android:text="Bánh tráng Chà bông"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="#FF9800" />
+                android:textColor="#FF9800"
+                android:layout_marginTop="16dp" />
 
             <!-- Price and Quantity -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:layout_marginTop="8dp">
 
                 <TextView
                     android:id="@+id/txtPrice"
@@ -97,8 +108,7 @@
                     android:text="$14.00"
                     android:textSize="24sp"
                     android:textColor="#FF5722"
-                    android:textStyle="bold"
-                    android:layout_weight="0" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/txtOriginalPrice"
@@ -108,8 +118,7 @@
                     android:textSize="16sp"
                     android:textColor="#757575"
                     android:paddingStart="8dp"
-                    android:paddingEnd="16dp"
-                    android:layout_weight="0" />
+                    android:paddingEnd="16dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -117,36 +126,30 @@
                     android:orientation="horizontal"
                     android:background="@drawable/quantity_background"
                     android:padding="4dp"
-                    android:layout_marginLeft="120dp"
-                    android:layout_weight="0"
-                    android:layout_gravity="end" > <!-- Căn phải -->
+                    android:layout_gravity="end">
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" /> <!-- Đẩy LinearLayout con sang phải -->
-                <ImageButton
-                    android:id="@+id/btnDecrease"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@mipmap/ic_menu_close_clear_cancel"
-                    android:background="?android:attr/selectableItemBackground" />
+                    <ImageButton
+                        android:id="@+id/btnDecrease"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@mipmap/ic_menu_close_clear_cancel"
+                        android:background="?android:attr/selectableItemBackground" />
 
-                <TextView
-                    android:id="@+id/txtQuantity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="3"
-                    android:textSize="18sp"
-                    android:gravity="center"
-                    android:paddingHorizontal="12dp" />
+                    <TextView
+                        android:id="@+id/txtQuantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3"
+                        android:textSize="18sp"
+                        android:gravity="center"
+                        android:paddingHorizontal="12dp" />
 
-                <ImageButton
-                    android:id="@+id/btnIncrease"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:src="@mipmap/ic_menu_add" />
+                    <ImageButton
+                        android:id="@+id/btnIncrease"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:src="@mipmap/ic_menu_add" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -168,7 +171,7 @@
                 android:text="SEE MORE"
                 android:textColor="#FF9800"
                 android:textSize="14sp"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center" />
 
             <!-- Comments Section -->
             <TextView
@@ -182,10 +185,9 @@
                 android:textColor="#212121" />
 
             <!-- Comment 1 -->
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:padding="8dp">
 
                 <TextView
@@ -195,7 +197,8 @@
                     android:text="Thank Tee"
                     android:textColor="#4CAF50"
                     android:textSize="16sp"
-                    android:layout_gravity="center_vertical"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <RatingBar
                     android:id="@+id/ratingBar1"
@@ -205,7 +208,10 @@
                     android:rating="4.8"
                     android:scaleX="0.5"
                     android:scaleY="0.5"
-                    android:stepSize="0.1" />
+                    android:stepSize="0.1"
+                    app:layout_constraintStart_toEndOf="@id/txtCommentUser1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
 
                 <TextView
                     android:id="@+id/txtCommentDate1"
@@ -214,8 +220,10 @@
                     android:text="3 Ngày trước"
                     android:textSize="12sp"
                     android:textColor="#757575"
-                    android:layout_gravity="center_vertical"/>
-            </LinearLayout>
+                    app:layout_constraintStart_toEndOf="@id/ratingBar1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/txtCommentText1"
@@ -225,13 +233,13 @@
                 android:paddingEnd="16dp"
                 android:text="Mình đã thử và thấy bao la lòng bạn nhé! Win Snack, bánh tráng rong biển, bánh tráng bơ."
                 android:textColor="#424242"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:layout_marginTop="4dp" />
 
             <!-- Comment 2 -->
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:padding="8dp">
 
                 <TextView
@@ -241,8 +249,8 @@
                     android:text="Thank Tee"
                     android:textColor="#4CAF50"
                     android:textSize="16sp"
-                    android:layout_gravity="center_vertical"
-                    />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <RatingBar
                     android:id="@+id/ratingBar2"
@@ -252,7 +260,10 @@
                     android:rating="4.8"
                     android:scaleX="0.5"
                     android:scaleY="0.5"
-                    android:stepSize="0.1" />
+                    android:stepSize="0.1"
+                    app:layout_constraintStart_toEndOf="@id/txtCommentUser2"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
 
                 <TextView
                     android:id="@+id/txtCommentDate2"
@@ -261,28 +272,21 @@
                     android:text="3 Ngày trước"
                     android:textSize="12sp"
                     android:textColor="#757575"
-                    android:layout_gravity="center_vertical"/>
-            </LinearLayout>
+                    app:layout_constraintStart_toEndOf="@id/ratingBar2"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/txtCommentText2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Mình đã thử và thấy bao la lòng bạn nhé! Win Snack, bánh tráng rong biển, bánh tráng bơ."
-                android:textSize="14sp"
-                android:textColor="#424242"
                 android:paddingStart="16dp"
-                android:paddingEnd="16dp" />
-
-            <TextView
-                android:id="@+id/txtAddComment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ADD COMMENTS"
+                android:paddingEnd="16dp"
+                android:text="Mình đã thử và thấy bao la lòng bạn nhé! Win Snack, bánh tráng rong biển, bánh tráng bơ."
+                android:textColor="#424242"
                 android:textSize="14sp"
-                android:textColor="#FF9800"
-                android:layout_marginTop="8dp"
-                android:layout_gravity="center"/>
+                android:layout_marginTop="4dp" />
 
             <!-- Add to Cart Button -->
             <Button
@@ -296,81 +300,7 @@
                 android:text="Add to Cart"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center" />
         </LinearLayout>
     </ScrollView>
-
-<!--    &lt;!&ndash; Bottom Navigation &ndash;&gt;-->
-<!--    <LinearLayout-->
-<!--        android:id="@+id/bottomNav"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="60dp"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:orientation="horizontal"-->
-<!--        android:gravity="center"-->
-<!--        android:background="@drawable/footer_background"-->
-<!--        android:paddingHorizontal="12dp">-->
-
-<!--        <ImageButton-->
-<!--            android:id="@+id/btnHome"-->
-<!--            android:layout_width="30dp"-->
-<!--            android:layout_height="30dp"-->
-<!--            android:background="@android:color/transparent"-->
-<!--            android:padding="0dp"-->
-<!--            android:scaleType="fitCenter"-->
-<!--            android:src="@mipmap/ic_navi1" />-->
-
-<!--        <ImageButton-->
-<!--            android:id="@+id/btnMenu"-->
-<!--            android:layout_width="30dp"-->
-<!--            android:layout_height="30dp"-->
-<!--            android:layout_marginStart="40dp"-->
-<!--            android:background="@android:color/transparent"-->
-<!--            android:padding="0dp"-->
-<!--            android:scaleType="fitCenter"-->
-<!--            android:src="@mipmap/ic_navi2" />-->
-
-<!--        <ImageButton-->
-<!--            android:id="@+id/btnChatbot"-->
-<!--            android:layout_width="30dp"-->
-<!--            android:layout_height="30dp"-->
-<!--            android:layout_marginStart="40dp"-->
-<!--            android:src="@mipmap/ic_navi3"-->
-<!--            android:background="@android:color/transparent"-->
-<!--            android:padding="0dp"-->
-<!--            android:scaleType="fitCenter" />-->
-
-<!--        <ImageButton-->
-<!--            android:id="@+id/btnEvent"-->
-<!--            android:layout_width="30dp"-->
-<!--            android:layout_height="30dp"-->
-<!--            android:layout_marginStart="40dp"-->
-<!--            android:src="@mipmap/ic_navi4"-->
-<!--            android:background="@android:color/transparent"-->
-<!--            android:padding="0dp"-->
-<!--            android:scaleType="fitCenter"/>-->
-
-<!--        <ImageButton-->
-<!--            android:id="@+id/btnOthers"-->
-<!--            android:layout_width="30dp"-->
-<!--            android:layout_height="30dp"-->
-<!--            android:layout_marginStart="40dp"-->
-<!--            android:src="@mipmap/ic_navi5"-->
-<!--            android:background="@android:color/transparent"-->
-<!--            android:padding="0dp"-->
-<!--            android:scaleType="fitCenter"/>-->
-<!--    </LinearLayout>-->
-
-<!--    &lt;!&ndash; ImageView cho ic_chatbot ở góc dưới bên phải &ndash;&gt;-->
-<!--    <ImageView-->
-<!--        android:id="@+id/imgChatbot"-->
-<!--        android:layout_width="80dp"-->
-<!--        android:layout_height="80dp"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:layout_alignParentEnd="true"-->
-<!--        android:layout_marginBottom="80dp"-->
-<!--        android:layout_marginEnd="16dp"-->
-<!--        android:src="@mipmap/ic_chatbot"-->
-<!--        android:elevation="8dp"-->
-<!--        android:background="?android:attr/selectableItemBackgroundBorderless" />-->
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

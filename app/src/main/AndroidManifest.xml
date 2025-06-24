@@ -115,6 +115,9 @@
         <activity
             android:name=".AboutUsActivity"
             android:exported="false" />
+        <activity
+            android:name=".ProductDetailsActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
