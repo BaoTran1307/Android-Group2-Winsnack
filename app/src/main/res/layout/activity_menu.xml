@@ -50,6 +50,7 @@
                     android:id="@+id/voice_button"
                     android:layout_width="23dp"
                     android:layout_height="23dp"
+
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="8dp"
                     android:background="@android:color/transparent"
