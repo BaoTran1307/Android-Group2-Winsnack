@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,6 +44,7 @@ public class CategoryActivity extends FooterActivity {
         setupFooter();
         db = FirebaseFirestore.getInstance();
 
+
         recyclerView = findViewById(R.id.recyclerViewCategory);
         titleView = findViewById(R.id.categoryTitle);
         filterButton = findViewById(R.id.filter_button);
@@ -69,7 +71,7 @@ public class CategoryActivity extends FooterActivity {
 
         // Setup RecyclerView
         adapter = new ProductAdapter(this, filteredList, R.layout.item_product_category);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2)); // 2 cột
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 1)); // 2 cột
         recyclerView.setAdapter(adapter);
 
         // Tìm kiếm trực tiếp trên trang
@@ -86,11 +88,50 @@ public class CategoryActivity extends FooterActivity {
             }
             return false;
         });
+        ImageView iconMenu = findViewById(R.id.icon_category_menu);
+
+        iconMenu.setOnClickListener(v -> {
+            PopupMenu popupMenu = new PopupMenu(CategoryActivity.this, v);
+            popupMenu.getMenuInflater().inflate(R.menu.category_menu, popupMenu.getMenu());
+
+            popupMenu.setOnMenuItemClickListener(item -> {
+                int id = item.getItemId();
+
+                if (id == R.id.menu_all) {
+                    titleView.setText("All Products");
+                    loadAllProducts();
+                    return true;
+                } else if (id == R.id.menu_mixed) {
+                    titleView.setText("Mixed");
+                    loadProductsByCategory("BT01");
+                    return true;
+                } else if (id == R.id.menu_grilled) {
+                    titleView.setText("Grilled");
+                    loadProductsByCategory("BT02");
+                    return true;
+                } else if (id == R.id.menu_sweet) {
+                    titleView.setText("Sweet");
+                    loadProductsByCategory("BT03");
+                    return true;
+                } else if (id == R.id.menu_combo) {
+                    titleView.setText("Combo");
+                    loadProductsByCategory("BT04");
+                    return true;
+                } else if (id == R.id.menu_ingredients) {
+                    titleView.setText("Ingredients");
+                    loadProductsByCategory("BT05");
+                    return true;
+                }
+                return false;
+            });
+
+
+            popupMenu.show();
+        });
 
         // Mở SearchActivity khi nhấn filter
         filterButton.setOnClickListener(v -> startActivity(new Intent(CategoryActivity.this, SearchActivity.class)));
     }
-
     private void loadAllProductsAndFilter(String keyword) {
         db.collection("PRODUCT")
                 .get()
@@ -164,4 +205,5 @@ public class CategoryActivity extends FooterActivity {
                     }
                 });
     }
+
 }
