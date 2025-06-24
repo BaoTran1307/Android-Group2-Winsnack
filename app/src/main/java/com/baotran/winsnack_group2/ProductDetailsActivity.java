@@ -19,9 +19,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import com.baotran.winsnack_group2.models.Product;
@@ -123,16 +128,24 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 isDescriptionExpanded = true;
             }
         });
-//
+
 //        txtAddComment.setOnClickListener(v ->
 //                Toast.makeText(this, "Add comment feature not implemented", Toast.LENGTH_SHORT).show()
 //        );
 
         btnAddToCart.setOnClickListener(v -> {
             if (product != null) {
-                String productName = txtBrand.getText().toString();
-                double price = Double.parseDouble(txtPrice.getText().toString().replace("$", ""));
-                addToCart(product.getProductID(), productName, price, quantity);
+                String priceStr = txtPrice.getText().toString().replace("$", "").trim();
+                double price;
+                try {
+                    NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+                    Number number = format.parse(priceStr);
+                    price = number.doubleValue();
+                } catch (ParseException e) {
+                    Toast.makeText(this, "Error parsing price: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                addToCart(product.getProductID(), txtBrand.getText().toString(), price, quantity);
             } else {
                 Toast.makeText(this, "Cannot add to cart: Product not found", Toast.LENGTH_SHORT).show();
             }
@@ -183,31 +196,49 @@ public class ProductDetailsActivity extends AppCompatActivity {
         FirebaseUser user = auth.getCurrentUser();
         String userId = user != null ? user.getUid() : "user_1";
 
-        DocumentReference cartItemRef = db.collection("carts")
-                .document(userId)
-                .collection("items")
-                .document(String.valueOf(productId));
+        DocumentReference cartRef = db.collection("CART").document(userId);
+        Map<String, Object> cartItem = new HashMap<>();
+        cartItem.put("productId", productId);
+        cartItem.put("productName", productName);
+        cartItem.put("price", price);
+        cartItem.put("quantity", quantity);
 
-        cartItemRef.get().addOnSuccessListener(documentSnapshot -> {
+        cartRef.get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists()) {
-                // Update quantity
-                long existingQuantity = documentSnapshot.getLong("quantity");
-                cartItemRef.update("quantity", existingQuantity + quantity)
-                        .addOnSuccessListener(aVoid -> {
-                            Toast.makeText(ProductDetailsActivity.this, "Updated quantity in cart", Toast.LENGTH_SHORT).show();
-                        })
-                        .addOnFailureListener(e -> {
-                            Toast.makeText(ProductDetailsActivity.this, "Error updating cart: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                        });
+                // Update existing item in array
+                List<Map<String, Object>> items = (List<Map<String, Object>>) documentSnapshot.get("items");
+                boolean itemUpdated = false;
+                if (items != null) {
+                    for (Map<String, Object> item : items) {
+                        if (item.get("productId").equals(String.valueOf(productId))) {
+                            item.put("quantity", ((Number) item.get("quantity")).intValue() + quantity);
+                            itemUpdated = true;
+                            break;
+                        }
+                    }
+                }
+                if (itemUpdated) {
+                    cartRef.update("items", items)
+                            .addOnSuccessListener(aVoid -> {
+                                Toast.makeText(ProductDetailsActivity.this, "Updated quantity in cart", Toast.LENGTH_SHORT).show();
+                            })
+                            .addOnFailureListener(e -> {
+                                Toast.makeText(ProductDetailsActivity.this, "Error updating cart: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                            });
+                } else {
+                    cartRef.update("items", FieldValue.arrayUnion(cartItem))
+                            .addOnSuccessListener(aVoid -> {
+                                Toast.makeText(ProductDetailsActivity.this, "Added " + quantity + " " + productName + " to cart", Toast.LENGTH_SHORT).show();
+                            })
+                            .addOnFailureListener(e -> {
+                                Toast.makeText(ProductDetailsActivity.this, "Error adding to cart: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                            });
+                }
             } else {
-                // Add new item
-                Map<String, Object> cartItem = new HashMap<>();
-                cartItem.put("productId", productId);
-                cartItem.put("productName", productName);
-                cartItem.put("price", price);
-                cartItem.put("quantity", quantity);
-
-                cartItemRef.set(cartItem)
+                // Create new cart with item array
+                Map<String, Object> newCart = new HashMap<>();
+                newCart.put("items", new Object[]{cartItem});
+                cartRef.set(newCart)
                         .addOnSuccessListener(aVoid -> {
                             Toast.makeText(ProductDetailsActivity.this, "Added " + quantity + " " + productName + " to cart", Toast.LENGTH_SHORT).show();
                         })
