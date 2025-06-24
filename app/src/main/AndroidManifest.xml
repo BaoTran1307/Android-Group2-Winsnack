@@ -22,7 +22,22 @@
             android:name=".EventActivity"
             android:exported="false" />
         <activity
+            android:name=".BlogActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ContactUsActivity"
+            android:exported="false" />
+        <activity
             android:name=".DeliveryAddressActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FAQsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PolicyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OrderInfoActivity"
             android:exported="false" />
         <activity
             android:name=".MyProfileActivity"
@@ -87,6 +102,9 @@
             android:exported="false" />
         <activity
             android:name=".FingerprintActiveActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PaymentMethodActivity"
             android:exported="false" />
         <activity
             android:name=".FingerprintSetupActivity"
