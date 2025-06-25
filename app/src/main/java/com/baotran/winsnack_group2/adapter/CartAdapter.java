@@ -1,34 +1,35 @@
 package com.baotran.winsnack_group2.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.baotran.winsnack_group2.R;
 import com.baotran.winsnack_group2.models.CartItem;
-
+import com.bumptech.glide.Glide;
 import java.util.List;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     private List<CartItem> items;
-    private OnItemActionListener listener; // Interface để xử lý hành động (tăng/giảm, chọn)
+    private OnItemActionListener listener;
+    private Context context;
 
-    // Interface để xử lý hành động
     public interface OnItemActionListener {
         void onQuantityChanged(int position, int newQuantity);
         void onItemChecked(int position, boolean isChecked);
     }
 
-    public CartAdapter(List<CartItem> items, OnItemActionListener listener) {
+    public CartAdapter(List<CartItem> items, OnItemActionListener listener, Context context) {
         this.items = items;
         this.listener = listener;
+        this.context = context;
     }
 
     @NonNull
@@ -41,37 +42,28 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         CartItem item = items.get(position);
-        holder.tvName.setText(item.getName());
-        holder.tvPrice.setText(item.getPrice());
-        holder.tvDateTime.setText(item.getDateTime());
+        // Chuyển Long thành String
+        holder.tvName.setText(item.getProductID() != null ? item.getProductID().toString() : "Unknown");
+        holder.tvPrice.setText(String.format("$%.2f", item.getPrice() != 0 ? item.getPrice() : 0.0));
+        holder.tvDateTime.setText("N/A");
         holder.txtQuantity.setText(String.valueOf(item.getQuantity()));
+        Glide.with(context).load(item.getImage()).into(holder.ivProductImage);
 
-        // Setup checkbox listener
-        holder.cbSelect.setChecked(false); // Mặc định không chọn
+        holder.cbSelect.setChecked(false);
         holder.cbSelect.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (listener != null) {
-                listener.onItemChecked(position, isChecked);
-            }
+            if (listener != null) listener.onItemChecked(position, isChecked);
         });
 
-        // Setup decrease button
         holder.btnDecrease.setOnClickListener(v -> {
-            int currentQuantity = Integer.parseInt(holder.txtQuantity.getText().toString());
+            int currentQuantity = item.getQuantity();
             if (currentQuantity > 1) {
-                holder.txtQuantity.setText(String.valueOf(currentQuantity - 1));
-                if (listener != null) {
-                    listener.onQuantityChanged(position, currentQuantity - 1);
-                }
+                if (listener != null) listener.onQuantityChanged(position, currentQuantity - 1);
             }
         });
 
-        // Setup increase button
         holder.btnIncrease.setOnClickListener(v -> {
-            int currentQuantity = Integer.parseInt(holder.txtQuantity.getText().toString());
-            holder.txtQuantity.setText(String.valueOf(currentQuantity + 1));
-            if (listener != null) {
-                listener.onQuantityChanged(position, currentQuantity + 1);
-            }
+            int currentQuantity = item.getQuantity();
+            if (listener != null) listener.onQuantityChanged(position, currentQuantity + 1);
         });
     }
 
@@ -84,6 +76,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         TextView tvName, tvPrice, tvDateTime, txtQuantity;
         ImageButton btnDecrease, btnIncrease;
         CheckBox cbSelect;
+        ImageView ivProductImage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -94,6 +87,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             btnDecrease = itemView.findViewById(R.id.btnDecrease);
             btnIncrease = itemView.findViewById(R.id.btnIncrease);
             cbSelect = itemView.findViewById(R.id.cbSelect);
+            ivProductImage = itemView.findViewById(R.id.ivProductImage);
         }
     }
 }

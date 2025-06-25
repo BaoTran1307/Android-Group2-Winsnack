@@ -46,6 +46,7 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
+
     implementation ("com.google.android.gms:play-services-tasks:18.0.2")
     implementation ("com.google.android.gms:play-services-base")
     implementation ("com.google.firebase:firebase-database:20.3.0")

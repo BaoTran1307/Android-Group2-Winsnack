@@ -31,20 +31,7 @@
             android:layout_marginStart="10dp" />
     </LinearLayout>
 
-    <!-- Divider -->
-
     <!-- Item Count -->
-    <View
-        android:id="@+id/divider2"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginBottom="500dp"
-        android:background="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@id/layoutTotal"
-        tools:layout_editor_absoluteX="16dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp" />
-
     <TextView
         android:id="@+id/tvItemCount"
         android:layout_width="wrap_content"
@@ -57,54 +44,24 @@
         app:layout_constraintTop_toBottomOf="@id/header"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintHorizontal_bias="0.5" />
 
-    <!-- ScrollView for Cart Items -->
-
-    <!-- Divider -->
-
-    <ScrollView
-        android:id="@+id/scrollView"
+    <!-- RecyclerView for Cart Items -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewCart"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="#FF9800"
-        android:fillViewport="true"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
         android:paddingRight="30dp"
         android:paddingBottom="30dp"
         app:layout_constraintBottom_toTopOf="@id/divider"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvItemCount"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toBottomOf="@id/tvItemCount" />
 
-        <LinearLayout
-            android:id="@+id/llCartItems"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <!-- Hardcoded items (can be replaced with dynamic content) -->
-            <include layout="@layout/item_cart" />
-
-            <include layout="@layout/item_cart" />
-
-            <include layout="@layout/item_cart" />
-
-            <include layout="@layout/item_cart" />
-
-            <include layout="@layout/item_cart" />
-
-            <include layout="@layout/item_cart" />
-
-            <include layout="@layout/item_cart" />
-
-        </LinearLayout>
-    </ScrollView>
-
+    <!-- Divider -->
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
@@ -131,8 +88,7 @@
             android:textSize="18sp"
             android:textColor="#FFFFFF"
             android:layout_weight="1"
-            android:layout_marginStart="25dp"
-            />
+            android:layout_marginStart="25dp" />
 
         <TextView
             android:id="@+id/tvTotal"

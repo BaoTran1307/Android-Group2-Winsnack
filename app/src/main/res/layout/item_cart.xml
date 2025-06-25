@@ -16,10 +16,11 @@
 
     <!-- ImageView -->
     <ImageView
+        android:id="@+id/ivProductImage"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:contentDescription="Item Image"
-        android:src="@mipmap/ic_recommend2" />
+        android:scaleType="centerCrop" />
 
     <!-- Inner LinearLayout for Text -->
     <LinearLayout
