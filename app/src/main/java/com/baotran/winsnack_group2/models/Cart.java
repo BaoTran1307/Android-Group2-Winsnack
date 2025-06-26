@@ -5,7 +5,6 @@ import java.util.List;
 public class Cart {
     private List<CartItem> items;
 
-    // Default constructor required for Firestore
     public Cart() {}
 
     public Cart(List<CartItem> items) {

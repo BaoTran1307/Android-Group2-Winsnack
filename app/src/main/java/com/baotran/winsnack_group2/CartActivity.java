@@ -1,135 +1,186 @@
 package com.baotran.winsnack_group2;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.baotran.winsnack_group2.adapter.CartAdapter;
 import com.baotran.winsnack_group2.models.CartItem;
+import com.baotran.winsnack_group2.models.Product;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class CartActivity extends AppCompatActivity implements CartAdapter.OnItemActionListener {
+public class CartActivity extends AppCompatActivity implements CartAdapter.OnItemInteractionListener {
 
-    private static final String TAG = "CartActivity";
-    private static final int HARDCODED_CUSTOMER_ID = 1; // Hardcode CustomerID = 1 (Naruto)
-
-    private RecyclerView recyclerViewCart;
-    private CartAdapter cartAdapter;
+    private RecyclerView rvCart;
     private TextView tvItemCount, tvTotal;
     private Button btnCheckout;
-    private FirebaseFirestore db;
+    private CartAdapter cartAdapter;
     private List<CartItem> cartItems = new ArrayList<>();
+    private Map<Long, Product> productMap = new HashMap<>();
     private double totalPrice = 0.0;
+    private FirebaseFirestore db;
+    private static final String TAG = "CartActivity";
+    private static final String PREFS_NAME = "UserPrefs";
+    private static final String KEY_CUSTOMER_ID = "CustomerID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_cart);
 
-        // Initialize Firebase
-        db = FirebaseFirestore.getInstance();
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
-        // Initialize UI elements
-        recyclerViewCart = findViewById(R.id.recyclerViewCart);
+        db = FirebaseFirestore.getInstance();
+        FirebaseFirestore.setLoggingEnabled(true);
+
+        rvCart = findViewById(R.id.rvCart);
         tvItemCount = findViewById(R.id.tvItemCount);
         tvTotal = findViewById(R.id.tvTotal);
-        btnCheckout = findViewById(R.id.btnCheckout);
+        btnCheckout = findViewById(R.id.btn_checkout);
 
-        // Set up RecyclerView
-        cartAdapter = new CartAdapter(cartItems, this, this);
-        recyclerViewCart.setLayoutManager(new LinearLayoutManager(this));
-        recyclerViewCart.setAdapter(cartAdapter);
+        cartAdapter = new CartAdapter(this, cartItems, this);
+        rvCart.setLayoutManager(new LinearLayoutManager(this));
+        rvCart.setAdapter(cartAdapter);
 
-        // Load cart data for hardcoded CustomerID = 1
-        loadCartData(HARDCODED_CUSTOMER_ID);
-
-        // Checkout button click
         btnCheckout.setOnClickListener(v -> {
-            Intent intent = new Intent(CartActivity.this, HomeActivity.class); // Thay bằng PaymentActivity nếu cần
-            intent.putExtra("totalAmount", totalPrice);
-            startActivity(intent);
+            if (cartItems.isEmpty()) {
+                Toast.makeText(this, "Cart is empty!", Toast.LENGTH_SHORT).show();
+            } else if (totalPrice == 0.0) {
+                Toast.makeText(this, "Please select items to checkout!", Toast.LENGTH_SHORT).show();
+            } else {
+                Intent intent = new Intent(CartActivity.this,PaymentMethodActivity.class);
+                startActivity(intent);
+                finish();
+            }
         });
+
+        loadCartData();
     }
 
-    private void loadCartData(int customerId) {
-        Log.d(TAG, "Loading cart data for CustomerID: " + customerId);
-        db.collection("CARTS") // Sử dụng collection CARTS
-                .whereEqualTo("CustomerID", customerId)
-                .get()
-                .addOnSuccessListener(querySnapshot -> {
-                    Log.d(TAG, "Query returned " + querySnapshot.size() + " documents");
-                    cartItems.clear();
-                    totalPrice = 0.0;
-                    for (QueryDocumentSnapshot document : querySnapshot) {
-                        CartItem item = document.toObject(CartItem.class);
-                        cartItems.add(item);
-                        totalPrice += (item.getPrice() != 0 ? item.getPrice() : 0) * item.getQuantity();
-                        Log.d(TAG, "Added item: LineID=" + item.getLineID() + ", ProductID=" + item.getProductID());
-                    }
-                    if (cartItems.isEmpty()) {
-                        Log.w(TAG, "No items found for CustomerID: " + customerId);
-                        tvItemCount.setText("You have 0 items in the cart");
-                        tvTotal.setText("$0.00");
-                    } else {
-                        tvItemCount.setText("You have " + cartItems.size() + " items in the cart");
-                        tvTotal.setText(String.format("$%.2f", totalPrice));
-                    }
-                    cartAdapter.notifyDataSetChanged();
-                })
-                .addOnFailureListener(e -> {
-                    Log.e(TAG, "Error loading cart data: " + e.getMessage());
-                    tvItemCount.setText("You have 0 items in the cart");
-                    tvTotal.setText("$0.00");
-                    cartItems.clear();
-                    cartAdapter.notifyDataSetChanged();
-                });
+    private void loadCartData() {
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        int customerId = prefs.getInt(KEY_CUSTOMER_ID, -1);
+
+        if (customerId != -1) {
+            db.collection("PRODUCT")
+                    .get()
+                    .addOnSuccessListener(productSnapshot -> {
+                        productMap.clear();
+                        for (QueryDocumentSnapshot doc : productSnapshot) {
+                            Product product = doc.toObject(Product.class);
+                            productMap.put(product.getProductID(), product);
+                        }
+                        Log.d(TAG, "Loaded " + productMap.size() + " products");
+
+                        db.collection("CARTS")
+                                .whereEqualTo("CustomerID", (long) customerId)
+                                .get()
+                                .addOnSuccessListener(cartSnapshot -> {
+                                    cartItems.clear();
+                                    totalPrice = 0.0; // Reset totalPrice khi load
+                                    for (QueryDocumentSnapshot doc : cartSnapshot) {
+                                        CartItem item = doc.toObject(CartItem.class);
+                                        Product product = productMap.get(item.getProductID());
+                                        if (product != null) {
+                                            item.setPrice(product.getPrice());
+                                            item.setImage(product.getImage());
+                                            item.setProductName(product.getProductName());
+                                        } else {
+                                            Log.w(TAG, "Product not found for ProductID: " + item.getProductID());
+                                            item.setProductName("Unknown");
+                                        }
+                                        cartItems.add(item);
+                                    }
+                                    if (cartItems.isEmpty()) {
+                                        Log.w(TAG, "No items found for CustomerID: " + customerId);
+                                        tvItemCount.setText("You have 0 items in the cart");
+                                        tvTotal.setText("$0.00");
+                                    } else {
+                                        tvItemCount.setText("You have " + cartItems.size() + " items in the cart");
+                                        tvTotal.setText(String.format("$%.2f", totalPrice));
+                                    }
+                                    cartAdapter.notifyDataSetChanged();
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.e(TAG, "Error loading cart data: " + e.getMessage());
+                                    Toast.makeText(this, "Error loading cart: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    tvItemCount.setText("You have 0 items in the cart");
+                                    tvTotal.setText("$0.00");
+                                });
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e(TAG, "Error loading products: " + e.getMessage());
+                        Toast.makeText(this, "Error loading products: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+        } else {
+            Log.w(TAG, "No CustomerID found in SharedPreferences");
+            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+    }
+
+    @Override
+    public void onItemChecked(int position, boolean isChecked) {
+        CartItem item = cartItems.get(position);
+        if (isChecked) {
+            totalPrice += item.getPrice() * item.getQuantity();
+        } else {
+            totalPrice -= item.getPrice() * item.getQuantity();
+        }
+        tvTotal.setText(String.format("$%.2f", totalPrice));
     }
 
     @Override
     public void onQuantityChanged(int position, int newQuantity) {
         if (position >= 0 && position < cartItems.size()) {
             CartItem item = cartItems.get(position);
+            double priceChange = (newQuantity - item.getQuantity()) * item.getPrice();
             item.setQuantity(newQuantity);
-            totalPrice = 0.0;
-            for (CartItem cartItem : cartItems) {
-                totalPrice += (cartItem.getPrice() != 0 ? cartItem.getPrice() : 0) * cartItem.getQuantity();
+            if (item.isChecked()) { // Giả sử có trường isChecked, cần thêm vào CartItem
+                totalPrice += priceChange;
             }
             tvTotal.setText(String.format("$%.2f", totalPrice));
             cartAdapter.notifyItemChanged(position);
 
-            // Cập nhật Firestore với CustomerID = 1
-            updateCartItem(item, newQuantity);
+            SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+            int customerId = prefs.getInt(KEY_CUSTOMER_ID, -1);
+            if (customerId != -1) {
+                db.collection("CARTS")
+                        .whereEqualTo("CustomerID", (long) customerId)
+                        .whereEqualTo("LineID", item.getLineID())
+                        .get()
+                        .addOnSuccessListener(querySnapshot -> {
+                            if (!querySnapshot.isEmpty()) {
+                                querySnapshot.getDocuments().get(0).getReference()
+                                        .update("Quantity", newQuantity)
+                                        .addOnSuccessListener(aVoid -> Log.d(TAG, "Quantity updated"))
+                                        .addOnFailureListener(e -> Log.e(TAG, "Error updating quantity: " + e.getMessage()));
+                            }
+                        });
+            }
         }
-    }
-
-    @Override
-    public void onItemChecked(int position, boolean isChecked) {
-        Log.d(TAG, "Item checked at position " + position + ": " + isChecked);
-    }
-
-    private void updateCartItem(CartItem item, int newQuantity) {
-        db.collection("CARTS")
-                .whereEqualTo("CustomerID", HARDCODED_CUSTOMER_ID)
-                .whereEqualTo("LineID", item.getLineID())
-                .get()
-                .addOnSuccessListener(querySnapshot -> {
-                    for (QueryDocumentSnapshot document : querySnapshot) {
-                        document.getReference()
-                                .update("Quantity", newQuantity)
-                                .addOnSuccessListener(aVoid -> Log.d(TAG, "Cart item updated"))
-                                .addOnFailureListener(e -> Log.e(TAG, "Error updating cart item: " + e.getMessage()));
-                    }
-                });
     }
 }
