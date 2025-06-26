@@ -331,7 +331,7 @@ public class PaymentActivity extends AppCompatActivity {
                     Toast.makeText(this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
                     cartItems.clear();
                     adapter.notifyDataSetChanged();
-                    Intent intent = new Intent(PaymentActivity.this, CartActivity.class);
+                    Intent intent = new Intent(PaymentActivity.this, OrderConfirmedActivity.class);
                     intent.putExtra("orderId", orderId);
                     startActivity(intent);
                     finish(); // Đóng PaymentActivity
@@ -350,6 +350,7 @@ public class PaymentActivity extends AppCompatActivity {
                 });
             }
         });
+
     }
 
     private double getSubtotal() {

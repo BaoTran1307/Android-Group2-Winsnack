@@ -107,6 +107,9 @@
             android:name=".PaymentMethodActivity"
             android:exported="false" />
         <activity
+            android:name=".OrderConfirmedActivity"
+            android:exported="false" />
+        <activity
             android:name=".PaymentActivity"
             android:exported="false" />
         <activity
