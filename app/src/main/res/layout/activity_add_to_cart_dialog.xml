@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    style="@style/Theme.AppCompat.Light.NoActionBar"
+    android:padding="30dp">
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_baseline_check_circle_outline"
+        android:layout_gravity="center"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Đã thêm sản phẩm vào giỏ hàng!"
+        android:textSize="20dp"
+        android:id="@+id/txt_NoiDung"
+        android:textColor="@color/black"/>
+
+    <Button
+        android:id="@+id/btn_GoToCart"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:backgroundTint="#FF9413"
+        android:text="Go to cart"
+        android:textColor="@color/white"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/btn_ContinueShopping"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/orange_light"
+        android:text="Continue shopping"
+        android:textColor="#FF9413"
+        android:textSize="20dp" />
+
+</LinearLayout>
