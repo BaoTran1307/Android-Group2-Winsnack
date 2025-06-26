@@ -107,6 +107,9 @@
             android:name=".PaymentMethodActivity"
             android:exported="false" />
         <activity
+            android:name=".PaymentActivity"
+            android:exported="false" />
+        <activity
             android:name=".FingerprintSetupActivity"
             android:exported="false" /> <!-- Chatbot -->
         <activity

@@ -17,11 +17,11 @@
     <!-- ImageView -->
     <ImageView
         android:id="@+id/ivProductImage"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="72dp"
+        android:layout_height="78dp"
+        android:background="@color/light_gray"
         android:contentDescription="Item Image"
-        android:scaleType="centerCrop"
-        android:background="@color/light_gray" />
+        android:scaleType="centerCrop" />
 
     <!-- Inner LinearLayout for Text -->
     <LinearLayout
@@ -46,6 +46,15 @@
             android:text="$20.00"
             android:textColor="@color/text_primary"
             android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/cancel_order_button"
+            android:layout_width="110dp"
+            android:layout_height="40dp"
+            android:backgroundTint="#FFDECF"
+            android:text="Cancel Order"
+            android:textColor="#FF9413"
+            android:textSize="10sp" />
 
         <!-- Xóa TextView tvDateTime -->
     </LinearLayout>
