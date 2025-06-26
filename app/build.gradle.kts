@@ -43,9 +43,11 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.auth)
+    implementation(libs.recyclerview)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
 
     implementation ("com.google.android.gms:play-services-tasks:18.0.2")
     implementation ("com.google.android.gms:play-services-base")

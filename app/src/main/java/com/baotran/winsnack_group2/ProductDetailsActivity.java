@@ -70,7 +70,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
         txtCommentUser2 = findViewById(R.id.txtCommentUser2);
         txtCommentDate2 = findViewById(R.id.txtCommentDate2);
         txtCommentText2 = findViewById(R.id.txtCommentText2);
-//        txtAddComment = findViewById(R.id.txtAddComment);
         imgProduct = findViewById(R.id.imgProduct);
         btnDecrease = findViewById(R.id.btnDecrease);
         btnIncrease = findViewById(R.id.btnIncrease);
@@ -128,10 +127,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 isDescriptionExpanded = true;
             }
         });
-
-//        txtAddComment.setOnClickListener(v ->
-//                Toast.makeText(this, "Add comment feature not implemented", Toast.LENGTH_SHORT).show()
-//        );
 
         btnAddToCart.setOnClickListener(v -> {
             if (product != null) {
@@ -192,7 +187,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private void addToCart(int productId, String productName, double price, int quantity) {
+    private void addToCart(Long productId, String productName, double price, int quantity) {
         FirebaseUser user = auth.getCurrentUser();
         String userId = user != null ? user.getUid() : "user_1";
 
@@ -210,7 +205,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 boolean itemUpdated = false;
                 if (items != null) {
                     for (Map<String, Object> item : items) {
-                        if (item.get("productId").equals(String.valueOf(productId))) {
+                        if (item.get("productId").equals(productId)) {
                             item.put("quantity", ((Number) item.get("quantity")).intValue() + quantity);
                             itemUpdated = true;
                             break;
