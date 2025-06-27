@@ -11,13 +11,15 @@
         android:scaleType="fitCenter"
         android:src="@drawable/ic_baseline_check_circle_outline"
         android:layout_gravity="center"/>
+
     <TextView
+        android:id="@+id/txt_NoiDung"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Đã thêm sản phẩm vào giỏ hàng!"
-        android:textSize="20dp"
-        android:id="@+id/txt_NoiDung"
-        android:textColor="@color/black"/>
+        android:text="Product added to cart!"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20dp" />
 
     <Button
         android:id="@+id/btn_GoToCart"
