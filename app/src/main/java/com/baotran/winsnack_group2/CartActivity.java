@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +32,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
 
     private RecyclerView rvCart;
     private TextView tvItemCount, tvTotal;
-    private Button btnCheckout;
+    private Button btnCheckout, backButton;
     private CartAdapter cartAdapter;
     private List<CartItem> cartItems = new ArrayList<>();
     private Map<Long, Product> productMap = new HashMap<>();
@@ -60,10 +61,13 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
         tvItemCount = findViewById(R.id.tvItemCount);
         tvTotal = findViewById(R.id.tvTotal);
         btnCheckout = findViewById(R.id.btn_checkout);
+        ImageView backButton = findViewById(R.id.btn_back);
 
         cartAdapter = new CartAdapter(this, cartItems, this);
         rvCart.setLayoutManager(new LinearLayoutManager(this));
         rvCart.setAdapter(cartAdapter);
+
+        backButton.setOnClickListener(v -> onBackPressed());
 
         btnCheckout.setOnClickListener(v -> {
             List<CartItem> selectedItems = new ArrayList<>();

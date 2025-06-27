@@ -36,7 +36,7 @@ public class OrderConfirmedActivity extends AppCompatActivity {
 
         // Xử lý sự kiện click cho nút Return Home
         btnReturnHome.setOnClickListener(v -> {
-            Intent intent = new Intent(OrderConfirmedActivity.this, HomeActivity.class); // Thay MainActivity bằng activity chính của bạn
+            Intent intent = new Intent(OrderConfirmedActivity.this, OrderHistoryActivity.class); // Thay MainActivity bằng activity chính của bạn
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
             finish();
