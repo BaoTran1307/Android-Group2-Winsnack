@@ -16,6 +16,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled=true
     }
 
     buildTypes {
@@ -49,7 +50,8 @@ dependencies {
 
 
     implementation ("com.google.android.gms:play-services-tasks:18.0.2")
-    implementation ("com.google.android.gms:play-services-base")
+    implementation ("com.google.android.gms:play-services-base:18.6.0")
+    implementation ("com.google.android.gms:play-services-auth:20.7.0")
     implementation ("com.google.firebase:firebase-database:20.3.0")
     implementation ("com.google.firebase:firebase-firestore:24.10.0")
     implementation ("com.google.firebase:firebase-storage:21.0.0")
@@ -63,8 +65,12 @@ dependencies {
     implementation("androidx.viewpager2:viewpager2:1.1.0")
     implementation("com.google.android.material:material:1.12.0")
     implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
+    implementation ("androidx.multidex:multidex:2.0.1")
 
 
 
 }
+apply(plugin = "com.google.gms.google-services")
