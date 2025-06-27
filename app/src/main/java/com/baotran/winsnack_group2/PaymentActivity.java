@@ -25,6 +25,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Transaction;
 
 import java.text.DecimalFormat;
@@ -40,16 +42,16 @@ import java.util.concurrent.Executors;
 
 public class PaymentActivity extends AppCompatActivity {
 
-    private TextView shippingAddressTextView, subtotalTextView, taxTextView, deliveryTextView, totalTextView;
+    private TextView shippingAddressTextView, subtotalTextView, taxTextView, deliveryTextView, totalTextView, discountTextView, paymentMethodText, paymentMethodCode;
     private EditText couponEditText;
-    private Button placeOrderButton;
+    private Button placeOrderButton, applyCouponButton;
     private ProgressBar progressBar;
     private RecyclerView cartRecyclerView;
     private FirebaseFirestore db;
     private FirebaseAuth auth;
     private List<CartItem> cartItems;
     private CartAdapter adapter;
-    private String selectedAddress = "Anh Nguyen | (+84) 123456789\n778 Locust View Drive Oakland, CA"; // Địa chỉ mặc định
+    private String selectedAddress = "Anh Nguyen | (+84) 123456789\n778 Locust View Drive Oakland";
     private double discount = 0.0;
     private String couponCode = "";
     private final double TAX_FEE = 5.0;
@@ -69,7 +71,7 @@ public class PaymentActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
-        userId = user != null ? user.getUid() : "1"; // Chuyển thành string để khớp với CustomerID
+        userId = user != null ? user.getUid() : "1";
 
         // Khởi tạo views
         shippingAddressTextView = findViewById(R.id.shipping_address_text);
@@ -77,10 +79,14 @@ public class PaymentActivity extends AppCompatActivity {
         ImageView paymentMethodEditIcon = findViewById(R.id.imageView2);
         couponEditText = findViewById(R.id.coupon_edit_text);
         placeOrderButton = findViewById(R.id.place_order_button);
+        applyCouponButton = findViewById(R.id.apply_coupon_button);
         subtotalTextView = findViewById(R.id.subtotal_text);
         taxTextView = findViewById(R.id.tax_text);
         deliveryTextView = findViewById(R.id.delivery_text);
         totalTextView = findViewById(R.id.total_text);
+        discountTextView = findViewById(R.id.discount_text);
+        paymentMethodText = findViewById(R.id.payment_method_text);
+        paymentMethodCode = findViewById(R.id.payment_method_code);
         cartRecyclerView = findViewById(R.id.cart_recycler_view);
         progressBar = findViewById(R.id.progress_bar);
         ImageView backButton = findViewById(R.id.btn_back);
@@ -93,9 +99,7 @@ public class PaymentActivity extends AppCompatActivity {
         cartRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new CartAdapter(this, cartItems, new CartAdapter.OnItemInteractionListener() {
             @Override
-            public void onItemChecked(int position, boolean isChecked) {
-                // Không xử lý check trong PaymentActivity
-            }
+            public void onItemChecked(int position, boolean isChecked) {}
 
             @Override
             public void onQuantityChanged(int position, int newQuantity) {
@@ -120,7 +124,7 @@ public class PaymentActivity extends AppCompatActivity {
             adapter.notifyDataSetChanged();
             updateSummary();
         } else {
-            Toast.makeText(this, "Không có sản phẩm nào được chọn!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No items selected!", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
@@ -138,9 +142,9 @@ public class PaymentActivity extends AppCompatActivity {
             startActivityForResult(intentPayment, REQUEST_PAYMENT_METHOD);
         });
 
-        couponEditText.setOnEditorActionListener((v, actionId, event) -> {
-            validateAndApplyCoupon(couponEditText.getText().toString().trim());
-            return true;
+        applyCouponButton.setOnClickListener(v -> {
+            String code = couponEditText.getText().toString().trim().toUpperCase();
+            validateAndApplyCoupon(code);
         });
 
         placeOrderButton.setOnClickListener(v -> processOrder());
@@ -158,7 +162,7 @@ public class PaymentActivity extends AppCompatActivity {
                 })
                 .addOnFailureListener(e -> {
                     Log.e("PaymentActivity", "Error updating cart item", e);
-                    Toast.makeText(this, "Lỗi khi cập nhật giỏ hàng: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Error updating cart: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
 
@@ -170,13 +174,13 @@ public class PaymentActivity extends AppCompatActivity {
                     adapter.notifyDataSetChanged();
                     updateSummary();
                     if (cartItems.isEmpty()) {
-                        Toast.makeText(this, "Giỏ hàng trống!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Cart is empty!", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 })
                 .addOnFailureListener(e -> {
                     Log.e("PaymentActivity", "Error removing cart item", e);
-                    Toast.makeText(this, "Lỗi khi xóa sản phẩm: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Error removing item: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
 
@@ -190,6 +194,7 @@ public class PaymentActivity extends AppCompatActivity {
             subtotalTextView.setText(formatPrice(subtotal));
             taxTextView.setText(formatPrice(TAX_FEE));
             deliveryTextView.setText(formatPrice(DELIVERY_FEE));
+            discountTextView.setText(formatPrice(-discount)); // Hiển thị số âm cho Discount
             totalTextView.setText(formatPrice(total));
         });
     }
@@ -199,96 +204,92 @@ public class PaymentActivity extends AppCompatActivity {
             discount = 0.0;
             couponCode = "";
             updateSummary();
+            Toast.makeText(this, "Please enter a coupon code!", Toast.LENGTH_SHORT).show();
             return;
         }
+
         executorService.execute(() -> {
-            try {
-                DocumentSnapshot couponDoc = db.collection("COUPON").document(code).get().getResult();
-                if (couponDoc.exists()) {
-                    String couponType = couponDoc.getString("CouponType");
-                    Number couponValue = couponDoc.getLong("CouponValue");
-                    Number minNetPrice = couponDoc.getLong("MinimunNetPrice");
-                    Number maxNetPrice = couponDoc.getLong("MaximumNetPrice");
-                    Number expireDate = couponDoc.getLong("ExpireDate");
-                    Number validDate = couponDoc.getLong("ValidDate");
+            db.collection("COUPON")
+                    .whereEqualTo("CouponCode", code)
+                    .limit(1)
+                    .get()
+                    .addOnSuccessListener(querySnapshot -> {
+                        Log.d("CouponDebug", "Query result size: " + querySnapshot.size());
+                        if (!querySnapshot.isEmpty()) {
+                            DocumentSnapshot document = querySnapshot.getDocuments().get(0);
+                            String couponType = document.getString("CouponType");
+                            Number couponValue = document.getLong("CouponValue");
+                            double subtotal = getSubtotal();
 
-                    double subtotal = getSubtotal();
-                    long currentDate = Long.parseLong(new SimpleDateFormat("yyyyMMdd").format(new Date()));
+                            Log.d("CouponDebug", "CouponType: " + couponType);
+                            Log.d("CouponDebug", "CouponValue: " + couponValue);
+                            Log.d("CouponDebug", "Subtotal: " + subtotal);
 
-                    if (expireDate.longValue() >= currentDate && validDate.longValue() <= currentDate &&
-                            subtotal >= minNetPrice.longValue() && (maxNetPrice.longValue() == 0 || subtotal <= maxNetPrice.longValue())) {
-                        double discountAmount = couponType.equals("Percentage") ?
-                                subtotal * (couponValue.doubleValue() / 100) : couponValue.doubleValue();
-                        mainHandler.post(() -> {
-                            discount = discountAmount;
-                            couponCode = code;
-                            Toast.makeText(this, "Áp dụng mã giảm giá thành công!", Toast.LENGTH_SHORT).show();
-                            updateSummary();
-                        });
-                    } else {
-                        mainHandler.post(() -> {
-                            discount = 0.0;
-                            couponCode = "";
-                            Toast.makeText(this, "Mã giảm giá không hợp lệ hoặc không áp dụng được", Toast.LENGTH_SHORT).show();
-                            updateSummary();
-                        });
-                    }
-                } else {
-                    mainHandler.post(() -> {
-                        discount = 0.0;
-                        couponCode = "";
-                        Toast.makeText(this, "Mã giảm giá không tồn tại", Toast.LENGTH_SHORT).show();
-                        updateSummary();
+                            double discountAmount;
+                            if ("Fixed".equals(couponType) && couponValue != null) {
+                                discountAmount = Math.min(couponValue.doubleValue(), subtotal);
+                            } else if ("Percentage".equals(couponType) && couponValue != null) {
+                                discountAmount = subtotal * (couponValue.doubleValue() / 100);
+                            } else {
+                                discountAmount = 0.0;
+                            }
+
+                            if (discountAmount > 0) {
+                                mainHandler.post(() -> {
+                                    discount = discountAmount;
+                                    couponCode = code;
+                                    Toast.makeText(this, "Coupon applied successfully! Discount: $" + discountAmount, Toast.LENGTH_SHORT).show();
+                                    updateSummary();
+                                });
+                            } else {
+                                mainHandler.post(() -> {
+                                    discount = 0.0;
+                                    couponCode = "";
+                                    Toast.makeText(this, "Coupon is invalid or cannot be applied", Toast.LENGTH_SHORT).show();
+                                    updateSummary();
+                                });
+                            }
+                        } else {
+                            mainHandler.post(() -> {
+                                discount = 0.0;
+                                couponCode = "";
+                                Toast.makeText(this, "Coupon code does not exist", Toast.LENGTH_SHORT).show();
+                                updateSummary();
+                            });
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e("PaymentActivity", "Error validating coupon: " + e.getMessage());
+                        mainHandler.post(() -> Toast.makeText(this, "Error validating coupon: " + e.getMessage(), Toast.LENGTH_SHORT).show());
                     });
-                }
-            } catch (Exception e) {
-                Log.e("PaymentActivity", "Error validating coupon", e);
-                mainHandler.post(() -> Toast.makeText(this, "Lỗi khi kiểm tra mã giảm giá: " + e.getMessage(), Toast.LENGTH_SHORT).show());
-            }
         });
     }
 
     private void processOrder() {
         if (cartItems.isEmpty()) {
-            Toast.makeText(this, "Giỏ hàng trống", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Cart is empty", Toast.LENGTH_SHORT).show();
             return;
         }
         if (selectedAddress == null || selectedAddress.trim().isEmpty()) {
-            Toast.makeText(this, "Vui lòng chọn địa chỉ giao hàng", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please select a delivery address", Toast.LENGTH_SHORT).show();
             return;
         }
 
         progressBar.setVisibility(View.VISIBLE);
         placeOrderButton.setEnabled(false);
 
-        // Tạo orderId dưới dạng String
-        String orderId;
-        try {
-            orderId = UUID.randomUUID().toString(); // Giữ nguyên UUID dạng chuỗi
-            if (orderId.isEmpty()) {
-                throw new IllegalStateException("Invalid order ID generated");
-            }
-        } catch (Exception e) {
-            Log.e("PaymentActivity", "Error generating orderId", e);
-            mainHandler.post(() -> {
-                progressBar.setVisibility(View.GONE);
-                placeOrderButton.setEnabled(true);
-                Toast.makeText(this, "Lỗi khi tạo mã đơn hàng", Toast.LENGTH_SHORT).show();
-            });
-            return;
-        }
-
+        String orderId = UUID.randomUUID().toString();
         String paymentId = String.valueOf(System.currentTimeMillis());
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
         Map<String, Object> order = new HashMap<>();
-        order.put("OrderID", orderId); // Lưu dưới dạng String
-        order.put("CustomerID", userId); // userId đã là String
+        order.put("OrderID", orderId);
+        order.put("CustomerID", userId);
         order.put("Date", date);
         order.put("Image", cartItems.isEmpty() ? "" : cartItems.get(0).getImage());
         order.put("Note", "Deliver before 6 PM");
-        order.put("PaymentID", paymentId); // Lưu dưới dạng String
-        order.put("PaymentMethod", "Credit Card");
+        order.put("PaymentID", paymentId);
+        order.put("PaymentMethod", paymentMethodText.getText().toString());
         order.put("Status", "Completed");
         order.put("Total", getSubtotal() + TAX_FEE + DELIVERY_FEE - discount);
         order.put("Address", selectedAddress);
@@ -300,7 +301,7 @@ public class PaymentActivity extends AppCompatActivity {
         for (CartItem item : cartItems) {
             Map<String, Object> line = new HashMap<>();
             line.put("LineID", item.getLineID());
-            line.put("OrderID", orderId); // Lưu dưới dạng String
+            line.put("OrderID", orderId);
             line.put("ProductID", item.getProductID());
             line.put("Quantity", item.getQuantity());
             line.put("SalePrice", item.getPrice());
@@ -319,6 +320,7 @@ public class PaymentActivity extends AppCompatActivity {
                         transaction.set(lineRef, line);
                     }
 
+                    // Xóa tất cả các sản phẩm trong giỏ hàng trong transaction
                     for (CartItem item : cartItems) {
                         DocumentReference cartRef = db.collection("CARTS").document(item.getLineID().toString());
                         transaction.delete(cartRef);
@@ -328,29 +330,29 @@ public class PaymentActivity extends AppCompatActivity {
                 }).addOnSuccessListener(aVoid -> mainHandler.post(() -> {
                     Log.d("PaymentActivity", "Order placed successfully, orderId: " + orderId);
                     progressBar.setVisibility(View.GONE);
-                    Toast.makeText(this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
+                    // Xóa danh sách cartItems cục bộ sau khi xóa thành công trên Firestore
                     cartItems.clear();
                     adapter.notifyDataSetChanged();
+                    Toast.makeText(this, "Order placed successfully!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(PaymentActivity.this, OrderConfirmedActivity.class);
                     intent.putExtra("orderId", orderId);
                     startActivity(intent);
-                    finish(); // Đóng PaymentActivity
+                    finish();
                 })).addOnFailureListener(e -> mainHandler.post(() -> {
                     Log.e("PaymentActivity", "Error placing order", e);
                     progressBar.setVisibility(View.GONE);
                     placeOrderButton.setEnabled(true);
-                    Toast.makeText(this, "Lỗi khi đặt hàng: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Error placing order: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }));
             } catch (Exception e) {
                 Log.e("PaymentActivity", "Transaction error", e);
                 mainHandler.post(() -> {
                     progressBar.setVisibility(View.GONE);
                     placeOrderButton.setEnabled(true);
-                    Toast.makeText(this, "Lỗi: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
             }
         });
-
     }
 
     private double getSubtotal() {
@@ -376,7 +378,12 @@ public class PaymentActivity extends AppCompatActivity {
                 Log.d("PaymentActivity", "Received address: " + selectedAddress);
             }
         } else if (requestCode == REQUEST_PAYMENT_METHOD && resultCode == RESULT_OK && data != null) {
-            // Xử lý lựa chọn phương thức thanh toán nếu cần
+            String method = data.getStringExtra("payment_method");
+            String code = data.getStringExtra("payment_code");
+            if (method != null) {
+                paymentMethodText.setText(method);
+                paymentMethodCode.setText(code.isEmpty() ? "" : code);
+            }
         }
     }
 

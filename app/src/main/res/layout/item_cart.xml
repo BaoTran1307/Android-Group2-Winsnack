@@ -54,7 +54,8 @@
             android:backgroundTint="#FFDECF"
             android:text="Cancel Order"
             android:textColor="#FF9413"
-            android:textSize="10sp" />
+            android:textSize="10sp"
+            android:visibility="gone"/>
 
         <!-- Xóa TextView tvDateTime -->
     </LinearLayout>
