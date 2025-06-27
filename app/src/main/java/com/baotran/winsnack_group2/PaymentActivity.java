@@ -24,10 +24,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Transaction;
+import com.google.firebase.firestore.WriteBatch;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -61,6 +63,7 @@ public class PaymentActivity extends AppCompatActivity {
     private static final int REQUEST_ADDRESS = 100;
     private static final int REQUEST_PAYMENT_METHOD = 101;
     private String userId;
+    private String orderId; // Khai báo orderId như biến thành viên
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,35 +154,63 @@ public class PaymentActivity extends AppCompatActivity {
     }
 
     private void updateCartItem(CartItem item) {
-        DocumentReference cartRef = db.collection("CARTS").document(item.getLineID().toString());
-        Map<String, Object> updates = new HashMap<>();
-        updates.put("Quantity", item.getQuantity());
+        db.collection("CARTS")
+                .whereEqualTo("CustomerID", Integer.parseInt(userId))
+                .whereEqualTo("ProductID", item.getProductID())
+                .whereEqualTo("LineID", item.getLineID())
+                .limit(1)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        DocumentReference cartRef = querySnapshot.getDocuments().get(0).getReference();
+                        Map<String, Object> updates = new HashMap<>();
+                        updates.put("Quantity", item.getQuantity());
 
-        cartRef.update(updates)
-                .addOnSuccessListener(aVoid -> {
-                    adapter.notifyDataSetChanged();
-                    updateSummary();
+                        cartRef.update(updates)
+                                .addOnSuccessListener(aVoid -> {
+                                    adapter.notifyDataSetChanged();
+                                    updateSummary();
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.e("PaymentActivity", "Error updating cart item", e);
+                                    Toast.makeText(this, "Error updating cart: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                });
+                    }
                 })
                 .addOnFailureListener(e -> {
-                    Log.e("PaymentActivity", "Error updating cart item", e);
+                    Log.e("PaymentActivity", "Error querying cart item for update", e);
                     Toast.makeText(this, "Error updating cart: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
 
     private void removeCartItem(CartItem item) {
-        DocumentReference cartRef = db.collection("CARTS").document(item.getLineID().toString());
-        cartRef.delete()
-                .addOnSuccessListener(aVoid -> {
-                    cartItems.remove(item);
-                    adapter.notifyDataSetChanged();
-                    updateSummary();
-                    if (cartItems.isEmpty()) {
-                        Toast.makeText(this, "Cart is empty!", Toast.LENGTH_SHORT).show();
-                        finish();
+        db.collection("CARTS")
+                .whereEqualTo("CustomerID", Integer.parseInt(userId))
+                .whereEqualTo("ProductID", item.getProductID())
+                .whereEqualTo("LineID", item.getLineID())
+                .limit(1)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        DocumentReference cartRef = querySnapshot.getDocuments().get(0).getReference();
+                        cartRef.delete()
+                                .addOnSuccessListener(aVoid -> {
+                                    cartItems.remove(item);
+                                    adapter.notifyDataSetChanged();
+                                    updateSummary();
+                                    if (cartItems.isEmpty()) {
+                                        Toast.makeText(this, "Cart is empty!", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                    }
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.e("PaymentActivity", "Error removing cart item", e);
+                                    Toast.makeText(this, "Error removing item: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                });
                     }
                 })
                 .addOnFailureListener(e -> {
-                    Log.e("PaymentActivity", "Error removing cart item", e);
+                    Log.e("PaymentActivity", "Error querying cart item for removal", e);
                     Toast.makeText(this, "Error removing item: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
@@ -194,7 +225,7 @@ public class PaymentActivity extends AppCompatActivity {
             subtotalTextView.setText(formatPrice(subtotal));
             taxTextView.setText(formatPrice(TAX_FEE));
             deliveryTextView.setText(formatPrice(DELIVERY_FEE));
-            discountTextView.setText(formatPrice(-discount)); // Hiển thị số âm cho Discount
+            discountTextView.setText(formatPrice(-discount));
             totalTextView.setText(formatPrice(total));
         });
     }
@@ -278,7 +309,7 @@ public class PaymentActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         placeOrderButton.setEnabled(false);
 
-        String orderId = UUID.randomUUID().toString();
+        orderId = UUID.randomUUID().toString(); // Gán giá trị cho biến thành viên orderId
         String paymentId = String.valueOf(System.currentTimeMillis());
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
@@ -316,29 +347,20 @@ public class PaymentActivity extends AppCompatActivity {
                     transaction.set(orderRef, order);
 
                     for (Map<String, Object> line : orderLines) {
-                        DocumentReference lineRef = db.collection("ORDERLINE").document(line.get("LineID").toString());
+                        DocumentReference lineRef = db.collection("ORDERLINE").document(UUID.randomUUID().toString()); // Tạo ID mới cho ORDERLINE
                         transaction.set(lineRef, line);
                     }
 
-                    // Xóa tất cả các sản phẩm trong giỏ hàng trong transaction
-                    for (CartItem item : cartItems) {
-                        DocumentReference cartRef = db.collection("CARTS").document(item.getLineID().toString());
-                        transaction.delete(cartRef);
-                    }
-
                     return null;
-                }).addOnSuccessListener(aVoid -> mainHandler.post(() -> {
-                    Log.d("PaymentActivity", "Order placed successfully, orderId: " + orderId);
-                    progressBar.setVisibility(View.GONE);
-                    // Xóa danh sách cartItems cục bộ sau khi xóa thành công trên Firestore
-                    cartItems.clear();
-                    adapter.notifyDataSetChanged();
-                    Toast.makeText(this, "Order placed successfully!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(PaymentActivity.this, OrderConfirmedActivity.class);
-                    intent.putExtra("orderId", orderId);
-                    startActivity(intent);
-                    finish();
-                })).addOnFailureListener(e -> mainHandler.post(() -> {
+                }).addOnSuccessListener(aVoid -> {
+                    mainHandler.post(() -> {
+                        Log.d("PaymentActivity", "Order placed successfully, orderId: " + orderId);
+                        progressBar.setVisibility(View.GONE);
+
+                        // Thực hiện xóa cart items sau khi order thành công
+                        deleteCartItems();
+                    });
+                }).addOnFailureListener(e -> mainHandler.post(() -> {
                     Log.e("PaymentActivity", "Error placing order", e);
                     progressBar.setVisibility(View.GONE);
                     placeOrderButton.setEnabled(true);
@@ -353,6 +375,76 @@ public class PaymentActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    private void deleteCartItems() {
+        List<Map<String, Object>> cartQueryConditions = new ArrayList<>();
+        for (CartItem item : cartItems) {
+            Map<String, Object> condition = new HashMap<>();
+            condition.put("CustomerID", Integer.parseInt(userId));
+            condition.put("ProductID", item.getProductID());
+            condition.put("LineID", item.getLineID());
+            cartQueryConditions.add(condition);
+            Log.d("PaymentActivity", "Attempting to delete cart item with CustomerID: " + userId + ", ProductID: " + item.getProductID() + ", LineID: " + item.getLineID());
+        }
+
+        db.collection("CARTS")
+                .whereEqualTo("CustomerID", Integer.parseInt(userId))
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    List<WriteBatch> batches = new ArrayList<>();
+                    WriteBatch batch = db.batch();
+                    int count = 0;
+
+                    for (DocumentSnapshot document : querySnapshot) {
+                        int docCustomerID = document.getLong("CustomerID") != null ? document.getLong("CustomerID").intValue() : 0;
+                        int docProductID = document.getLong("ProductID") != null ? document.getLong("ProductID").intValue() : 0;
+                        int docLineID = document.getLong("LineID") != null ? document.getLong("LineID").intValue() : 0;
+
+                        for (CartItem item : cartItems) {
+                            if (docCustomerID == Integer.parseInt(userId) && docProductID == item.getProductID() && docLineID == item.getLineID()) {
+                                batch.delete(document.getReference());
+                                count++;
+                                if (count == 500) {
+                                    batches.add(batch);
+                                    batch = db.batch();
+                                    count = 0;
+                                }
+                                break;
+                            }
+                        }
+                    }
+
+                    if (count > 0) {
+                        batches.add(batch);
+                    }
+
+                    // Thực thi từng batch
+                    for (int i = 0; i < batches.size(); i++) {
+                        int finalI = i;
+                        batches.get(i).commit().addOnSuccessListener(aVoid -> {
+                            Log.d("PaymentActivity", "Batch " + finalI + " deleted successfully");
+                            if (finalI == batches.size() - 1) {
+                                mainHandler.post(() -> {
+                                    cartItems.clear();
+                                    adapter.notifyDataSetChanged();
+                                    Toast.makeText(this, "Order placed successfully!", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(PaymentActivity.this, OrderConfirmedActivity.class);
+                                    intent.putExtra("orderId", orderId); // Sử dụng biến thành viên orderId
+                                    startActivity(intent);
+                                    finish();
+                                });
+                            }
+                        }).addOnFailureListener(e -> {
+                            Log.e("PaymentActivity", "Error deleting cart items in batch " + finalI, e);
+                            mainHandler.post(() -> Toast.makeText(this, "Error deleting cart items: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                        });
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("PaymentActivity", "Error querying cart items for deletion", e);
+                    mainHandler.post(() -> Toast.makeText(this, "Error deleting cart items: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                });
     }
 
     private double getSubtotal() {
