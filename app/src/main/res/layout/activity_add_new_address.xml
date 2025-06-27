@@ -74,6 +74,7 @@
                 android:layout_marginBottom="4dp" />
 
             <EditText
+                android:id="@+id/edit_text_name"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:text="Anna House"
@@ -94,6 +95,7 @@
                 android:layout_marginBottom="4dp" />
 
             <EditText
+                android:id="@+id/edit_text_address"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:text="778 Locust View Drive Oakland, CA"

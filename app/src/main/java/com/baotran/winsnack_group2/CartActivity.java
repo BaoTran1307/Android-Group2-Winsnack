@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +32,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
 
     private RecyclerView rvCart;
     private TextView tvItemCount, tvTotal;
-    private Button btnCheckout;
+    private Button btnCheckout, backButton;
     private CartAdapter cartAdapter;
     private List<CartItem> cartItems = new ArrayList<>();
     private Map<Long, Product> productMap = new HashMap<>();
@@ -60,20 +61,27 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
         tvItemCount = findViewById(R.id.tvItemCount);
         tvTotal = findViewById(R.id.tvTotal);
         btnCheckout = findViewById(R.id.btn_checkout);
+        ImageView backButton = findViewById(R.id.btn_back);
 
         cartAdapter = new CartAdapter(this, cartItems, this);
         rvCart.setLayoutManager(new LinearLayoutManager(this));
         rvCart.setAdapter(cartAdapter);
 
+        backButton.setOnClickListener(v -> onBackPressed());
+
         btnCheckout.setOnClickListener(v -> {
-            if (cartItems.isEmpty()) {
-                Toast.makeText(this, "Cart is empty!", Toast.LENGTH_SHORT).show();
-            } else if (totalPrice == 0.0) {
-                Toast.makeText(this, "Please select items to checkout!", Toast.LENGTH_SHORT).show();
+            List<CartItem> selectedItems = new ArrayList<>();
+            for (CartItem item : cartItems) {
+                if (item.isChecked()) {
+                    selectedItems.add(item);
+                }
+            }
+            if (selectedItems.isEmpty()) {
+                Toast.makeText(this, "Vui lòng chọn ít nhất một sản phẩm!", Toast.LENGTH_SHORT).show();
             } else {
-                Intent intent = new Intent(CartActivity.this,PaymentMethodActivity.class);
+                Intent intent = new Intent(CartActivity.this, PaymentActivity.class);
+                intent.putExtra("selectedItems", new ArrayList<>(selectedItems));
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -179,6 +187,34 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
                                         .addOnSuccessListener(aVoid -> Log.d(TAG, "Quantity updated"))
                                         .addOnFailureListener(e -> Log.e(TAG, "Error updating quantity: " + e.getMessage()));
                             }
+                        });
+            }
+        }
+    }
+
+    @Override
+    public void onCancelOrder(int position) {
+        if (position >= 0 && position < cartItems.size()) {
+            CartItem item = cartItems.get(position);
+            double itemPrice = item.isChecked() ? item.getPrice() * item.getQuantity() : 0;
+            totalPrice -= itemPrice; // Cập nhật tổng tiền nếu mục được chọn
+
+            SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+            int customerId = prefs.getInt(KEY_CUSTOMER_ID, -1);
+            if (customerId != -1) {
+                db.collection("CARTS")
+                        .document(item.getLineID().toString())
+                        .delete()
+                        .addOnSuccessListener(aVoid -> {
+                            cartItems.remove(position);
+                            cartAdapter.notifyItemRemoved(position);
+                            tvItemCount.setText("You have " + cartItems.size() + " items in the cart");
+                            tvTotal.setText(String.format("$%.2f", totalPrice));
+                            Log.d(TAG, "Cart item removed successfully");
+                        })
+                        .addOnFailureListener(e -> {
+                            Log.e(TAG, "Error removing cart item: " + e.getMessage());
+                            Toast.makeText(this, "Error removing item: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         });
             }
         }

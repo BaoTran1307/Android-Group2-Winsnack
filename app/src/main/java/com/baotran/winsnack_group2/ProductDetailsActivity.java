@@ -1,5 +1,6 @@
 package com.baotran.winsnack_group2;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +10,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,14 +18,11 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -86,11 +83,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 product = (Product) extra;
                 loadProductDetails();
             } else {
-                Toast.makeText(this, "Invalid product data", Toast.LENGTH_SHORT).show();
+                showErrorDialog("Invalid product data");
                 finish();
             }
         } else {
-            Toast.makeText(this, "Product not found", Toast.LENGTH_SHORT).show();
+            showErrorDialog("Product not found");
             finish();
         }
 
@@ -112,7 +109,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 quantity++;
                 txtQuantity.setText(String.valueOf(quantity));
             } else {
-                Toast.makeText(this, "Maximum quantity reached", Toast.LENGTH_SHORT).show();
+                showErrorDialog("Maximum quantity reached");
             }
         });
 
@@ -137,12 +134,12 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     Number number = format.parse(priceStr);
                     price = number.doubleValue();
                 } catch (ParseException e) {
-                    Toast.makeText(this, "Error parsing price: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    showErrorDialog("Error parsing price: " + e.getMessage());
                     return;
                 }
                 addToCart(product.getProductID(), txtBrand.getText().toString(), price, quantity);
             } else {
-                Toast.makeText(this, "Cannot add to cart: Product not found", Toast.LENGTH_SHORT).show();
+                showErrorDialog("Cannot add to cart: Product not found");
             }
         });
     }
@@ -183,66 +180,77 @@ public class ProductDetailsActivity extends AppCompatActivity {
             txtCommentText2.setText("Really enjoyed this product. Great for a quick snack and the price is reasonable!");
             ratingBar2.setRating(4.8f);
         } else {
-            Toast.makeText(this, "Error initializing comments section", Toast.LENGTH_SHORT).show();
+            showErrorDialog("Error initializing comments section");
         }
     }
 
     private void addToCart(Long productId, String productName, double price, int quantity) {
         FirebaseUser user = auth.getCurrentUser();
-        String userId = user != null ? user.getUid() : "user_1";
+        String userId = user != null ? user.getUid() : "1";
 
-        DocumentReference cartRef = db.collection("CART").document(userId);
+        // Generate a unique LineID (for simplicity, use current timestamp)
+        long lineId = System.currentTimeMillis();
+
         Map<String, Object> cartItem = new HashMap<>();
-        cartItem.put("productId", productId);
-        cartItem.put("productName", productName);
-        cartItem.put("price", price);
-        cartItem.put("quantity", quantity);
+        cartItem.put("CustomerID", Integer.parseInt(userId)); // Convert to number
+        cartItem.put("Image", product.getImage());
+        cartItem.put("LineID", lineId);
+        cartItem.put("ProductID", productId);
+        cartItem.put("Quantity", quantity);
 
-        cartRef.get().addOnSuccessListener(documentSnapshot -> {
-            if (documentSnapshot.exists()) {
-                // Update existing item in array
-                List<Map<String, Object>> items = (List<Map<String, Object>>) documentSnapshot.get("items");
-                boolean itemUpdated = false;
-                if (items != null) {
-                    for (Map<String, Object> item : items) {
-                        if (item.get("productId").equals(productId)) {
-                            item.put("quantity", ((Number) item.get("quantity")).intValue() + quantity);
-                            itemUpdated = true;
-                            break;
-                        }
-                    }
-                }
-                if (itemUpdated) {
-                    cartRef.update("items", items)
-                            .addOnSuccessListener(aVoid -> {
-                                Toast.makeText(ProductDetailsActivity.this, "Updated quantity in cart", Toast.LENGTH_SHORT).show();
-                            })
-                            .addOnFailureListener(e -> {
-                                Toast.makeText(ProductDetailsActivity.this, "Error updating cart: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                            });
-                } else {
-                    cartRef.update("items", FieldValue.arrayUnion(cartItem))
-                            .addOnSuccessListener(aVoid -> {
-                                Toast.makeText(ProductDetailsActivity.this, "Added " + quantity + " " + productName + " to cart", Toast.LENGTH_SHORT).show();
-                            })
-                            .addOnFailureListener(e -> {
-                                Toast.makeText(ProductDetailsActivity.this, "Error adding to cart: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                            });
-                }
-            } else {
-                // Create new cart with item array
-                Map<String, Object> newCart = new HashMap<>();
-                newCart.put("items", new Object[]{cartItem});
-                cartRef.set(newCart)
-                        .addOnSuccessListener(aVoid -> {
-                            Toast.makeText(ProductDetailsActivity.this, "Added " + quantity + " " + productName + " to cart", Toast.LENGTH_SHORT).show();
-                        })
-                        .addOnFailureListener(e -> {
-                            Toast.makeText(ProductDetailsActivity.this, "Error adding to cart: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                        });
-            }
-        }).addOnFailureListener(e -> {
-            Toast.makeText(ProductDetailsActivity.this, "Error checking cart: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        DocumentReference cartRef = db.collection("CARTS").document(String.valueOf(lineId)); // Use LineID as document ID
+
+        cartRef.set(cartItem)
+                .addOnSuccessListener(aVoid -> {
+                    showAddToCartDialog(productName, quantity);
+                })
+                .addOnFailureListener(e -> {
+                    showErrorDialog("Error adding to cart: " + e.getMessage());
+                });
+    }
+
+    private void showAddToCartDialog(String productName, int quantity) {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.activity_add_to_cart_dialog);
+
+        TextView txtNoiDung = dialog.findViewById(R.id.txt_NoiDung);
+        Button btnGoToCart = dialog.findViewById(R.id.btn_GoToCart);
+        Button btnContinueShopping = dialog.findViewById(R.id.btn_ContinueShopping);
+
+        txtNoiDung.setText("Đã thêm " + quantity + " " + productName + " vào giỏ hàng!");
+
+        btnGoToCart.setOnClickListener(v -> {
+            Intent intent = new Intent(ProductDetailsActivity.this, CartActivity.class); // Thay CartActivity bằng activity giỏ hàng thực tế
+            startActivity(intent);
+            dialog.dismiss();
+            finish();
         });
+
+        btnContinueShopping.setOnClickListener(v -> {
+            Intent intent = new Intent(ProductDetailsActivity.this, HomeActivity.class); // Thay CartActivity bằng activity giỏ hàng thực tế
+            startActivity(intent);
+            dialog.dismiss();
+            finish();
+        });
+
+        dialog.setCancelable(true);
+        dialog.show();
+    }
+
+    private void showErrorDialog(String message) {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.activity_add_to_cart_dialog);
+
+        TextView txtNoiDung = dialog.findViewById(R.id.txt_NoiDung);
+        Button btnGoToCart = dialog.findViewById(R.id.btn_GoToCart);
+        Button btnContinueShopping = dialog.findViewById(R.id.btn_ContinueShopping);
+
+        txtNoiDung.setText(message);
+        btnGoToCart.setVisibility(View.GONE);
+        btnContinueShopping.setText("OK");
+        btnContinueShopping.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.setCancelable(true);
+        dialog.show();
     }
 }
