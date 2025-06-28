@@ -1,5 +1,6 @@
 package com.baotran.winsnack_group2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -97,7 +98,7 @@ class WinSnackInfo {
             case "bánh tráng ngọt":
                 return "Bánh tráng ngọt - sự kết hợp độc đáo giữa bánh tráng và vị ngọt mới lạ.";
             case "combo bánh tráng mix vị":
-                return "Combo bánh tráng mix vị - khám phá nhiều hương vị trong một bộ sưu tập tiện lợi.";
+                return "Combo bánh tráng mix vị bao gồm nhiều loại bánh tráng kết hợp cùng nhau. Bạn có thể mua ăn thử để khám phá nhiều hương vị trong một bộ sưu tập tiện lợi nhé!.";
             case "nguyên liệu lẻ":
                 return "Nguyên liệu lẻ - lựa chọn topping và gia vị để tự tay tạo nên món bánh tráng theo ý thích.";
             default:
@@ -107,17 +108,24 @@ class WinSnackInfo {
 
     public String suggestProduct(String preference) {
         String pref = preference.toLowerCase();
+        Log.d("SuggestProduct", "Preference: " + pref);
         if (pref.contains("giòn") || pref.contains("thơm")) {
-            return "Bạn thích đồ giòn và thơm? Hãy thử Bánh tráng nướng - giòn rụm, mang hương vị đường phố Việt Nam!";
+            Log.d("SuggestProduct", "Matched giòn/thơm");
+            return "Bạn thích đồ giòn và thơm? Hãy thử Bánh tráng nướng bên mình nhé! Bánh tráng giòn rụm, mang hương vị đường phố Việt Nam, rất thích hợp để ăn vặt nè!";
         } else if (pref.contains("ngọt") || pref.contains("tráng miệng")) {
+            Log.d("SuggestProduct", "Matched ngọt/tráng miệng");
             return "Bạn thích vị ngọt? Bánh tráng ngọt là lựa chọn hoàn hảo với sự kết hợp độc đáo và mới lạ!";
         } else if (pref.contains("tiện lợi") || pref.contains("nhanh")) {
+            Log.d("SuggestProduct", "Matched tiện lợi/nhanh");
             return "Cần món ăn nhanh và tiện lợi? Bánh tráng trộn sẵn sẽ là lựa chọn tuyệt vời cho bạn!";
         } else if (pref.contains("đa dạng") || pref.contains("thử")) {
+            Log.d("SuggestProduct", "Matched đa dạng/thử");
             return "Bạn muốn khám phá nhiều hương vị? Combo bánh tráng mix vị sẽ giúp bạn trải nghiệm đa dạng!";
         } else if (pref.contains("tự làm")) {
+            Log.d("SuggestProduct", "Matched tự làm");
             return "Thích tự tay sáng tạo? Nguyên liệu lẻ sẽ giúp bạn làm món bánh tráng theo ý thích!";
         } else {
+            Log.d("SuggestProduct", "No match");
             return "Hãy cho mình biết sở thích của bạn (ví dụ: giòn, ngọt, tiện lợi), mình sẽ tư vấn sản phẩm phù hợp nhé!";
         }
     }
@@ -136,12 +144,22 @@ public class ChatbotActivity extends FooterActivity {
     private Retrofit retrofit;
     private GeminiApi geminiApi;
     private final String API_KEY = "AIzaSyBoQtNypCVF2hCGjuf0GHqYOs2eoOJruAs";
+    ImageView btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatbot);
         setupFooter();
+        btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ChatbotActivity.this, HomeActivity.class);
+                startActivity(intent);
+                finish(); // Đóng BlogActivity để tránh quay lại bằng nút back
+            }
+        });
 
         messageInput = findViewById(R.id.messageInput);
         sendButton = findViewById(R.id.btnSend);
@@ -236,36 +254,48 @@ public class ChatbotActivity extends FooterActivity {
 
     private void sendMessageToGemini(String message) {
         WinSnackInfo winSnack = new WinSnackInfo();
-        if (message.toLowerCase().contains("thông tin cửa hàng") || message.toLowerCase().contains("về công ty")) {
+        if (message.toLowerCase().contains("thông tin cửa hàng") || message.toLowerCase().contains("về thương hiệu")) {
+            Log.d("Chatbot", "Brand info detected");
             runOnUiThread(() -> addBotResponse(winSnack.getBrandInfo()));
             return;
         }
         if (message.toLowerCase().contains("sản phẩm")) {
+            Log.d("Chatbot", "Products detected");
             String products = "Sản phẩm của Win Snack: " + String.join(", ", winSnack.getProducts());
             runOnUiThread(() -> addBotResponse(products));
             return;
         }
         for (String product : winSnack.getProducts()) {
             if (message.toLowerCase().contains(product.toLowerCase())) {
+                Log.d("Chatbot", "Product detail detected: " + product);
                 runOnUiThread(() -> addBotResponse(winSnack.getProductDetails(product)));
                 return;
             }
         }
         if (message.toLowerCase().contains("ý nghĩa thương hiệu")) {
+            Log.d("Chatbot", "Brand meaning detected");
             runOnUiThread(() -> addBotResponse("Thương hiệu Win Snack mang ý nghĩa từ niềm đam mê bánh tráng, với khẩu hiệu 'Ăn là ghiền!' tạo ấn tượng mạnh mẽ. Logo với tông cam năng động và hình ảnh túi snack tạo nên sự trẻ trung, phù hợp với người yêu ăn vặt."));
             return;
         }
+        if (message.toLowerCase().contains("giòn")) {
+            Log.d("Chatbot", "Giòn preference detected");
+            runOnUiThread(() -> addBotResponse(winSnack.suggestProduct(message)));
+            return;
+        }
         if (message.toLowerCase().contains("tư vấn") || message.toLowerCase().contains("gợi ý")) {
+            Log.d("Chatbot", "Suggestion detected");
             runOnUiThread(() -> addBotResponse(winSnack.suggestProduct(message)));
             return;
         }
 
+        Log.d("Chatbot", "Sending to Gemini API: " + message);
         GeminiRequest request = new GeminiRequest(message);
         geminiApi.getResponse(API_KEY, request).enqueue(new Callback<GeminiResponse>() {
             @Override
             public void onResponse(Call<GeminiResponse> call, Response<GeminiResponse> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().candidates != null && !response.body().candidates.isEmpty()) {
                     String aiResponse = response.body().candidates.get(0).content.parts.get(0).text;
+                    Log.d("Chatbot", "Gemini response: " + aiResponse);
                     runOnUiThread(() -> addBotResponse(aiResponse));
                 } else {
                     final String errorMsgBase = "Lỗi: Mã trạng thái: " + response.code();
@@ -277,7 +307,7 @@ public class ChatbotActivity extends FooterActivity {
                             errorMsg += ", Không đọc được chi tiết.";
                         }
                     }
-                    final String finalErrorMsg = errorMsg; // Biến final để dùng trong lambda
+                    final String finalErrorMsg = errorMsg;
                     Log.e("GeminiAPI", finalErrorMsg);
                     runOnUiThread(() -> addBotResponse(finalErrorMsg));
                 }

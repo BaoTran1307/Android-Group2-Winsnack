@@ -18,7 +18,7 @@
         android:paddingEnd="24dp">
 
         <ImageView
-            android:id="@+id/btn_back"
+            android:id="@+id/btnBack"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_alignParentStart="true"
@@ -103,6 +103,7 @@
                     android:layout_marginTop="4dp" />
 
                 <Button
+                    android:id="@+id/btnReadBlog"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Read Blog"

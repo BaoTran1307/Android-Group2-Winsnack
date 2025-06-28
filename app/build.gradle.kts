@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.google.services)
 }
 
-
 android {
     namespace = "com.baotran.winsnack_group2"
     compileSdk = 35
@@ -14,11 +13,9 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        multiDexEnabled=true
+        multiDexEnabled = true
     }
-
 
     buildTypes {
         release {
@@ -28,8 +25,8 @@ android {
                 "proguard-rules.pro"
             )
         }
-
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -37,7 +34,7 @@ android {
 }
 
 dependencies {
-
+    // Sử dụng các thư viện từ libs.versions.toml
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
@@ -49,29 +46,17 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-
-    implementation ("com.google.android.gms:play-services-tasks:18.0.2")
-    implementation ("com.google.android.gms:play-services-base:18.6.0")
-    implementation ("com.google.android.gms:play-services-auth:20.7.0")
-    implementation ("com.google.firebase:firebase-database:20.3.0")
-    implementation ("com.google.firebase:firebase-firestore:24.10.0")
-    implementation ("com.google.firebase:firebase-storage:21.0.0")
-    implementation ("com.github.bumptech.glide:glide:4.16.0")
-    annotationProcessor ("com.github.bumptech.glide:compiler:4.16.0")
-    implementation ("androidx.appcompat:appcompat:1.7.0")
-    implementation ("androidx.recyclerview:recyclerview:1.3.2")
-    implementation("androidx.cardview:cardview:1.0.0")
-    implementation("androidx.transition:transition:1.4.1")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.viewpager2:viewpager2:1.1.0")
-    implementation("com.google.android.material:material:1.12.0")
+    // Dependency không có trong libs, giữ nguyên hoặc bổ sung vào libs.versions.toml
+    implementation("com.google.android.gms:play-services-tasks:18.0.2")
+    implementation("com.google.android.gms:play-services-base:18.6.0")
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
+    implementation("com.google.firebase:firebase-database:20.3.0")
+    implementation("com.google.firebase:firebase-storage:21.0.0")
     implementation("com.github.bumptech.glide:glide:4.16.0")
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
-    implementation ("androidx.multidex:multidex:2.0.1")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("androidx.multidex:multidex:2.0.1")
 
-
-
+    // Dependency bị trùng lặp hoặc không cần thiết đã loại bỏ (như appcompat, recyclerview đã có trong libs)
 }
-apply(plugin = "com.google.gms.google-services")

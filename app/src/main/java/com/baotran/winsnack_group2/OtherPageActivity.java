@@ -23,7 +23,7 @@ public class OtherPageActivity extends FooterActivity {
         Button btnLogOut = findViewById(R.id.btnLogOut);
 
         // Gán sự kiện chuyển trang
-        btnOrders.setOnClickListener(v -> startActivity(new Intent(this, OrderInfoActivity.class)));
+        btnOrders.setOnClickListener(v -> startActivity(new Intent(this, OrderHistoryActivity.class)));
         btnProfile.setOnClickListener(v -> startActivity(new Intent(this, MyProfileActivity.class)));
         btnDeliveryAddress.setOnClickListener(v -> startActivity(new Intent(this, DeliveryAddressActivity.class)));
         btnPaymentMethod.setOnClickListener(v -> startActivity(new Intent(this, PaymentMethodActivity.class)));
@@ -38,7 +38,7 @@ public class OtherPageActivity extends FooterActivity {
             // Nếu có sử dụng Firebase Authentication:
             // FirebaseAuth.getInstance().signOut();
 
-            Intent intent = new Intent(this, LoginActivity.class);
+            Intent intent = new Intent(this, LaunchWelcomeScreenActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Xóa lịch sử
             startActivity(intent);
             finish();
