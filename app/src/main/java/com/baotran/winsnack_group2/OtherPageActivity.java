@@ -38,7 +38,7 @@ public class OtherPageActivity extends FooterActivity {
             // Nếu có sử dụng Firebase Authentication:
             // FirebaseAuth.getInstance().signOut();
 
-            Intent intent = new Intent(this, LoginActivity.class);
+            Intent intent = new Intent(this, LaunchWelcomeScreenActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Xóa lịch sử
             startActivity(intent);
             finish();

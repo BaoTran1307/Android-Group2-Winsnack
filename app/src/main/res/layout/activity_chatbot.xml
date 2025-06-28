@@ -1,27 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#FFF9E4">
+    android:background="#FFFFFF"
+    android:orientation="vertical">
 
     <!-- 🟨 Header -->
-    <LinearLayout
+    <!-- 🟨 Header (Sửa lại) -->
+    <RelativeLayout
         android:id="@+id/chatHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="#FFD54F"
+        android:background="#FF9413"
         android:padding="16dp">
 
+        <!-- Nút back -->
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:clickable="true"
+            android:contentDescription="Back"
+            android:focusable="true"
+            android:src="@drawable/ic_arrow_back" />
+
+        <!-- Tiêu đề -->
         <TextView
+            android:id="@+id/headerTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="‹ Chat with AI"
-            android:textColor="#222222"
-            android:textSize="18sp"
+            android:layout_centerInParent="true"
+            android:text="Chat with AI"
+            android:textColor="#F8F8F8"
+            android:textSize="20sp"
             android:textStyle="bold" />
-    </LinearLayout>
+
+    </RelativeLayout>
+
 
     <!-- 💬 Nội dung Chat -->
 
@@ -80,17 +98,17 @@
         android:id="@+id/chatInputBar"
         android:layout_width="match_parent"
         android:layout_height="72dp"
-        android:orientation="horizontal"
         android:background="#FFF3D3"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:paddingHorizontal="12dp"
-        android:paddingVertical="8dp"
-        android:gravity="center_vertical">
+        android:paddingVertical="8dp">
 
         <ImageButton
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@mipmap/ic_translate"
-            android:background="@android:color/transparent" />
+            android:background="@android:color/transparent"
+            android:src="@mipmap/ic_translate" />
 
         <EditText
             android:id="@+id/messageInput"
@@ -108,8 +126,8 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="8dp"
-            android:src="@mipmap/ic_mic"
-            android:background="@android:color/transparent" />
+            android:background="@android:color/transparent"
+            android:src="@mipmap/ic_mic" />
 
         <ImageButton
             android:id="@+id/btnSend"
@@ -132,9 +150,9 @@
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:gravity="center"
         android:background="@drawable/footer_background"
+        android:gravity="center"
+        android:orientation="horizontal"
         android:paddingHorizontal="12dp">
 
         <ImageButton
@@ -161,29 +179,29 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="40dp"
-            android:src="@mipmap/ic_navi3"
             android:background="@android:color/transparent"
             android:padding="0dp"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_navi3" />
 
         <ImageButton
             android:id="@+id/btnEvent"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="40dp"
-            android:src="@mipmap/ic_navi4"
             android:background="@android:color/transparent"
             android:padding="0dp"
-            android:scaleType="fitCenter"/>
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_navi4" />
 
         <ImageButton
             android:id="@+id/btnOthers"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="40dp"
-            android:src="@mipmap/ic_navi5"
             android:background="@android:color/transparent"
             android:padding="0dp"
-            android:scaleType="fitCenter"/>
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_navi5" />
     </LinearLayout>
 </LinearLayout>

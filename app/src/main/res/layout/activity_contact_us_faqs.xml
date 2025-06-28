@@ -17,6 +17,7 @@
             android:padding="16dp">
 
             <ImageView
+                android:id="@+id/btnBack"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_back"
@@ -69,6 +70,7 @@
             android:padding="12dp">
 
             <Button
+                android:id="@+id/btnContactUs"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
@@ -78,6 +80,7 @@
                 android:textStyle="bold" />
 
             <Button
+                android:id="@+id/btnFaqs"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
