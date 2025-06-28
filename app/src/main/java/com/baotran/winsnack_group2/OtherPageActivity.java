@@ -23,7 +23,7 @@ public class OtherPageActivity extends FooterActivity {
         Button btnLogOut = findViewById(R.id.btnLogOut);
 
         // Gán sự kiện chuyển trang
-        btnOrders.setOnClickListener(v -> startActivity(new Intent(this, OrderInfoActivity.class)));
+        btnOrders.setOnClickListener(v -> startActivity(new Intent(this, OrderHistoryActivity.class)));
         btnProfile.setOnClickListener(v -> startActivity(new Intent(this, MyProfileActivity.class)));
         btnDeliveryAddress.setOnClickListener(v -> startActivity(new Intent(this, DeliveryAddressActivity.class)));
         btnPaymentMethod.setOnClickListener(v -> startActivity(new Intent(this, PaymentMethodActivity.class)));
