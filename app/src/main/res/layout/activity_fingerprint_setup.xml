@@ -34,7 +34,7 @@
             android:layout_marginTop="16dp"
             android:text="Set Your Fingerprint"
             android:textColor="@color/white"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
     </RelativeLayout>
@@ -121,52 +121,5 @@
 
     </LinearLayout>
 
-    <!-- Bottom Navigation -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/gradient_background"
-        android:orientation="horizontal"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:gravity="center">
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="24dp"
-            android:layout_weight="1"
-            android:src="@android:drawable/ic_menu_gallery"
-            app:tint="@color/white" />
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="24dp"
-            android:layout_weight="1"
-            android:src="@android:drawable/ic_menu_gallery"
-            app:tint="@color/white" />
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="24dp"
-            android:layout_weight="1"
-            android:src="@android:drawable/ic_menu_gallery"
-            app:tint="@color/white" />
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="24dp"
-            android:layout_weight="1"
-            android:src="@android:drawable/ic_menu_gallery"
-            app:tint="@color/white" />
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="24dp"
-            android:layout_weight="1"
-            android:src="@android:drawable/ic_menu_gallery"
-            app:tint="@color/white" />
-
-    </LinearLayout>
 
 </RelativeLayout>
